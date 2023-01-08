@@ -1,0 +1,12 @@
+body {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  height: auto;
+  width: auto;
+}
