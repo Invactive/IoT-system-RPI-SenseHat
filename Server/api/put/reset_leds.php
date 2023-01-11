@@ -4,7 +4,7 @@
 
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "PUT"){
-        $command = escapeshellcmd('python3 ../srcPY/reset_leds.py');
+        $command = escapeshellcmd('python3 ../src/python/reset_leds.py');
         $output = shell_exec($command);
         http_response_code(200);
     }

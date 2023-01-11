@@ -4,8 +4,7 @@
 
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "GET"){
-        $command = escapeshellcmd('python3 ../srcPY/get_accelerometer.py');
-        $output = shell_exec($command);
+        $output = file_get_contents("../src/data/accelerometer.dat");
         http_response_code(200);
         echo $output;
     }

@@ -35,7 +35,7 @@
             $argR >= 0 && $argR < 256 &&
             $argG >= 0 && $argG < 256 &&
             $argB >= 0 && $argB < 256){
-                $command = escapeshellcmd('python3 ../srcPY/set_leds.py -x '.$argX.' -y '.$argY.' -r '.$argR.' -g '.$argG.' -b '.$argB);
+                $command = escapeshellcmd('python3 ../src/python/set_leds.py -x '.$argX.' -y '.$argY.' -r '.$argR.' -g '.$argG.' -b '.$argB);
                 echo $command;
                 $output = shell_exec($command);
                 http_response_code(200);
