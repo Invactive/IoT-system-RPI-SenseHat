@@ -1,6 +1,12 @@
 <?php
+    $http_origin = $_SERVER['HTTP_ORIGIN'];
 
     header("Content-type: application/json; charset=UTF-8");
+    header("Access-Control-Allow-Origin: *");
+
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS'){
+        echo "XD";
+    }
 
     $parts = explode('/', $_SERVER['REQUEST_URI']);
     $argTime;
