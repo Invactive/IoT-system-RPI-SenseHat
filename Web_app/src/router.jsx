@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HashRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import { Home } from "./pages/Home";
 import { Matrix } from "./pages/Matrix";
@@ -11,7 +11,7 @@ const Router = () => {
   return (
     <>
       <GlobalStyle />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/matrix" element={<Matrix />} />
@@ -19,7 +19,7 @@ const Router = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/data" element={<Data />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 };

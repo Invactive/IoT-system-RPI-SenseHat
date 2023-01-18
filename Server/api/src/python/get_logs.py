@@ -14,9 +14,9 @@ def read_file(file_path):
     with open(file_path, 'r') as f:
         return f.read()
 
+# Adding keys to dict from filenames
 for file in os.listdir(directory):
         if file.endswith(".dat"):
-            data = read_file(directory + file)
             key = file.replace('.dat', '')
             json_keys.append(key)
             json_dict[key] = []
@@ -26,7 +26,11 @@ while(True):
     json_dict["timestamp"].append(str(datetime.datetime.now()))
     for file in os.listdir(directory):
         if file.endswith(".dat"):
-            data = read_file(directory + file)
+            try:
+                data = read_file(directory + file)
+                data = json.loads(data)
+            except:
+                pass
             key = file.replace('.dat', '')
             json_dict[key].append(data)
 
@@ -36,7 +40,7 @@ while(True):
         json_dict["timestamp"].pop(0)
 
     log = open("/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/logs.json", 'w')
-    log.write(str(json_dict))
+    log.write(json.dumps(json_dict))
     log.close()
 
     time_interval = read_file(directory + "interval.txt")
