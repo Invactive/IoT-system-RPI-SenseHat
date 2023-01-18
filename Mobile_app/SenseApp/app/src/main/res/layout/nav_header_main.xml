@@ -31,5 +31,5 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="krzysztof.stanowski@czestochowa.com" />
+        android:text="krzysztof.stanowski@vip.com" />
 </LinearLayout>
