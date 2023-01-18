@@ -1,4 +1,4 @@
-package com.example.sensehat.ui.gallery;
+package com.example.sensehat.ui.charts;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sensehat.databinding.FragmentGalleryBinding;
+import com.example.sensehat.databinding.FragmentChartsBinding;
 
-public class GalleryFragment extends Fragment {
+public class ChartsFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentChartsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        ChartsViewModel ChartsViewModel =
+                new ViewModelProvider(this).get(ChartsViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentChartsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textCharts;
+        ChartsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
