@@ -1,4 +1,4 @@
-package com.example.sensehat.ui.slideshow;
+package com.example.sensehat.ui.leds;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,23 +9,22 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.sensehat.databinding.FragmentLedsBinding;
 
-import com.example.sensehat.databinding.FragmentSlideshowBinding;
+public class LedsFragment extends Fragment {
 
-public class SlideshowFragment extends Fragment {
-
-    private FragmentSlideshowBinding binding;
+    private FragmentLedsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        LedsViewModel galleryViewModel =
+                new ViewModelProvider(this).get(LedsViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentLedsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        slideshowViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textLeds;
+        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
