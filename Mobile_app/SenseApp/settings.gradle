@@ -10,6 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        //Graph maven
+        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "SenseHat"
