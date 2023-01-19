@@ -4,6 +4,7 @@ import time
 import datetime
 import os
 
+
 json_keys = []
 directory = "/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/"
 json_dict = {}
