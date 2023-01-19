@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,11 +107,16 @@ public class ChartsFragment extends Fragment {
         chart.setData(new LineData(dataSets));
 
         chart.getDescription().setText("");
-
+        chart.notifyDataSetChanged();
         chart.getDescription().setTextColor(Color.RED);
+        chart.setBackgroundColor(Color.argb(10, 10, 10, 10));
+        chart.setDrawBorders(true);
+        chart.setBorderWidth(3);
 
 
         chart.animateY(1400, Easing.EaseInOutBounce);
+
+
 //        final TextView textView = binding.textCharts;
 //        ChartsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
