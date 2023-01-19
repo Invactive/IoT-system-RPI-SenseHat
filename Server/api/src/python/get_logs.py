@@ -4,13 +4,14 @@ import time
 import datetime
 import os
 
+
 json_keys = []
 directory = "/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/"
 json_dict = {}
 interval_float = 1
 
 
-def read_file(file_path):
+def read_file(file_path: str):
     with open(file_path, 'r') as f:
         return f.read()
 

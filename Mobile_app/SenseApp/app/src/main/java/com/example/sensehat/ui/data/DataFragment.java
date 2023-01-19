@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sensehat.R;
+import com.example.sensehat.data.Repository;
 import com.example.sensehat.databinding.FragmentDataBinding;
 
 public class DataFragment extends Fragment {
@@ -39,3 +40,6 @@ public class DataFragment extends Fragment {
         binding = null;
     }
 }
+
+
+

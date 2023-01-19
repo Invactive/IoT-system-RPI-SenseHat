@@ -34,8 +34,10 @@ public class ChartsFragment extends Fragment {
         binding = FragmentChartsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        //Zbindowanie wykresu z xml
         LineChart chart = (LineChart) binding.chart;
 
+        // Opis osi X
         ArrayList<String> xAxisValues = new ArrayList<String>();
         xAxisValues.add("Term1");
         xAxisValues.add("Term2");
@@ -43,12 +45,11 @@ public class ChartsFragment extends Fragment {
         xAxisValues.add("Term4");
         xAxisValues.add("Term5");
         xAxisValues.add("Term6");
-
         chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
 
 
+        // pierwszy set danych do wykresu
         ArrayList<Entry> entries = new ArrayList<>();
-
         entries.add(new Entry(0, 60));//20    2018f  (2018f, 20))
         entries.add(new Entry(1, 57));//40    2019f   (2019f, 40))
         entries.add(new Entry(2, 65));//60    2020f (2020f, 60))
@@ -56,7 +57,7 @@ public class ChartsFragment extends Fragment {
         entries.add(new Entry(4, 80));//80    2021f (2021f, 80))
         entries.add(new Entry(5, 70));//80    2021f (2021f, 80))
 
-
+        // drugi set danych do wykresu
         ArrayList<Entry> entry = new ArrayList<>();
         entry.add(new Entry(0, 70));
         entry.add(new Entry(1, 50));
@@ -65,6 +66,7 @@ public class ChartsFragment extends Fragment {
         entry.add(new Entry(4, 75));
         entry.add(new Entry(5, 80));
 
+        // trzeci set danych do wykresu
         ArrayList<Entry> marathi = new ArrayList<>();
         marathi.add(new Entry(0, 80));
         marathi.add(new Entry(1, 70));
@@ -73,9 +75,10 @@ public class ChartsFragment extends Fragment {
         marathi.add(new Entry(4, 55));
         marathi.add(new Entry(5, 36));
 
-
+        //Inicjalizacja legendy
         ArrayList<LineDataSet> lines = new ArrayList<LineDataSet>();
 
+        //Parametry legendy dla danych pierwszych
         LineDataSet set1 = new LineDataSet(entries, "English");
         set1.setDrawFilled(true);
         set1.setFillColor(Color.WHITE);
@@ -83,6 +86,7 @@ public class ChartsFragment extends Fragment {
         set1.setCircleColor(Color.DKGRAY);
         lines.add(set1);
 
+        //Parametry legendy dla danych drugich
         LineDataSet set2 = new LineDataSet(entry, "Hindi");
         set2.setDrawFilled(true);
         set2.setFillColor(Color.WHITE);
@@ -90,6 +94,7 @@ public class ChartsFragment extends Fragment {
         set2.setCircleColor(Color.RED);
         lines.add(set2);
 
+        //Parametry legendy dla danych trzecich
         LineDataSet set3 = new LineDataSet(marathi, "Marathi");
         set3.setDrawFilled(true);
         set3.setFillColor(Color.WHITE);
@@ -97,19 +102,20 @@ public class ChartsFragment extends Fragment {
         set3.setCircleColor(Color.parseColor("#8B0000"));
         lines.add(set3);
 
-
+        //Dodawanie datasetów do wykresu
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);
         dataSets.add(set2);
         dataSets.add(set3);
 
+        //Update danych na wykresie
         chart.setData(new LineData(dataSets));
 
-        chart.getDescription().setText("");
-
+        //Dodanie tytułu wykresu
+        chart.getDescription().setText("XDDDDDDD");
         chart.getDescription().setTextColor(Color.RED);
 
-
+        //Animacje wu
         chart.animateY(1400, Easing.EaseInOutBounce);
 //        final TextView textView = binding.textCharts;
 //        ChartsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
