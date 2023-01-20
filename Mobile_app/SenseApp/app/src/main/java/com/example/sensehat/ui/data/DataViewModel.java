@@ -15,7 +15,7 @@ public class DataViewModel extends ViewModel {
         mText = new MutableLiveData<>();
 
 //        EXAMPLE: get value of temperature from temperature sensor in degrees mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString()
-//        mText.setValue(mRepo.getTemperatureDataChart().getValue().toString());
+        mText.setValue(mRepo.getTemperatureDataChart().getValue().toString());
 
 //        EXAMPLE: get value of pressure in hpa mRepo.getPressureDataChart().getValue().get("pressHpa").toString()
 //        mText.setValue(mRepo.getPressureDataChart().getValue().toString());

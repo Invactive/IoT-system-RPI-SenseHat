@@ -14,8 +14,17 @@ import java.util.HashMap;
  */
 public class RepositoryModel {
 
+    public int min = 10; // Minimum value of range
+    public int max = 100; // Maximum value of range
+    public double random_i1 = (double)Math.floor(Math.random() * (max - min + 1) + min);
+    public double random_i2 = (double)Math.floor(Math.random() * (max - min + 1) + min);
+    public double random_i3 = (double)Math.floor(Math.random() * (max - min + 1) + min);
+    public double random_i4 = (double)Math.floor(Math.random() * (max - min + 1) + min);
+    public double random_i5 = (double)Math.floor(Math.random() * (max - min + 1) + min);
+    public double random_i6 = (double)Math.floor(Math.random() * (max - min + 1) + min);
+
     // TEMP STRING FOR TESTING PURPOSES
-    public String jsonTempString = "{\"temp\": {\"tempC\": 67.0, \"tempF\": 152.60000000000002}, \"temp_humi\": {\"tempC\": 67.0, \"tempF\": 152.60000000000002}, \"temp_press\": {\"tempC\": 67.15625, \"tempF\": 152.88125000000002}}";
+    public String jsonTempString = "{\"temp\": {\"tempC\": " + random_i1 + ", \"tempF\": " + random_i2 + "}, \"temp_humi\": {\"tempC\": " + random_i3 + ", \"tempF\": " + random_i4 + "}, \"temp_press\": {\"tempC\": " + random_i5 + ", \"tempF\": " + random_i6 + "}}";
     public String jsonPressString = "{\"press_hpa\": 1013.011474609375, \"press_mmhg\": 759.8209682629974}";
     public String jsonHumiString = "{\"humidity\": 44.73046875}";
     public String jsonAccelString = "{\"roll\": 0.0, \"pitch\": 0.0, \"yaw\": 0.0}";
@@ -276,10 +285,10 @@ public class RepositoryModel {
         }
     }
 
-    public MutableLiveData<HashMap<String, ArrayList<Integer>>> getLogsData(){
-        fetchLogs();
-        return this.logsData;
-    }
+//    public MutableLiveData<HashMap<String, ArrayList<Integer>>> getLogsData(){
+//        fetchLogs();
+////        return this.logsData;
+//    }
 
 
 
