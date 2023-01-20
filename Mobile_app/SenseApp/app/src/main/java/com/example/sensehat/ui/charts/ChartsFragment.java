@@ -25,6 +25,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.FileUtils;
@@ -52,23 +53,22 @@ public class ChartsFragment extends Fragment {
         binding = FragmentChartsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //Zbindowanie wykresu z xml
+        //Ustawienia wykresu
         LineChart chart = (LineChart) binding.chart;
+        chart.getDescription().setEnabled(false);
         chart.setBackgroundColor(Color.WHITE);
         Legend legend = chart.getLegend();
         legend.setWordWrapEnabled(true);
         legend.setForm(Legend.LegendForm.CIRCLE);
         legend.setTextSize(12f);
         legend.setTextColor(Color.BLACK);
-
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setGranularityEnabled(true);
-//        leftAxis.setAxisMinimum(-30f);
-//        leftAxis.setAxisMaximum(110f);
-//        leftAxis.setYOffset(-9f);
+        //  leftAxis.setAxisMinimum(-30f);
+        //  leftAxis.setAxisMaximum(110f);
+        //  leftAxis.setYOffset(-9f);
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
-
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
         LineData data = new LineData(dataSets);
         chart.setData(data);
@@ -76,15 +76,10 @@ public class ChartsFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(ChartsViewModel.class);
         updater(mViewModel, "tempC", chart, data, dataSets);
         updater(mViewModel, "tempF", chart, data, dataSets);
-        updater(mViewModel, "pressHpa", chart, data, dataSets);
-        updater(mViewModel, "pressMmhg", chart, data, dataSets);
-        updater(mViewModel, "humidity", chart, data, dataSets);
+//        updater(mViewModel, "pressHpa", chart, data, dataSets);
+//        updater(mViewModel, "pressMmhg", chart, data, dataSets);
+//        updater(mViewModel, "humidity", chart, data, dataSets);
 
-
-        // Opis osi X
-
-//        final TextView textView = binding.textCharts;
-//        ChartsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -97,6 +92,15 @@ public class ChartsFragment extends Fragment {
     public void updater(ChartsViewModel model, String type, LineChart chart,LineData data, ArrayList<ILineDataSet> dataSets){
 
         if(type == "tempC") {
+
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+" °";
+                }
+            });
+
             ArrayList<Entry> values = new ArrayList<>();
             LineDataSet set = new LineDataSet(values, "Temperature Celcius");
             set.setDrawValues(false);
@@ -122,6 +126,15 @@ public class ChartsFragment extends Fragment {
             });
         }
         if(type == "tempF") {
+
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+" °";
+                }
+            });
+
             ArrayList<Entry> values = new ArrayList<>();
             LineDataSet set = new LineDataSet(values, "Temperature Fahrenheit");
             set.setDrawValues(false);
@@ -197,6 +210,15 @@ public class ChartsFragment extends Fragment {
             });
         }
         if(type == "humidity") {
+
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+" %";
+                }
+            });
+
             ArrayList<Entry> values = new ArrayList<>();
             LineDataSet set = new LineDataSet(values, "Humidity");
             set.setDrawValues(false);
