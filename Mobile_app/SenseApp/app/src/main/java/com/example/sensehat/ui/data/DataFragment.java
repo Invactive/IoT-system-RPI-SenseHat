@@ -27,7 +27,10 @@ public class DataFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textData;
+        final TextView textView2 = binding.textData2;
         DataViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        DataViewModel.getText().observe(getViewLifecycleOwner(), textView2::setText);
+
         return root;
     }
 
