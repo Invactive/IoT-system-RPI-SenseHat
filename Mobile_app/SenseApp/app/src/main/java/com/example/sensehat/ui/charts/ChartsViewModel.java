@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sensehat.data.RepositoryModel;
 
+import java.util.ArrayList;
+
 public class ChartsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mTemperatureC;
@@ -30,8 +32,7 @@ public class ChartsViewModel extends ViewModel {
         mHandler = new Handler();
         Handler mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-        fetcher(2L);
-//        mText.setValue(mRepo.getTemperatureDataChart().getValue().get("tempFPress").toString());
+        fetcher(1L);
     }
 
     public LiveData<String> getTempCData() {
