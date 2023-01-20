@@ -18,6 +18,7 @@ import com.example.sensehat.databinding.FragmentChartsBinding;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -37,7 +38,11 @@ import java.util.Locale;
 public class ChartsFragment extends Fragment {
     private ChartsViewModel mViewModel;
     private FragmentChartsBinding binding;
-    private int i = 0;
+    private int ttc = 0;
+    private int ttf = 0;
+    private int tph = 0;
+    private int tpm = 0;
+    private int th = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,39 +54,31 @@ public class ChartsFragment extends Fragment {
 
         //Zbindowanie wykresu z xml
         LineChart chart = (LineChart) binding.chart;
-        chart.setBackgroundColor(Color.LTGRAY);
+        chart.setBackgroundColor(Color.WHITE);
+        Legend legend = chart.getLegend();
+        legend.setWordWrapEnabled(true);
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setGranularityEnabled(true);
-        leftAxis.setAxisMinimum(-30f);
-        leftAxis.setAxisMaximum(110f);
-        leftAxis.setYOffset(-9f);
-
+//        leftAxis.setAxisMinimum(-30f);
+//        leftAxis.setAxisMaximum(110f);
+//        leftAxis.setYOffset(-9f);
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
 
-        LineData data = new LineData();
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        LineData data = new LineData(dataSets);
         chart.setData(data);
-        ArrayList<Entry> values = new ArrayList<>();
-        LineDataSet set = new LineDataSet(values, "Temperature");
-        set.setLineWidth(2.5f);
-        set.setColor(Color.RED);
-        data.addDataSet(set);
 
         mViewModel = new ViewModelProvider(this).get(ChartsViewModel.class);
-        mViewModel.getData().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                set.addEntry(new Entry(i, Float.parseFloat(s)));
-                if(set.getEntryCount() > 50){
-                    Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
-                    data.removeEntry(e, 0);
-                }
-                data.notifyDataChanged();
-                chart.notifyDataSetChanged();
-                chart.invalidate();
-                i++;
-            }
-        });
+        updater(mViewModel, "tempC", chart, data, dataSets);
+        updater(mViewModel, "tempF", chart, data, dataSets);
+        updater(mViewModel, "pressHpa", chart, data, dataSets);
+        updater(mViewModel, "pressMmhg", chart, data, dataSets);
+        updater(mViewModel, "humidity", chart, data, dataSets);
 
 
         // Opis osi X
@@ -95,6 +92,137 @@ public class ChartsFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void updater(ChartsViewModel model, String type, LineChart chart,LineData data, ArrayList<ILineDataSet> dataSets){
+
+        if(type == "tempC") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Temperature Celcius");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.RED);
+            dataSets.add(set);
+
+            model.getTempCData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(ttc, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    ttc++;
+                }
+            });
+        }
+        if(type == "tempF") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Temperature Fahrenheit");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.BLUE);
+            dataSets.add(set);
+
+            model.getTempFData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(ttf, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    ttf++;
+                }
+            });
+        }
+        if(type == "pressHpa") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Pressure Hpa");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.GREEN);
+            dataSets.add(set);
+
+            model.getPressHpaData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(tph, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    tph++;
+                }
+            });
+        }
+        if(type == "pressMmhg") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Pressure Mmhg");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.GRAY);
+            dataSets.add(set);
+
+            model.getPressMmhgData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(tpm, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    tpm++;
+                }
+            });
+        }
+        if(type == "humidity") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Humidity");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.BLACK);
+            dataSets.add(set);
+
+            model.getHumidity().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(th, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    th++;
+                }
+            });
+        }
+
+
     }
 
 }

@@ -10,37 +10,65 @@ import com.example.sensehat.data.RepositoryModel;
 
 public class ChartsViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> mTemperatureC;
+    private final MutableLiveData<String> mTemperatureF;
+    private final MutableLiveData<String> mPressureHp;
+    private final MutableLiveData<String> mPressureMm;
+    private final MutableLiveData<String> mHumidity;
+    private final MutableLiveData<String> mTimestamp;
     private RepositoryModel mRepo;
     private Handler mHandler;
 
     public ChartsViewModel() {
         mRepo = new RepositoryModel();
-        mText = new MutableLiveData<>();
+        mTemperatureC = new MutableLiveData<>();
+        mTemperatureF = new MutableLiveData<>();
+        mPressureHp = new MutableLiveData<>();
+        mPressureMm = new MutableLiveData<>();
+        mHumidity = new MutableLiveData<>();
+        mTimestamp = new MutableLiveData<>();
         mHandler = new Handler();
         Handler mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-        timer(2L);
+        fetcher(2L);
 //        mText.setValue(mRepo.getTemperatureDataChart().getValue().get("tempFPress").toString());
     }
 
-    public LiveData<String> getData() {
-        return mText;
+    public LiveData<String> getTempCData() {
+        return mTemperatureC;
     }
 
-    public void setData(String data) {
-        timer(100L);
+    public LiveData<String> getTempFData() {
+        return mTemperatureF;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getPressHpaData() {
+        return mPressureHp;
     }
 
-    public void timer(Long delay){
+    public LiveData<String> getPressMmhgData() {
+        return mPressureMm;
+    }
+
+    public LiveData<String> getHumidity() {
+        return mHumidity;
+    }
+
+    public LiveData<String> getTimestamp() {
+        return mTimestamp;
+    }
+
+
+    public void fetcher(Long delay){
         mHandler.postDelayed(new Runnable(){
             public void run(){
                 System.out.println("Task");
-                mText.setValue(mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString());
+                mTemperatureC.setValue(mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString());
+                mTemperatureF.setValue(mRepo.getTemperatureDataChart().getValue().get("tempFTemp").toString());
+                mPressureHp.setValue(mRepo.getPressureDataChart().getValue().get("pressHpa").toString());
+                mPressureMm.setValue(mRepo.getPressureDataChart().getValue().get("pressMmhg").toString());
+                mHumidity.setValue(mRepo.getHumidityDataChart().getValue().get("humi").toString());
+                mTimestamp.setValue(mRepo.getTemperatureDataChart().getValue().get("timestamp").toString());
                 mHandler.postDelayed(this, delay);
             }
         }, delay);
