@@ -5,26 +5,45 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sensehat.databinding.FragmentChartsBinding;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.FileUtils;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ChartsFragment extends Fragment {
-
+    private ChartsViewModel mViewModel;
     private FragmentChartsBinding binding;
+    private int ttc = 0;
+    private int ttf = 0;
+    private int tph = 0;
+    private int tpm = 0;
+    private int th = 0;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -34,91 +53,33 @@ public class ChartsFragment extends Fragment {
         binding = FragmentChartsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //Zbindowanie wykresu z xml
+        //Ustawienia wykresu
         LineChart chart = (LineChart) binding.chart;
+        chart.getDescription().setEnabled(false);
+        chart.setBackgroundColor(Color.WHITE);
+        Legend legend = chart.getLegend();
+        legend.setWordWrapEnabled(true);
+        legend.setForm(Legend.LegendForm.CIRCLE);
+        legend.setTextSize(12f);
+        legend.setTextColor(Color.BLACK);
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setGranularityEnabled(true);
+        //  leftAxis.setAxisMinimum(-30f);
+        //  leftAxis.setAxisMaximum(110f);
+        //  leftAxis.setYOffset(-9f);
+        YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setEnabled(false);
+        ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+        LineData data = new LineData(dataSets);
+        chart.setData(data);
 
-        // Opis osi X
-        ArrayList<String> xAxisValues = new ArrayList<String>();
-        xAxisValues.add("Term1");
-        xAxisValues.add("Term2");
-        xAxisValues.add("Term3");
-        xAxisValues.add("Term4");
-        xAxisValues.add("Term5");
-        xAxisValues.add("Term6");
-        chart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
+        mViewModel = new ViewModelProvider(this).get(ChartsViewModel.class);
+        updater(mViewModel, "tempC", chart, data, dataSets);
+        updater(mViewModel, "tempF", chart, data, dataSets);
+//        updater(mViewModel, "pressHpa", chart, data, dataSets);
+//        updater(mViewModel, "pressMmhg", chart, data, dataSets);
+//        updater(mViewModel, "humidity", chart, data, dataSets);
 
-
-        // pierwszy set danych do wykresu
-        ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(0, 60));//20    2018f  (2018f, 20))
-        entries.add(new Entry(1, 57));//40    2019f   (2019f, 40))
-        entries.add(new Entry(2, 65));//60    2020f (2020f, 60))
-        entries.add(new Entry(3, 70));//80    2021f (2021f, 80))
-        entries.add(new Entry(4, 80));//80    2021f (2021f, 80))
-        entries.add(new Entry(5, 70));//80    2021f (2021f, 80))
-
-        // drugi set danych do wykresu
-        ArrayList<Entry> entry = new ArrayList<>();
-        entry.add(new Entry(0, 70));
-        entry.add(new Entry(1, 50));
-        entry.add(new Entry(2, 60));
-        entry.add(new Entry(3, 65));
-        entry.add(new Entry(4, 75));
-        entry.add(new Entry(5, 80));
-
-        // trzeci set danych do wykresu
-        ArrayList<Entry> marathi = new ArrayList<>();
-        marathi.add(new Entry(0, 80));
-        marathi.add(new Entry(1, 70));
-        marathi.add(new Entry(2, 50));
-        marathi.add(new Entry(3, 68));
-        marathi.add(new Entry(4, 55));
-        marathi.add(new Entry(5, 36));
-
-        //Inicjalizacja legendy
-        ArrayList<LineDataSet> lines = new ArrayList<LineDataSet>();
-
-        //Parametry legendy dla danych pierwszych
-        LineDataSet set1 = new LineDataSet(entries, "English");
-        set1.setDrawFilled(true);
-        set1.setFillColor(Color.WHITE);
-        set1.setColor(Color.RED);
-        set1.setCircleColor(Color.DKGRAY);
-        lines.add(set1);
-
-        //Parametry legendy dla danych drugich
-        LineDataSet set2 = new LineDataSet(entry, "Hindi");
-        set2.setDrawFilled(true);
-        set2.setFillColor(Color.WHITE);
-        set2.setColor(Color.BLUE);
-        set2.setCircleColor(Color.RED);
-        lines.add(set2);
-
-        //Parametry legendy dla danych trzecich
-        LineDataSet set3 = new LineDataSet(marathi, "Marathi");
-        set3.setDrawFilled(true);
-        set3.setFillColor(Color.WHITE);
-        set3.setColor(Color.YELLOW);
-        set3.setCircleColor(Color.parseColor("#8B0000"));
-        lines.add(set3);
-
-        //Dodawanie datasetów do wykresu
-        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-        dataSets.add(set2);
-        dataSets.add(set3);
-
-        //Update danych na wykresie
-        chart.setData(new LineData(dataSets));
-
-        //Dodanie tytułu wykresu
-        chart.getDescription().setText("XDDDDDDD");
-        chart.getDescription().setTextColor(Color.RED);
-
-        //Animacje wu
-        chart.animateY(1400, Easing.EaseInOutBounce);
-//        final TextView textView = binding.textCharts;
-//        ChartsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -127,4 +88,163 @@ public class ChartsFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    public void updater(ChartsViewModel model, String type, LineChart chart,LineData data, ArrayList<ILineDataSet> dataSets){
+
+        if(type == "tempC") {
+
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+" °";
+                }
+            });
+
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Temperature Celcius");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.RED);
+            dataSets.add(set);
+
+            model.getTempCData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(ttc, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    ttc++;
+                }
+            });
+        }
+        if(type == "tempF") {
+
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+" °";
+                }
+            });
+
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Temperature Fahrenheit");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.BLUE);
+            dataSets.add(set);
+
+            model.getTempFData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(ttf, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    ttf++;
+                }
+            });
+        }
+        if(type == "pressHpa") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Pressure Hpa");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.GREEN);
+            dataSets.add(set);
+
+            model.getPressHpaData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(tph, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    tph++;
+                }
+            });
+        }
+        if(type == "pressMmhg") {
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Pressure Mmhg");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.GRAY);
+            dataSets.add(set);
+
+            model.getPressMmhgData().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(tpm, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    tpm++;
+                }
+            });
+        }
+        if(type == "humidity") {
+
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+" %";
+                }
+            });
+
+            ArrayList<Entry> values = new ArrayList<>();
+            LineDataSet set = new LineDataSet(values, "Humidity");
+            set.setDrawValues(false);
+            set.setDrawCircles(false);
+            set.setLineWidth(2.5f);
+            set.setColor(Color.BLACK);
+            dataSets.add(set);
+
+            model.getHumidity().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    set.addEntry(new Entry(th, Float.parseFloat(s)));
+                    if (set.getEntryCount() > 50) {
+                        Entry e = set.getEntryForXValue(set.getEntryCount() - 50, Float.NaN);
+                        int index = dataSets.indexOf(set);
+                        data.removeEntry(e, index);
+                    }
+                    data.notifyDataChanged();
+                    chart.notifyDataSetChanged();
+                    chart.invalidate();
+                    th++;
+                }
+            });
+        }
+
+
+    }
+
 }
