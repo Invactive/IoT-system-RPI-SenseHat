@@ -76,6 +76,8 @@ public class RepositoryModel {
             getRequest("temperature");
 //            Get temp object - temperature from temperature sensor
             JSONObject tempJsonObj = new JSONObject(this.jsonTempString);
+//            Get timestamp
+            dataHashMap.put("timestamp", tempJsonObj.getString("timestamp"));
             tempJsonObj = tempJsonObj.getJSONObject("temp");
 //            Get tempC and tempF from temperature sensor
             dataHashMap.put("tempCTemp", tempJsonObj.getDouble("tempC"));
@@ -92,8 +94,7 @@ public class RepositoryModel {
 //            Get tempC and tempF from humidity sensor
             dataHashMap.put("tempCHumi", tempHumiJsonObj.getDouble("tempC"));
             dataHashMap.put("tempFHumi", tempHumiJsonObj.getDouble("tempF"));
-//            Get timestamp
-            dataHashMap.put("timestamp", tempHumiJsonObj.getString("tempC"));
+
 
             this.temperaturesData.setValue(dataHashMap);
         } catch (JSONException e) {
@@ -116,6 +117,8 @@ public class RepositoryModel {
             getRequest("pressure");
 //            Get pressure object - data from pressure sensor
             JSONObject pressJsonObj = new JSONObject(this.jsonPressString);
+//            Get timestamp
+            dataHashMap.put("timestamp", pressJsonObj.getString("timestamp"));
 //            Get pressure in hPa and mmHg
             dataHashMap.put("pressHpa", pressJsonObj.getDouble("press_hpa"));
             dataHashMap.put("pressMmhg", pressJsonObj.getDouble("press_mmhg"));
@@ -140,6 +143,8 @@ public class RepositoryModel {
             getRequest("humidity");
 //            Get humidity object - data from humidity sensor
             JSONObject humiJsonObj = new JSONObject(this.jsonHumiString);
+//            Get timestamp
+            dataHashMap.put("timestamp", humiJsonObj.getString("timestamp"));
 //            Get humidity in %
             dataHashMap.put("humi", humiJsonObj.getDouble("humidity"));
 
@@ -163,6 +168,8 @@ public class RepositoryModel {
             getRequest("accelerometer");
 //            Get accelerometer object - data from IMU sensor
             JSONObject accelJsonObj = new JSONObject(this.jsonAccelString);
+//            Get timestamp
+            dataHashMap.put("timestamp", accelJsonObj.getString("timestamp"));
 //            Get roll, pitch, yaw in degrees
             dataHashMap.put("roll", accelJsonObj.getDouble("roll"));
             dataHashMap.put("pitch", accelJsonObj.getDouble("pitch"));
@@ -188,6 +195,8 @@ public class RepositoryModel {
             getRequest("orientation");
 //            Get orientation object - data from IMU sensor
             JSONObject orientJsonObj = new JSONObject(this.jsonOrientString);
+//            Get timestamp
+            dataHashMap.put("timestamp", orientJsonObj.getString("timestamp"));
             JSONObject degJsonObj = orientJsonObj.getJSONObject("degrees");
             JSONObject radJsonObj = orientJsonObj.getJSONObject("radians");
 //            Get roll, pitch, yaw in degrees and radians
@@ -218,6 +227,8 @@ public class RepositoryModel {
             getRequest("compass");
 //            Get compass object - data from IMU sensor
             JSONObject compassJsonObj = new JSONObject(this.jsonCompassString);
+//            Get timestamp
+            dataHashMap.put("timestamp", compassJsonObj.getString("timestamp"));
 //            Get north value in degrees
             dataHashMap.put("compass", compassJsonObj.getDouble("north"));
 
@@ -241,6 +252,8 @@ public class RepositoryModel {
             getRequest("joystick");
 //            Get joystick object - data from joystick
             JSONObject joystickJsonObj = new JSONObject(this.jsonJoystickString);
+//            Get timestamp
+            dataHashMap.put("timestamp", joystickJsonObj.getString("timestamp"));
 //            Get number of moves in x, y axis and middle clicks
             dataHashMap.put("X", joystickJsonObj.getInt("X"));
             dataHashMap.put("Y", joystickJsonObj.getInt("Y"));
@@ -266,6 +279,8 @@ public class RepositoryModel {
             getRequest("leds");
 //            Get leds object - data from LED matrix
             JSONObject ledsJsonObj = new JSONObject(this.jsonLedsString);
+//            Get timestamp
+            dataHashMap.put("timestamp", ledsJsonObj.getString("timestamp"));
 //            Get RGB array of every LED from matrix
             for(int i=0; i<ledsJsonObj.length()-1; i++){
                 ArrayList<Integer> arrayList = new ArrayList<>();
@@ -274,7 +289,6 @@ public class RepositoryModel {
                 }
                 dataHashMap.put(Integer.toString(i), arrayList);
             }
-            dataHashMap.put("timestamp", ledsJsonObj.getString("timestamp"));
 
             this.ledsData.setValue(dataHashMap);
         } catch (JSONException e) {
@@ -431,6 +445,11 @@ public class RepositoryModel {
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if(response.isSuccessful()){
                     System.out.println("Put interval succesful");
+                    try {
+                        System.out.println(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
                 else{
                     System.out.println("Put interval unsuccesful. Response code: " + response.code() + ". Message: " + response.message());
@@ -438,4 +457,5 @@ public class RepositoryModel {
             }
         });
     }
+
 }

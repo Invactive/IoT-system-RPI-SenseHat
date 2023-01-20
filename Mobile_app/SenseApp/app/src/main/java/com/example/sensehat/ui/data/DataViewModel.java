@@ -55,16 +55,19 @@ public class DataViewModel extends ViewModel {
 
     public void timer(Long delay){
         mHandler.postDelayed(new Runnable(){
+            int i =0;
             public void run(){
-                System.out.println("Task");
+                System.out.println(i);
                 mText.setValue(mRepo.getTemperatureDataChart().getValue().toString());
                 System.out.println("TEMP:" + mRepo.getTemperatureDataChart().getValue().toString());
                 rText.setValue(mRepo.getPressureDataChart().getValue().toString());
                 System.out.println("PRESS:" + mRepo.getPressureDataChart().getValue().toString());
                 mRepo.putLedsRequest(1,2,3,4,5);
-                mHandler.postDelayed(this, delay * 50);
+                mRepo.putIntervalRequest(Integer.toString(i));
+                mHandler.postDelayed(this, delay * 500);
+                i+=1;
             }
-        }, delay * 50);
+        }, delay * 500);
     }
 
 
