@@ -111,7 +111,7 @@ public class RepositoryModel {
     private void fetchPressureChart(){
         HashMap<String, Object> dataHashMap = new HashMap<>();
         try {
-            getRequest("pressure", this.jsonPressString);
+            getRequest("pressure", this.jsonTempString);
 //            Get pressure object - data from pressure sensor
             JSONObject pressJsonObj = new JSONObject(this.jsonTempString);
 //            Get pressure in hPa and mmHg
@@ -331,7 +331,6 @@ public class RepositoryModel {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     System.out.println("Fetching response succesful");
-                    System.out.println(response.headers());
                     jsonTempString = response.body().string();
                     resultWeb = true;
                 }
