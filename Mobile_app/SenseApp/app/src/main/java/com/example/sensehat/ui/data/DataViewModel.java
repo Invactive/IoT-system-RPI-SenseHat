@@ -19,7 +19,6 @@ public class DataViewModel extends ViewModel {
         mText = new MutableLiveData<>();
         rText = new MutableLiveData<>();
         mHandler = new Handler();
-        Handler mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
 
 //        EXAMPLE: get value of temperature from temperature sensor in degrees mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString()
@@ -48,19 +47,25 @@ public class DataViewModel extends ViewModel {
 
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public LiveData<String> getText() { return mText; }
+    public LiveData<String> getText1() {
+        return rText;
     }
+
 
     public void timer(Long delay){
         mHandler.postDelayed(new Runnable(){
             public void run(){
                 System.out.println("Task");
                 mText.setValue(mRepo.getTemperatureDataChart().getValue().toString());
+                System.out.println("TEMP:" + mRepo.getTemperatureDataChart().getValue().toString());
                 rText.setValue(mRepo.getPressureDataChart().getValue().toString());
-                mHandler.postDelayed(this, delay * 1000);
+                System.out.println("PRESS:" + mRepo.getPressureDataChart().getValue().toString());
+                mRepo.putLedsRequest(1,2,3,4,5);
+                mHandler.postDelayed(this, delay * 50);
             }
-        }, delay * 1000);
+        }, delay * 50);
     }
+
 
 }
