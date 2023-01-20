@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.sensehat.databinding.FragmentDataBinding;
@@ -28,8 +29,9 @@ public class DataFragment extends Fragment {
 
         final TextView textView = binding.textData;
         final TextView textView2 = binding.textData2;
+        final Button button = binding.button;
         DataViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        DataViewModel.getText().observe(getViewLifecycleOwner(), textView2::setText);
+        DataViewModel.getText1().observe(getViewLifecycleOwner(), textView2::setText);
 
         return root;
     }
@@ -39,6 +41,7 @@ public class DataFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }
 
 
