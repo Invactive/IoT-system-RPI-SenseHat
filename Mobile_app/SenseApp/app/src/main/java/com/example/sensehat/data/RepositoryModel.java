@@ -17,6 +17,7 @@ import java.util.concurrent.CountDownLatch;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -49,7 +50,7 @@ public class RepositoryModel {
     private MutableLiveData<HashMap<String, Object>> compassData;
     private MutableLiveData<HashMap<String, Object>> joystickData;
     private MutableLiveData<HashMap<String, Object>> ledsData;
-    private MutableLiveData<HashMap<String, Object>> logsData;
+    private MutableLiveData<HashMap<String, JSONArray>> logsData;
 
     public RepositoryModel() {
         temperaturesData = new MutableLiveData<>();
@@ -304,25 +305,35 @@ public class RepositoryModel {
         return this.ledsData;
     }
 
-//    private void fetchLogs(){
-////        TODO getRequest from server to get data
-//
-//        HashMap<String, ArrayList<Integer>> dataHashMap = new HashMap<>();
-//        try {
-////            Get logs object - data from all sensors with timestamps
-//            JSONObject logsJsonObj = new JSONObject(this.jsonLogsString);
-//
-//
-//            this.logsData.setValue(dataHashMap);
-//        } catch (JSONException e) {
-//            // Handle exception
-//        }
-//    }
-//
-//    public MutableLiveData<HashMap<String, ArrayList<Integer>>> getLogsData(){
-//        fetchLogs();
-//        return this.logsData;
-//    }
+    private void fetchLogs(){
+        HashMap<String, JSONArray> dataHashMap = new HashMap<>();
+        try {
+            getRequest("logs");
+//            Get logs object - data from all sensors with timestamps
+            JSONObject logsJsonObj = new JSONObject(this.jsonLogsString);
+//            Get all last 10 logs from every sensor or actuator
+            dataHashMap.put("timestamp", logsJsonObj.getJSONArray("timestamp"));
+            dataHashMap.put("temperature", logsJsonObj.getJSONArray("temperature"));
+            dataHashMap.put("pressure", logsJsonObj.getJSONArray("pressure"));
+            dataHashMap.put("humidity", logsJsonObj.getJSONArray("humidity"));
+            dataHashMap.put("accelerometer", logsJsonObj.getJSONArray("accelerometer"));
+            dataHashMap.put("orientation", logsJsonObj.getJSONArray("orientation"));
+            dataHashMap.put("compass", logsJsonObj.getJSONArray("compass"));
+            dataHashMap.put("joystick", logsJsonObj.getJSONArray("joystick"));
+            dataHashMap.put("pixels", logsJsonObj.getJSONArray("pixels"));
+
+            this.logsData.setValue(dataHashMap);
+        } catch (JSONException e) {
+            System.out.println("Exception - json parse error");
+        } catch (InterruptedException e) {
+            System.out.println("Exception - fetching data error");
+        }
+    }
+
+    public MutableLiveData<HashMap<String, JSONArray>> getLogsData(){
+        fetchLogs();
+        return this.logsData;
+    }
 
 
     public void getRequest(String param) throws InterruptedException {
@@ -344,7 +355,7 @@ public class RepositoryModel {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     try {
-                        System.out.println("Fetching response succesful");
+//                        System.out.println("Fetching response succesful");
                         bodyDestinationSolver(response.body().string(), url);
                     } catch (ProtocolException e) {
                         System.out.println("Fetching error - empty response. " + e);
@@ -391,13 +402,21 @@ public class RepositoryModel {
 
     public void putLedsRequest(int x, int y, int r, int g, int b){
         String url = this.URL + "put/set_leds.php";
-        RequestBody requestBody = new FormBody.Builder()
-                .add("x", "6")
-                .add("y", "4")
-                .add("r", "255")
-                .add("g", "4")
-                .add("b", "100")
-                .build();
+        MediaType JSON = MediaType.parse("application/json; charset=UTF-8");
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("x", Integer.toString(x));
+            jsonRequest.put("y", Integer.toString(y));
+            jsonRequest.put("r", Integer.toString(r));
+            jsonRequest.put("g", Integer.toString(g));
+            jsonRequest.put("b", Integer.toString(b));
+
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody requestBody = RequestBody.create(jsonRequest.toString(), JSON);
         Request request = new Request.Builder()
                 .url(url)
                 .header("Content-Type", "application/json")
@@ -414,7 +433,7 @@ public class RepositoryModel {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if(response.isSuccessful()){
-                        System.out.println("Put led succesful");
+//                        System.out.println("Put led succesful");
                 }
                 else{
                     System.out.println("Put led unsuccesful. Response code: " + response.code() + ". Message: " + response.message());
@@ -423,17 +442,23 @@ public class RepositoryModel {
         });
     }
 
-    public void putIntervalRequest(String interval){
+    public void putIntervalRequest(Integer interval){
         String url = this.URL + "put/set_interval.php";
-        RequestBody requestBody = new FormBody.Builder()
-                .add("interval", "6")
-                .build();
+        MediaType JSON = MediaType.parse("application/json; charset=UTF-8");
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("interval", Integer.toString(interval));
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody requestBody = RequestBody.create(jsonRequest.toString(), JSON);
         Request request = new Request.Builder()
                 .url(url)
                 .header("Content-Type", "application/json")
                 .put(requestBody)
                 .build();
-
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -444,12 +469,7 @@ public class RepositoryModel {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if(response.isSuccessful()){
-                    System.out.println("Put interval succesful");
-                    try {
-                        System.out.println(response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+//                    System.out.println("Put interval succesful");
                 }
                 else{
                     System.out.println("Put interval unsuccesful. Response code: " + response.code() + ". Message: " + response.message());
@@ -458,4 +478,33 @@ public class RepositoryModel {
         });
     }
 
+    public void putResetLedsRequest(){
+        String url = this.URL + "put/reset_leds.php";
+        MediaType JSON = MediaType.parse("application/json; charset=UTF-8");
+        JSONObject jsonRequest = new JSONObject();
+
+        RequestBody requestBody = RequestBody.create(jsonRequest.toString(), JSON);
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Content-Type", "application/json")
+                .put(requestBody)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+                System.out.println("Connection error");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
+                if(response.isSuccessful()){
+//                    System.out.println("Put reset LEDs succesful");
+                }
+                else{
+                    System.out.println("Put LEDs unsuccesful. Response code: " + response.code() + ". Message: " + response.message());
+                }
+            }
+        });
+    }
 }

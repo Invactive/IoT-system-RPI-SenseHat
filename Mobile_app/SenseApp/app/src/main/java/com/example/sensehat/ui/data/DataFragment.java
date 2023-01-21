@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.sensehat.databinding.FragmentDataBinding;
@@ -28,10 +30,11 @@ public class DataFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textData;
-        final TextView textView2 = binding.textData2;
-        final Button button = binding.button;
+        TableLayout table = binding.table;
+        DataViewModel.addtable(table, getActivity());
+        DataViewModel.drawTable(table, getActivity());
+        DataViewModel.updateTable(1L);
         DataViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        DataViewModel.getText1().observe(getViewLifecycleOwner(), textView2::setText);
 
         return root;
     }
@@ -41,6 +44,7 @@ public class DataFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 
 }
 
