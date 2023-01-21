@@ -36,6 +36,8 @@ public class DataFragment extends Fragment {
         DataViewModel.updateTable(1L);
         DataViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        DataViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
         return root;
     }
 
