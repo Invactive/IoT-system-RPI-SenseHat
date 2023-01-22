@@ -16,6 +16,7 @@
             android:id="@+id/nav_charts"
             android:icon="@drawable/chart"
             android:title="@string/menu_charts" />
+
         <item
             android:id="@+id/nav_data"
             android:icon="@drawable/data"
@@ -24,5 +25,13 @@
             android:id="@+id/nav_options"
             android:icon="@drawable/settings"
             android:title="@string/menu_options" />
+    </group>
+    <group
+        android:id="@+id/members_group"
+        android:checkableBehavior="single"
+        android:visible="false">
+
+
+
     </group>
 </menu>

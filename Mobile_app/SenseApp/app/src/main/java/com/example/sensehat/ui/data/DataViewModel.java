@@ -81,20 +81,20 @@ public class DataViewModel extends ViewModel {
         header1.setText("Timestamp");
         header1.setGravity(Gravity.CENTER);
         header1.setPadding(30, 30, 30, 30);
-        header1.setTextColor(Color.WHITE);
+        header1.setTextColor(Color.BLACK);
         tabRow.addView(header1);
 
         TextView header2 = new TextView(context);
         header2.setText("Temperature");
         header2.setGravity(Gravity.CENTER);
         header2.setPadding(30, 30, 30, 30);
-        header2.setTextColor(Color.WHITE);
+        header2.setTextColor(Color.BLACK);
         tabRow.addView(header2);
 
         TextView header3 = new TextView(context);
         header3.setText("Humidity");
         header3.setGravity(Gravity.CENTER);
-        header3.setTextColor(Color.WHITE);
+        header3.setTextColor(Color.BLACK);
         header3.setPadding(30, 30, 30, 30);
         tabRow.addView(header3);
 
@@ -102,7 +102,7 @@ public class DataViewModel extends ViewModel {
         header4.setText("Joystick");
         header4.setGravity(Gravity.CENTER);
         header4.setPadding(30, 30, 30, 30);
-        header4.setTextColor(Color.WHITE);
+        header4.setTextColor(Color.BLACK);
         tabRow.addView(header4);
 
         table.addView(tabRow);
