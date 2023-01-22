@@ -45,10 +45,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    // Volley
-    implementation 'com.android.volley:volley:1.2.1'
+    // okHttp
     implementation "com.squareup.okhttp3:okhttp:4.10.0"
-
 
     //Graphs
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'

@@ -1,0 +1,2455 @@
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n}\r\n\r\nandroid {\r\n    namespace 'com.example.sensehat'\r\n    compileSdk 33\r\n\r\n    defaultConfig {\r\n        applicationId \"com.example.sensehat\"\r\n        minSdk 21\r\n        targetSdk 33\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    buildFeatures {\r\n        viewBinding true\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.appcompat:appcompat:1.6.0'\r\n    implementation 'com.google.android.material:material:1.7.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'\r\n    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'\r\n    implementation 'androidx.navigation:navigation-fragment:2.5.3'\r\n    implementation 'androidx.navigation:navigation-ui:2.5.3'\r\n    implementation 'androidx.legacy:legacy-support-v4:1.0.0'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.5'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ b/app/build.gradle	(date 1674083400914)
+@@ -44,4 +44,8 @@
+     testImplementation 'junit:junit:4.13.2'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
++
++    // Volley
++    implementation 'com.android.volley:volley:1.2.1'
++
+ }
+\ No newline at end of file
+Index: app/src/main/res/navigation/mobile_navigation.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<navigation xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/mobile_navigation\"\r\n    app:startDestination=\"@+id/nav_home\">\r\n\r\n    <fragment\r\n        android:id=\"@+id/nav_home\"\r\n        android:name=\"com.example.sensehat.ui.home.HomeFragment\"\r\n        android:label=\"@string/menu_home\"\r\n        tools:layout=\"@layout/fragment_home\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/nav_leds\"\r\n        android:name=\"com.example.sensehat.ui.leds.LedsFragment\"\r\n        android:label=\"Leds\"\r\n        tools:layout=\"@layout/fragment_leds\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/nav_charts\"\r\n        android:name=\"com.example.sensehat.ui.charts.ChartsFragment\"\r\n        android:label=\"Charts\"\r\n        tools:layout=\"@layout/fragment_charts\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/dataFragment\"\r\n        android:name=\"com.example.sensehat.ui.data.DataFragment\"\r\n        android:label=\"fragment_data\"\r\n        tools:layout=\"@layout/fragment_data\" />\r\n\r\n    <fragment\r\n        android:id=\"@+id/optionFragment\"\r\n        android:name=\"com.example.sensehat.ui.Options.OptionFragment\"\r\n        android:label=\"fragment_option\"\r\n        tools:layout=\"@layout/fragment_option\" />\r\n</navigation>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/navigation/mobile_navigation.xml b/app/src/main/res/navigation/mobile_navigation.xml
+--- a/app/src/main/res/navigation/mobile_navigation.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ b/app/src/main/res/navigation/mobile_navigation.xml	(date 1674082862248)
+@@ -24,13 +24,13 @@
+         tools:layout="@layout/fragment_charts" />
+ 
+     <fragment
+-        android:id="@+id/dataFragment"
++        android:id="@+id/nav_data"
+         android:name="com.example.sensehat.ui.data.DataFragment"
+         android:label="fragment_data"
+         tools:layout="@layout/fragment_data" />
+ 
+     <fragment
+-        android:id="@+id/optionFragment"
++        android:id="@+id/nav_options"
+         android:name="com.example.sensehat.ui.Options.OptionFragment"
+         android:label="fragment_option"
+         tools:layout="@layout/fragment_option" />
+Index: app/src/main/java/com/example/sensehat/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.sensehat;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\nimport android.view.Menu;\r\n\r\nimport com.google.android.material.snackbar.Snackbar;\r\nimport com.google.android.material.navigation.NavigationView;\r\n\r\nimport androidx.navigation.NavController;\r\nimport androidx.navigation.Navigation;\r\nimport androidx.navigation.ui.AppBarConfiguration;\r\nimport androidx.navigation.ui.NavigationUI;\r\nimport androidx.drawerlayout.widget.DrawerLayout;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport com.example.sensehat.databinding.ActivityMainBinding;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    private AppBarConfiguration mAppBarConfiguration;\r\n    private ActivityMainBinding binding;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n\r\n        binding = ActivityMainBinding.inflate(getLayoutInflater());\r\n        setContentView(binding.getRoot());\r\n\r\n        setSupportActionBar(binding.appBarMain.toolbar);\r\n        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {\r\n            @Override\r\n            public void onClick(View view) {\r\n                Snackbar.make(view, \"Replace with your own action\", Snackbar.LENGTH_LONG)\r\n                        .setAction(\"Action\", null).show();\r\n            }\r\n        });\r\n        DrawerLayout drawer = binding.drawerLayout;\r\n        NavigationView navigationView = binding.navView;\r\n        // Passing each menu ID as a set of Ids because each\r\n        // menu should be considered as top level destinations.\r\n        mAppBarConfiguration = new AppBarConfiguration.Builder(\r\n                R.id.nav_home, R.id.nav_leds, R.id.nav_charts)\r\n                .setOpenableLayout(drawer)\r\n                .build();\r\n        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);\r\n        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);\r\n        NavigationUI.setupWithNavController(navigationView, navController);\r\n    }\r\n\r\n    @Override\r\n    public boolean onCreateOptionsMenu(Menu menu) {\r\n        // Inflate the menu; this adds items to the action bar if it is present.\r\n        getMenuInflater().inflate(R.menu.main, menu);\r\n        return true;\r\n    }\r\n\r\n    @Override\r\n    public boolean onSupportNavigateUp() {\r\n        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);\r\n        return NavigationUI.navigateUp(navController, mAppBarConfiguration)\r\n                || super.onSupportNavigateUp();\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sensehat/MainActivity.java b/app/src/main/java/com/example/sensehat/MainActivity.java
+--- a/app/src/main/java/com/example/sensehat/MainActivity.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ b/app/src/main/java/com/example/sensehat/MainActivity.java	(date 1674082578931)
+@@ -41,7 +41,7 @@
+         // Passing each menu ID as a set of Ids because each
+         // menu should be considered as top level destinations.
+         mAppBarConfiguration = new AppBarConfiguration.Builder(
+-                R.id.nav_home, R.id.nav_leds, R.id.nav_charts)
++                R.id.nav_home, R.id.nav_leds, R.id.nav_charts, R.id.nav_data, R.id.nav_options)
+                 .setOpenableLayout(drawer)
+                 .build();
+         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+Index: ../RESTapp/.gitignore
+===================================================================
+diff --git a/../RESTapp/.gitignore b/../RESTapp/.gitignore
+deleted file mode 100644
+--- a/../RESTapp/.gitignore	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,15 +0,0 @@
+-*.iml
+-.gradle
+-/local.properties
+-/.idea/caches
+-/.idea/libraries
+-/.idea/modules.xml
+-/.idea/workspace.xml
+-/.idea/navEditor.xml
+-/.idea/assetWizardSettings.xml
+-.DS_Store
+-/build
+-/captures
+-.externalNativeBuild
+-.cxx
+-local.properties
+Index: ../RESTapp/app/src/main/java/com/example/restapp/GridAdapter.java
+===================================================================
+diff --git a/../RESTapp/app/src/main/java/com/example/restapp/GridAdapter.java b/../RESTapp/app/src/main/java/com/example/restapp/GridAdapter.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/java/com/example/restapp/GridAdapter.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,62 +0,0 @@
+-package com.example.restapp;
+-
+-import android.content.Context;
+-import android.graphics.Color;
+-import android.view.LayoutInflater;
+-import android.view.View;
+-import android.view.ViewGroup;
+-import android.widget.BaseAdapter;
+-import android.widget.Button;
+-
+-import org.json.JSONArray;
+-import org.json.JSONException;
+-
+-public class GridAdapter extends BaseAdapter {
+-    Context context;
+-    JSONArray rgb;
+-
+-    LayoutInflater inflater;
+-
+-    public GridAdapter(Context context, JSONArray rgb){
+-        this.context = context;
+-        this.rgb = rgb;
+-    }
+-
+-    @Override
+-    public int getCount() {
+-        return rgb.length();
+-    }
+-
+-    @Override
+-    public Object getItem(int i) {
+-        return null;
+-    }
+-
+-    @Override
+-    public long getItemId(int i) {
+-        return 0;
+-    }
+-
+-    @Override
+-    public View getView(int i, View view, ViewGroup viewGroup) {
+-        if(inflater == null)
+-            inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+-
+-        if(view == null){
+-            view = inflater.inflate(R.layout.matrix_item, null);
+-        }
+-        Button btn = view.findViewById(R.id.matrixBtn);
+-        try {
+-            int r = (int) rgb.getJSONArray(i).get(0);
+-            int g = (int) rgb.getJSONArray(i).get(1);
+-            int b = (int) rgb.getJSONArray(i).get(2);
+-            String hexRGB = String.format("#%02x%02x%02x", rgb.getJSONArray(i).get(0), rgb.getJSONArray(i).get(1), rgb.getJSONArray(i).get(2));
+-            btn.setBackgroundColor(Color.parseColor(hexRGB));
+-            btn.setText(Integer.toString(i));
+-        } catch (JSONException e) {
+-            e.printStackTrace();
+-        }
+-
+-        return view;
+-    }
+-}
+Index: ../RESTapp/app/src/main/res/drawable-v24/no_round.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable-v24/no_round.xml b/../RESTapp/app/src/main/res/drawable-v24/no_round.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable-v24/no_round.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<shape xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:shape="rectangle" >
+-
+-    <!-- View background color -->
+-    <solid
+-        android:color="@color/frameColor">
+-    </solid>
+-
+-    <!-- View border color and width -->
+-    <stroke
+-        android:width="1dp"
+-        android:color="@color/purple_500">
+-    </stroke>
+-
+-    <!-- The radius makes the corners rounded -->
+-    <corners
+-        android:radius="0dp">
+-    </corners>
+-
+-</shape>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/drawable/back_no_border.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable/back_no_border.xml b/../RESTapp/app/src/main/res/drawable/back_no_border.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable/back_no_border.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<shape xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:shape="rectangle" >
+-
+-    <!-- View background color -->
+-    <solid
+-        android:color="@color/frameColor" >
+-    </solid>
+-
+-    <!-- View border color and width -->
+-
+-    <!-- The radius makes the corners rounded -->
+-    <corners
+-        android:radius="10dp"   >
+-    </corners>
+-
+-</shape>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/java/com/example/restapp/MainActivity.java
+===================================================================
+diff --git a/../RESTapp/app/src/main/java/com/example/restapp/MainActivity.java b/../RESTapp/app/src/main/java/com/example/restapp/MainActivity.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/java/com/example/restapp/MainActivity.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,79 +0,0 @@
+-package com.example.restapp;
+-
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-import android.app.ProgressDialog;
+-import android.content.Intent;
+-import android.os.Bundle;
+-import android.os.Handler;
+-import android.text.method.ScrollingMovementMethod;
+-import android.util.Log;
+-import android.view.View;
+-import android.view.Window;
+-import android.view.WindowManager;
+-import android.widget.ArrayAdapter;
+-import android.widget.Button;
+-import android.widget.EditText;
+-import android.widget.TextView;
+-
+-import com.android.volley.Request;
+-import com.android.volley.RequestQueue;
+-import com.android.volley.Response;
+-import com.android.volley.VolleyError;
+-import com.android.volley.toolbox.StringRequest;
+-import com.android.volley.toolbox.Volley;
+-import com.example.restapp.databinding.ActivityMainBinding;
+-
+-import org.json.JSONArray;
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import java.io.BufferedReader;
+-import java.io.IOException;
+-import java.io.InputStream;
+-import java.io.InputStreamReader;
+-import java.lang.reflect.Array;
+-import java.net.HttpURLConnection;
+-import java.net.MalformedURLException;
+-import java.net.URL;
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Stack;
+-
+-public class MainActivity extends AppCompatActivity {
+-
+-    ActivityMainBinding binding;
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-
+-        // NO TITLE BAR
+-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+-        getSupportActionBar().hide();
+-
+-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+-        setContentView(binding.getRoot());
+-
+-        binding.graphBtn.setOnClickListener(v -> {
+-            // Intents are objects of the android.content.Intent type. Your code can send them to the Android system defining
+-            // the components you are targeting. Intent to start an activity called oneActivity with the following code
+-            Intent intent = new Intent(MainActivity.this, GraphActivity.class);
+-            // start the activity connect to the specified class
+-            startActivity(intent);
+-        });
+-
+-        binding.ledsBtn.setOnClickListener(v -> {
+-            Intent intent = new Intent(MainActivity.this, LEDSActivity.class);
+-            startActivity(intent);
+-        });
+-
+-        binding.dataBtn.setOnClickListener(v -> {
+-            Intent intent = new Intent(MainActivity.this, DataActivity.class);
+-            startActivity(intent);
+-        });
+-    }
+-
+-}
+-
+Index: ../RESTapp/app/src/main/res/layout/activity_main.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/layout/activity_main.xml b/../RESTapp/app/src/main/res/layout/activity_main.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/layout/activity_main.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,68 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:background="@drawable/wallpaper3"
+-    tools:context=".MainActivity">
+-
+-    <TextView
+-        android:id="@+id/restJsonTV"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_marginTop="30dp"
+-        android:background="@drawable/back_no_border"
+-        android:paddingLeft="14dp"
+-        android:paddingTop="10dp"
+-        android:paddingRight="14dp"
+-        android:paddingBottom="10dp"
+-        android:text="REST JSON"
+-        android:textColor="@color/fontColor"
+-        android:textSize="30dp"
+-        android:textStyle="bold"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent" />
+-
+-
+-    <Button
+-        android:id="@+id/graphBtn"
+-        android:layout_width="142dp"
+-        android:layout_height="52dp"
+-        android:layout_marginStart="133dp"
+-        android:layout_marginTop="30dp"
+-        android:layout_marginEnd="133dp"
+-        android:backgroundTint="@color/teal_glass"
+-        android:text="Graphs"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/ledsBtn" />
+-
+-    <Button
+-        android:id="@+id/ledsBtn"
+-        android:layout_width="142dp"
+-        android:layout_height="52dp"
+-        android:layout_marginStart="133dp"
+-        android:layout_marginEnd="133dp"
+-        android:layout_marginBottom="508dp"
+-        android:backgroundTint="@color/teal_glass"
+-        android:text="Leds"
+-        app:layout_constraintBottom_toBottomOf="parent"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintStart_toStartOf="parent" />
+-
+-    <Button
+-        android:id="@+id/dataBtn"
+-        android:layout_width="142dp"
+-        android:layout_height="52dp"
+-        android:layout_marginStart="133dp"
+-        android:layout_marginTop="30dp"
+-        android:layout_marginEnd="133dp"
+-        android:backgroundTint="@color/teal_glass"
+-        android:text="Data"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="0.424"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toBottomOf="@+id/graphBtn" />
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/AndroidManifest.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/AndroidManifest.xml b/../RESTapp/app/src/main/AndroidManifest.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/AndroidManifest.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,65 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:tools="http://schemas.android.com/tools">
+-
+-    <uses-permission android:name="android.permission.INTERNET" />
+-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+-
+-    <application
+-        android:allowBackup="true"
+-        android:dataExtractionRules="@xml/data_extraction_rules"
+-        android:fullBackupContent="@xml/backup_rules"
+-        android:icon="@mipmap/ic_launcher"
+-        android:label="@string/app_name"
+-        android:roundIcon="@mipmap/ic_launcher_round"
+-        android:supportsRtl="true"
+-        android:theme="@style/Theme.RESTApp"
+-        android:usesCleartextTraffic="true"
+-        android:windowSoftInputMode="stateHidden|adjustPan"
+-        tools:targetApi="31">
+-        <activity
+-            android:name=".DataActivity"
+-            android:exported="false"
+-            android:label="@string/title_activity_data"
+-            android:theme="@style/Theme.RESTApp.NoActionBar">
+-            <meta-data
+-                android:name="android.app.lib_name"
+-                android:value="" />
+-        </activity>
+-        <activity
+-            android:name=".LEDSActivity"
+-            android:exported="false"
+-            android:label="@string/title_activity_leds"
+-            android:theme="@style/Theme.RESTApp.NoActionBar">
+-            <meta-data
+-                android:name="android.app.lib_name"
+-                android:value="" />
+-        </activity>
+-        <activity
+-            android:name=".GraphActivity"
+-            android:exported="false">
+-            <meta-data
+-                android:name="android.app.lib_name"
+-                android:value="" />
+-        </activity>
+-
+-        <uses-library
+-            android:name="org.apache.http.legacy"
+-            android:required="false" />
+-
+-        <activity
+-            android:name=".MainActivity"
+-            android:exported="true">
+-            <intent-filter>
+-                <action android:name="android.intent.action.MAIN" />
+-
+-                <category android:name="android.intent.category.LAUNCHER" />
+-            </intent-filter>
+-
+-            <meta-data
+-                android:name="android.app.lib_name"
+-                android:value="" />
+-        </activity>
+-    </application>
+-
+-</manifest>
+\ No newline at end of file
+Index: ../RESTapp/gradle.properties
+===================================================================
+diff --git a/../RESTapp/gradle.properties b/../RESTapp/gradle.properties
+deleted file mode 100644
+--- a/../RESTapp/gradle.properties	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,22 +0,0 @@
+-# Project-wide Gradle settings.
+-# IDE (e.g. Android Studio) users:
+-# Gradle settings configured through the IDE *will override*
+-# any settings specified in this file.
+-# For more details on how to configure your build environment visit
+-# http://www.gradle.org/docs/current/userguide/build_environment.html
+-# Specifies the JVM arguments used for the daemon process.
+-# The setting is particularly useful for tweaking memory settings.
+-org.gradle.jvmargs=-Xmx2048m -Dfile.encoding=UTF-8
+-# When configured, Gradle will run in incubating parallel mode.
+-# This option should only be used with decoupled projects. More details, visit
+-# http://www.gradle.org/docs/current/userguide/multi_project_builds.html#sec:decoupled_projects
+-# org.gradle.parallel=true
+-# AndroidX package structure to make it clearer which packages are bundled with the
+-# Android operating system, and which are packaged with your app's APK
+-# https://developer.android.com/topic/libraries/support-library/androidx-rn
+-android.useAndroidX=true
+-# Enables namespacing of each library's R class so that its R class includes only the
+-# resources declared in the library itself and none from the library's dependencies,
+-# thereby reducing the size of the R class for that library
+-android.nonTransitiveRClass=true
+-android.enableJetifier=true
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/layout/activity_leds.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/layout/activity_leds.xml b/../RESTapp/app/src/main/res/layout/activity_leds.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/layout/activity_leds.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,146 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:background="@drawable/wallpaper3"
+-    tools:context=".LEDSActivity">
+-
+-    <ScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:layout_marginStart="1dp"
+-        android:layout_marginTop="1dp"
+-        android:layout_marginEnd="1dp"
+-        android:fillViewport="true"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="1.0"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        tools:ignore="SpeakableTextPresentCheck">
+-
+-    <RelativeLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:gravity="center"
+-        android:orientation="vertical" >
+-
+-        <TextView
+-            android:id="@+id/textLEDS"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_marginTop="30dp"
+-            android:background="@drawable/back_no_border"
+-            android:paddingLeft="14dp"
+-            android:paddingTop="10dp"
+-            android:paddingRight="14dp"
+-            android:paddingBottom="10dp"
+-            android:layout_centerHorizontal="true"
+-            android:text="LEDS"
+-            android:textColor="@color/fontColor"
+-            android:textSize="30dp"
+-            android:textStyle="bold" />
+-
+-        <GridView
+-            android:id="@+id/grid_view"
+-            android:layout_width="match_parent"
+-            android:layout_height="420dp"
+-            android:layout_marginTop="110dp"
+-            android:columnWidth="20dip"
+-            android:gravity="center"
+-            android:horizontalSpacing="2dp"
+-            android:numColumns="8"
+-            android:stretchMode="columnWidth"
+-            android:verticalSpacing="2dp">
+-
+-        </GridView>
+-
+-        <EditText
+-            android:id="@+id/ledNumEditText"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_centerHorizontal="true"
+-            android:layout_marginTop="10dp"
+-            android:layout_below="@id/grid_view"
+-            android:ems="10"
+-            android:inputType="number"
+-            android:hint="LED Number"
+-            android:textColorHint="@color/white"
+-            android:textColor="@color/white" />
+-
+-        <EditText
+-            android:id="@+id/rNumEditText"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:ems="10"
+-            android:hint="Red color"
+-            android:textColorHint="@color/red"
+-            android:textColor="@color/red"
+-            android:layout_alignTop="@+id/ledNumEditText"
+-            android:layout_marginTop="50dp"
+-            android:layout_centerHorizontal="true"
+-            android:layout_marginBottom="80dp"
+-            android:inputType="number" />
+-
+-        <EditText
+-            android:id="@+id/gNumEditText"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:ems="10"
+-            android:layout_alignTop="@+id/rNumEditText"
+-            android:layout_marginTop="50dp"
+-            android:textColor="@color/green"
+-            android:hint="Green color"
+-            android:textColorHint="@color/green"
+-            android:layout_centerHorizontal="true"
+-            android:layout_marginBottom="80dp"
+-            android:inputType="number" />
+-
+-        <EditText
+-            android:id="@+id/bNumEditText"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:ems="10"
+-            android:textColor="@color/blue"
+-            android:hint="Blue color"
+-            android:textColorHint="@color/blue"
+-            android:layout_alignTop="@+id/gNumEditText"
+-            android:layout_marginTop="50dp"
+-            android:layout_centerHorizontal="true"
+-            android:layout_marginBottom="80dp"
+-            android:inputType="number" />
+-
+-        <Button
+-            android:id="@+id/postLedBtn"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_alignParentLeft="true"
+-            android:layout_alignParentBottom="true"
+-            android:layout_centerHorizontal="true"
+-            android:backgroundTint="@color/teal_glass"
+-            android:layout_marginStart="40dp"
+-            android:layout_marginLeft="40dp"
+-            android:layout_marginTop="40dp"
+-            android:layout_marginEnd="40dp"
+-            android:layout_marginBottom="40dp"
+-            android:text="Post"
+-            android:textColor="@color/white" />
+-
+-        <Button
+-            android:id="@+id/backLedsBtn"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:textColor="@color/white"
+-            android:layout_alignParentBottom="true"
+-            android:backgroundTint="@color/teal_glass"
+-            android:layout_marginRight="40dp"
+-            android:layout_alignParentRight="true"
+-            android:layout_marginBottom="40dp"
+-            android:text="Back" />
+-    </RelativeLayout>
+-
+-    </ScrollView>
+-
+-
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: ../RESTapp/gradle/wrapper/gradle-wrapper.properties
+===================================================================
+diff --git a/../RESTapp/gradle/wrapper/gradle-wrapper.properties b/../RESTapp/gradle/wrapper/gradle-wrapper.properties
+deleted file mode 100644
+--- a/../RESTapp/gradle/wrapper/gradle-wrapper.properties	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,6 +0,0 @@
+-#Fri Nov 18 12:51:18 CET 2022
+-distributionBase=GRADLE_USER_HOME
+-distributionUrl=https\://services.gradle.org/distributions/gradle-7.4-bin.zip
+-distributionPath=wrapper/dists
+-zipStorePath=wrapper/dists
+-zipStoreBase=GRADLE_USER_HOME
+Index: ../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml b/../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,5 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@drawable/ic_launcher_background" />
+-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+-</adaptive-icon>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/layout/refr_rate_dialog.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/layout/refr_rate_dialog.xml b/../RESTapp/app/src/main/res/layout/refr_rate_dialog.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/layout/refr_rate_dialog.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,39 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:orientation="vertical"
+-    android:layout_width="match_parent"
+-    android:layout_height="wrap_content"
+-    android:background="@color/backgroundColor"
+-    android:paddingVertical="10dp"
+-    android:paddingHorizontal="20dp">
+-
+-    <TextView
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:text="Set refresh rate [ms]"
+-        android:textSize="24sp"
+-        android:textColor="@color/white"
+-        android:layout_marginTop="5dp"
+-        android:layout_marginStart="5dp"
+-        android:layout_marginBottom="16dp"/>
+-
+-    <EditText
+-        android:id="@+id/refrRateET"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:hint="Refresh Rate"
+-        android:textColorHint="@color/white"
+-        android:textColor="@color/white"
+-        android:layout_marginStart="5dp"
+-        android:imeOptions="actionNext"
+-        android:inputType="number"
+-        android:minHeight="48dp" />
+-
+-    <Button
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_gravity="end"
+-        android:backgroundTint="@color/teal_glass"
+-        android:text="OK"
+-        android:id="@+id/submit_button"/>
+-</LinearLayout>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values/dimens.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values/dimens.xml b/../RESTapp/app/src/main/res/values/dimens.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values/dimens.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,3 +0,0 @@
+-<resources>
+-    <dimen name="fab_margin">16dp</dimen>
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/build.gradle
+===================================================================
+diff --git a/../RESTapp/build.gradle b/../RESTapp/build.gradle
+deleted file mode 100644
+--- a/../RESTapp/build.gradle	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,5 +0,0 @@
+-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+-plugins {
+-    id 'com.android.application' version '7.3.1' apply false
+-    id 'com.android.library' version '7.3.1' apply false
+-}
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/navigation/nav_graph.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/navigation/nav_graph.xml b/../RESTapp/app/src/main/res/navigation/nav_graph.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/navigation/nav_graph.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,28 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:id="@+id/nav_graph"
+-    app:startDestination="@id/First2Fragment">
+-
+-    <fragment
+-        android:id="@+id/First2Fragment"
+-        android:name="com.example.restapp.First2Fragment"
+-        android:label="@string/first_fragment_label"
+-        tools:layout="@layout/fragment_first2">
+-
+-        <action
+-            android:id="@+id/action_First2Fragment_to_Second2Fragment"
+-            app:destination="@id/Second2Fragment" />
+-    </fragment>
+-    <fragment
+-        android:id="@+id/Second2Fragment"
+-        android:name="com.example.restapp.Second2Fragment"
+-        android:label="@string/second_fragment_label"
+-        tools:layout="@layout/fragment_second2">
+-
+-        <action
+-            android:id="@+id/action_Second2Fragment_to_First2Fragment"
+-            app:destination="@id/First2Fragment" />
+-    </fragment>
+-</navigation>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values/colors.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values/colors.xml b/../RESTapp/app/src/main/res/values/colors.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values/colors.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,20 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<resources>
+-    <color name="purple_200">#FFBB86FC</color>
+-    <color name="purple_500">#FF6200EE</color>
+-    <color name="purple_glass">#4D9755F6</color>
+-    <color name="teal_glass">#4D93ECEB</color>
+-    <color name="purple_700">#FF3700B3</color>
+-    <color name="backgroundColor">#2C2F33</color>
+-    <color name="fontColor">#C3CCD9</color>
+-    <color name="frameColor">#33CFD0D3</color>
+-    <color name="frameColorActive">#4DCFD0D3</color>
+-    <color name="teal_200">#FF03DAC5</color>
+-    <color name="teal_700">#FF018786</color>
+-    <color name="black">#FF000000</color>
+-    <color name="white">#FFFFFFFF</color>
+-    <color name="btnColor">#393838</color>
+-    <color name="red">#F44336</color>
+-    <color name="green">#4CAF50</color>
+-    <color name="blue">#3F51B5</color>
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/drawable/back.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable/back.xml b/../RESTapp/app/src/main/res/drawable/back.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable/back.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<shape xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:shape="rectangle" >
+-
+-    <!-- View background color -->
+-    <solid
+-        android:color="@color/frameColor" >
+-    </solid>
+-
+-    <!-- View border color and width -->
+-    <stroke
+-        android:width="1dp"
+-        android:color="@color/purple_500" >
+-    </stroke>
+-
+-    <!-- The radius makes the corners rounded -->
+-    <corners
+-        android:radius="10dp"   >
+-    </corners>
+-
+-</shape>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/java/com/example/restapp/LEDSActivity.java
+===================================================================
+diff --git a/../RESTapp/app/src/main/java/com/example/restapp/LEDSActivity.java b/../RESTapp/app/src/main/java/com/example/restapp/LEDSActivity.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/java/com/example/restapp/LEDSActivity.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,222 +0,0 @@
+-package com.example.restapp;
+-
+-import android.content.Intent;
+-import android.os.Bundle;
+-import android.os.Handler;
+-import android.text.InputFilter;
+-import android.util.Log;
+-import android.view.View;
+-import android.view.Window;
+-import android.view.WindowManager;
+-import android.widget.AdapterView;
+-import android.widget.Button;
+-import android.widget.EditText;
+-import android.widget.Toast;
+-
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-import com.android.volley.Request;
+-import com.android.volley.RequestQueue;
+-import com.android.volley.Response;
+-import com.android.volley.VolleyError;
+-import com.android.volley.toolbox.JsonObjectRequest;
+-import com.android.volley.toolbox.StringRequest;
+-import com.android.volley.toolbox.Volley;
+-import com.example.restapp.databinding.ActivityLedsBinding;
+-
+-import org.json.JSONArray;
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import java.io.UnsupportedEncodingException;
+-import java.util.HashMap;
+-import java.util.Map;
+-
+-public class LEDSActivity extends AppCompatActivity {
+-
+-    Button previous_button;
+-    ActivityLedsBinding binding;
+-
+-    Button postBtn;
+-    EditText LEDpos;
+-    EditText red;
+-    EditText green;
+-    EditText blue;
+-
+-    int i;
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-
+-        // NO TITLE BAR
+-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+-
+-        binding = ActivityLedsBinding.inflate(getLayoutInflater());
+-        setContentView(binding.getRoot());
+-
+-        previous_button = (Button) findViewById(R.id.backLedsBtn);
+-        postBtn = (Button) findViewById(R.id.postLedBtn);
+-        LEDpos = (EditText) findViewById(R.id.ledNumEditText);
+-        red = (EditText) findViewById(R.id.rNumEditText);
+-        green = (EditText) findViewById(R.id.gNumEditText);
+-        blue = (EditText) findViewById(R.id.bNumEditText);
+-
+-        EditText[] rgbArr = {red, green, blue};
+-
+-        setInputFilters(63, 255, LEDpos, rgbArr);
+-
+-        previous_button.setOnClickListener(v -> {
+-            Intent intent = new Intent(LEDSActivity.this, MainActivity.class);
+-            startActivity(intent);
+-        });
+-        postBtn.setOnClickListener(v -> {
+-//            putRequest(); // It works
+-            postRequest(); // Also works
+-
+-            LEDpos.setText("");
+-            red.setText("");
+-            green.setText("");
+-            blue.setText("");
+-        });
+-
+-        final Handler timeHandler = new Handler();
+-        timeHandler.postDelayed(new Runnable(){
+-            public void run(){
+-                getRequest();
+-                i += 1;
+-                timeHandler.postDelayed(this, 1000);
+-            }
+-        }, 1000); // takes millis
+-    }
+-
+-    private void getRequest() {
+-        RequestQueue queue = Volley.newRequestQueue(this);
+-        String url = "http://192.168.1.156/getEverything.php";
+-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+-                response -> {
+-                    try {
+-                        JSONObject jsonObject = new JSONObject(response);
+-                        JSONArray rgb = jsonObject.getJSONArray("LEDS");
+-                        GridAdapter gridAdapter = new GridAdapter(LEDSActivity.this, rgb);
+-                        binding.gridView.setAdapter(gridAdapter);
+-                        binding.gridView.setOnItemClickListener((adapterView, view, i, l) ->
+-                                System.out.println("Clicked")
+-                        );
+-                    } catch (JSONException e) {
+-                        e.printStackTrace();
+-                    }
+-                }, error -> Log.d("TEST", "That didn't work! " + error));
+-
+-        queue.add(stringRequest);
+-    }
+-
+-    private void putRequest() {
+-        RequestQueue queue = Volley.newRequestQueue(this);
+-        String url = "http://192.168.1.156:80/ledPost.php";
+-        final JSONObject jsonObject = new JSONObject();
+-        try {
+-            jsonObject.put("LED", LEDpos.getText().toString());
+-            jsonObject.put("R", red.getText().toString());
+-            jsonObject.put("G", green.getText().toString());
+-            jsonObject.put("B", blue.getText().toString());
+-        } catch (JSONException e) {
+-            // handle exception
+-        }
+-
+-
+-        JsonObjectRequest putRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonObject,
+-                new Response.Listener<JSONObject>()
+-                {
+-                    @Override
+-                    public void onResponse(JSONObject response) {
+-                        // response
+-                        Log.d("Response", response.toString());
+-                    }
+-                },
+-                new Response.ErrorListener()
+-                {
+-                    @Override
+-                    public void onErrorResponse(VolleyError error) {
+-                        // error
+-                        Log.d("Error.Response", error.toString());
+-                    }
+-                }
+-        ) {
+-
+-            @Override
+-            public Map<String, String> getHeaders()
+-            {
+-                Map<String, String> headers = new HashMap<String, String>();
+-                headers.put("Content-Type", "application/json");
+-                headers.put("Accept", "application/json");
+-                return headers;
+-            }
+-
+-            @Override
+-            public String getBodyContentType() {
+-                return "application/json";
+-            }
+-
+-            @Override
+-            public byte[] getBody() {
+-
+-                try {
+-                    Log.i("json", jsonObject.toString());
+-                    return jsonObject.toString().getBytes("UTF-8");
+-
+-                } catch (UnsupportedEncodingException e) {
+-                    e.printStackTrace();
+-                }
+-                return null;
+-            }
+-        };
+-
+-        queue.add(putRequest);
+-    }
+-
+-    private void postRequest(){
+-        String url = "http://192.168.1.156:80/ledPost.php";
+-        try {
+-            JSONObject jsonParams = new JSONObject();
+-            if(!LEDpos.getText().toString().isEmpty()) {
+-                jsonParams.put("LED", LEDpos.getText().toString());
+-                jsonParams.put("R", red.getText().toString());
+-                jsonParams.put("G", green.getText().toString());
+-                jsonParams.put("B", blue.getText().toString());
+-            }
+-            else{
+-                Toast.makeText(LEDSActivity.this, "LED Number not set!", Toast.LENGTH_SHORT).show();
+-            }
+-
+-            // Building a request
+-            JsonObjectRequest request = new JsonObjectRequest(
+-                    Request.Method.POST, url, jsonParams,
+-                    response -> {
+-                        try {
+-                            Toast.makeText(LEDSActivity.this, "LED " + response.get("LED")+ " set", Toast.LENGTH_SHORT).show();
+-                        } catch (JSONException e) {
+-                            e.printStackTrace();
+-                        }
+-                        Log.i("Response", response.toString());
+-                    },
+-                    error -> {
+-                        Toast.makeText(LEDSActivity.this, "Error Response ", Toast.LENGTH_SHORT).show();
+-                        Log.e("Error", error.toString());
+-                    });
+-            Volley.newRequestQueue(getApplicationContext()).add(request);
+-        } catch(JSONException ex){
+-            Toast.makeText(LEDSActivity.this, "Error JSON parse", Toast.LENGTH_SHORT).show();
+-        }
+-    }
+-
+-    private void setInputFilters(int maxNumOfLEDS, int maxValRGB, EditText ledNumInput, EditText[] rgbArr){
+-        ledNumInput.setFilters(new InputFilter[]{ new InputFilterMinMax(0, maxNumOfLEDS)});
+-
+-        for (EditText et : rgbArr) {
+-            et.setFilters(new InputFilter[]{ new InputFilterMinMax(0, maxValRGB)});
+-        }
+-    }
+-
+-}
+Index: ../RESTapp/app/src/main/res/layout/activity_data.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/layout/activity_data.xml b/../RESTapp/app/src/main/res/layout/activity_data.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/layout/activity_data.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,70 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    android:background="@drawable/wallpaper3"
+-    tools:context=".DataActivity">
+-
+-    <ScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:layout_marginStart="1dp"
+-        android:layout_marginTop="1dp"
+-        android:layout_marginEnd="1dp"
+-        android:fillViewport="true"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="1.0"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        tools:ignore="SpeakableTextPresentCheck">
+-
+-        <RelativeLayout
+-            android:layout_width="fill_parent"
+-            android:layout_height="fill_parent"
+-            android:orientation="horizontal">
+-
+-            <TextView
+-                android:id="@+id/dataTV"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginEnd="16dp"
+-                android:layout_marginTop="30dp"
+-                android:background="@drawable/back_no_border"
+-                android:paddingLeft="14dp"
+-                android:paddingTop="10dp"
+-                android:paddingRight="14dp"
+-                android:paddingBottom="10dp"
+-                android:layout_centerHorizontal="true"
+-                android:text="Data"
+-                android:textColor="@color/fontColor"
+-                android:textSize="30dp"
+-                android:textStyle="bold" />
+-
+-
+-            <TableLayout
+-                android:id="@+id/table"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_centerHorizontal="true"
+-                android:layout_marginTop="110dp"
+-                >
+-
+-            </TableLayout>
+-
+-            <Button
+-                android:id="@+id/backDataBtn"
+-                android:layout_width="130dp"
+-                android:layout_height="48dp"
+-                android:layout_centerHorizontal="true"
+-                android:layout_marginBottom="40dp"
+-                android:layout_alignParentBottom="true"
+-                android:backgroundTint="@color/teal_glass"
+-                android:text="Back"
+-                android:textSize="15sp"
+-                android:textStyle="bold" />
+-        </RelativeLayout>
+-    </ScrollView>
+-
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: ../RESTapp/app/proguard-rules.pro
+===================================================================
+diff --git a/../RESTapp/app/proguard-rules.pro b/../RESTapp/app/proguard-rules.pro
+deleted file mode 100644
+--- a/../RESTapp/app/proguard-rules.pro	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,21 +0,0 @@
+-# Add project specific ProGuard rules here.
+-# You can control the set of applied configuration files using the
+-# proguardFiles setting in build.gradle.
+-#
+-# For more details, see
+-#   http://developer.android.com/guide/developing/tools/proguard.html
+-
+-# If your project uses WebView with JS, uncomment the following
+-# and specify the fully qualified class name to the JavaScript interface
+-# class:
+-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+-#   public *;
+-#}
+-
+-# Uncomment this to preserve the line number information for
+-# debugging stack traces.
+-#-keepattributes SourceFile,LineNumberTable
+-
+-# If you keep the line number information, uncomment this to
+-# hide the original source file name.
+-#-renamesourcefileattribute SourceFile
+\ No newline at end of file
+Index: ../RESTapp/app/.gitignore
+===================================================================
+diff --git a/../RESTapp/app/.gitignore b/../RESTapp/app/.gitignore
+deleted file mode 100644
+--- a/../RESTapp/app/.gitignore	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,1 +0,0 @@
+-/build
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values/themes.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values/themes.xml b/../RESTapp/app/src/main/res/values/themes.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values/themes.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,25 +0,0 @@
+-<resources xmlns:tools="http://schemas.android.com/tools">
+-    <!-- Base application theme. -->
+-    <style name="Theme.RESTApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+-        <!-- Primary brand color. -->
+-        <item name="colorPrimary">@color/purple_500</item>
+-        <item name="colorPrimaryVariant">@color/purple_700</item>
+-        <item name="colorOnPrimary">@color/white</item>
+-        <!-- Secondary brand color. -->
+-        <item name="colorSecondary">@color/teal_200</item>
+-        <item name="colorSecondaryVariant">@color/teal_700</item>
+-        <item name="colorOnSecondary">@color/black</item>
+-        <!-- Status bar color. -->
+-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+-        <!-- Customize your theme here. -->
+-    </style>
+-
+-    <style name="Theme.RESTApp.NoActionBar">
+-        <item name="windowActionBar">false</item>
+-        <item name="windowNoTitle">true</item>
+-    </style>
+-
+-    <style name="Theme.RESTApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+-
+-    <style name="Theme.RESTApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values-night/themes.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values-night/themes.xml b/../RESTapp/app/src/main/res/values-night/themes.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values-night/themes.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,16 +0,0 @@
+-<resources xmlns:tools="http://schemas.android.com/tools">
+-    <!-- Base application theme. -->
+-    <style name="Theme.RESTApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+-        <!-- Primary brand color. -->
+-        <item name="colorPrimary">@color/purple_200</item>
+-        <item name="colorPrimaryVariant">@color/purple_700</item>
+-        <item name="colorOnPrimary">@color/black</item>
+-        <!-- Secondary brand color. -->
+-        <item name="colorSecondary">@color/teal_200</item>
+-        <item name="colorSecondaryVariant">@color/teal_200</item>
+-        <item name="colorOnSecondary">@color/black</item>
+-        <!-- Status bar color. -->
+-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+-        <!-- Customize your theme here. -->
+-    </style>
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/xml/data_extraction_rules.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/xml/data_extraction_rules.xml b/../RESTapp/app/src/main/res/xml/data_extraction_rules.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/xml/data_extraction_rules.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,19 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?><!--
+-   Sample data extraction rules file; uncomment and customize as necessary.
+-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
+-   for details.
+--->
+-<data-extraction-rules>
+-    <cloud-backup>
+-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
+-        <include .../>
+-        <exclude .../>
+-        -->
+-    </cloud-backup>
+-    <!--
+-    <device-transfer>
+-        <include .../>
+-        <exclude .../>
+-    </device-transfer>
+-    -->
+-</data-extraction-rules>
+\ No newline at end of file
+Index: ../RESTapp/app/src/test/java/com/example/restapp/ExampleUnitTest.java
+===================================================================
+diff --git a/../RESTapp/app/src/test/java/com/example/restapp/ExampleUnitTest.java b/../RESTapp/app/src/test/java/com/example/restapp/ExampleUnitTest.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/test/java/com/example/restapp/ExampleUnitTest.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,17 +0,0 @@
+-package com.example.restapp;
+-
+-import org.junit.Test;
+-
+-import static org.junit.Assert.*;
+-
+-/**
+- * Example local unit test, which will execute on the development machine (host).
+- *
+- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+- */
+-public class ExampleUnitTest {
+-    @Test
+-    public void addition_isCorrect() {
+-        assertEquals(4, 2 + 2);
+-    }
+-}
+\ No newline at end of file
+Index: ../RESTapp/settings.gradle
+===================================================================
+diff --git a/../RESTapp/settings.gradle b/../RESTapp/settings.gradle
+deleted file mode 100644
+--- a/../RESTapp/settings.gradle	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,16 +0,0 @@
+-pluginManagement {
+-    repositories {
+-        gradlePluginPortal()
+-        google()
+-        mavenCentral()
+-    }
+-}
+-dependencyResolutionManagement {
+-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+-    repositories {
+-        google()
+-        mavenCentral()
+-    }
+-}
+-rootProject.name = "REST app"
+-include ':app'
+Index: ../RESTapp/app/src/main/java/com/example/restapp/InputFilterMinMax.java
+===================================================================
+diff --git a/../RESTapp/app/src/main/java/com/example/restapp/InputFilterMinMax.java b/../RESTapp/app/src/main/java/com/example/restapp/InputFilterMinMax.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/java/com/example/restapp/InputFilterMinMax.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,39 +0,0 @@
+-package com.example.restapp;
+-
+-import android.text.InputFilter;
+-import android.text.Spanned;
+-
+-public class InputFilterMinMax implements InputFilter {
+-
+-    private int min, max;
+-
+-    public InputFilterMinMax(int min, int max) {
+-        this.min = min;
+-        this.max = max;
+-    }
+-
+-    public InputFilterMinMax(String min, String max) {
+-        this.min = Integer.parseInt(min);
+-        this.max = Integer.parseInt(max);
+-    }
+-
+-    @Override
+-    public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+-        try {
+-            // Removes string that is to be replaced from destination
+-            // and adds the new string in.
+-            String newVal = dest.subSequence(0, dstart)
+-                    // Note that below "toString()" is the only required:
+-                    + source.subSequence(start, end).toString()
+-                    + dest.subSequence(dend, dest.length());
+-            int input = Integer.parseInt(newVal);
+-            if (isInRange(min, max, input))
+-                return null;
+-        } catch (NumberFormatException nfe) { }
+-        return "";
+-    }
+-
+-    private boolean isInRange(int a, int b, int c) {
+-        return b > a ? c >= a && c <= b : c >= b && c <= a;
+-    }
+-}
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/drawable/cell_shape.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable/cell_shape.xml b/../RESTapp/app/src/main/res/drawable/cell_shape.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable/cell_shape.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,6 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<shape
+-    xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:shape= "rectangle"  >
+-    <stroke android:width="1dp"  android:color="#ff9"/>
+-</shape>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/layout/activity_graph.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/layout/activity_graph.xml b/../RESTapp/app/src/main/res/layout/activity_graph.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/layout/activity_graph.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,98 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:background="@drawable/wallpaper3"
+-    tools:context=".GraphActivity">
+-
+-    <ScrollView
+-        android:layout_width="match_parent"
+-        android:layout_height="match_parent"
+-        android:layout_marginStart="1dp"
+-        android:layout_marginTop="1dp"
+-        android:layout_marginEnd="1dp"
+-        android:fillViewport="true"
+-        app:layout_constraintEnd_toEndOf="parent"
+-        app:layout_constraintHorizontal_bias="1.0"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        tools:ignore="SpeakableTextPresentCheck">
+-
+-        <RelativeLayout
+-            android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            android:orientation="horizontal">
+-
+-            <TextView
+-                android:id="@+id/graphsTV"
+-                android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_marginStart="16dp"
+-                android:layout_marginEnd="16dp"
+-                android:layout_marginTop="30dp"
+-                android:background="@drawable/back_no_border"
+-                android:paddingLeft="14dp"
+-                android:paddingTop="10dp"
+-                android:paddingRight="14dp"
+-                android:paddingBottom="10dp"
+-                android:layout_centerHorizontal="true"
+-                android:text="Graphs"
+-                android:textColor="@color/fontColor"
+-                android:textSize="30dp"
+-                android:textStyle="bold" />
+-
+-            <ImageButton
+-                android:id="@+id/settingsBtn"
+-                android:layout_width="50dp"
+-                android:layout_height="50dp"
+-                android:layout_marginStart="320dp"
+-                android:layout_marginTop="35dp"
+-                android:layout_marginEnd="20dp"
+-                android:backgroundTint="@color/frameColor"
+-                android:clickable="true"
+-                app:layout_constraintEnd_toEndOf="parent"
+-                app:layout_constraintStart_toEndOf="@+id/graphsTV"
+-                app:layout_constraintTop_toTopOf="parent"
+-                app:srcCompat="@android:drawable/ic_menu_manage" />
+-
+-            <com.jjoe64.graphview.GraphView
+-                android:id="@+id/graphTemp"
+-                android:layout_width="match_parent"
+-                android:layout_marginHorizontal="5dp"
+-                android:layout_height="400dip"
+-                android:layout_marginTop="110dp"
+-                android:background="@color/white"
+-                app:layout_constraintEnd_toEndOf="parent"
+-                app:layout_constraintHorizontal_bias="0.0"
+-                app:layout_constraintStart_toStartOf="parent"
+-                app:layout_constraintTop_toTopOf="parent" />
+-
+-            <com.jjoe64.graphview.GraphView
+-                android:id="@+id/graphHumi"
+-                android:layout_width="match_parent"
+-                android:layout_marginHorizontal="5dp"
+-                android:layout_height="400dip"
+-                android:layout_below="@id/graphTemp"
+-                android:layout_marginTop="40dp"
+-                android:background="@color/white"
+-                />
+-
+-            <Button
+-                android:id="@+id/backGraphBtn"
+-                android:layout_width="130dp"
+-                android:layout_height="48dp"
+-                android:layout_marginTop="1030dp"
+-                android:layout_centerHorizontal="true"
+-                android:layout_marginBottom="20dp"
+-                android:backgroundTint="@color/teal_glass"
+-                android:text="Back"
+-                android:textSize="15sp"
+-                android:textStyle="bold" />
+-
+-        </RelativeLayout>
+-
+-
+-    </ScrollView>
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values-w600dp/dimens.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values-w600dp/dimens.xml b/../RESTapp/app/src/main/res/values-w600dp/dimens.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values-w600dp/dimens.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,3 +0,0 @@
+-<resources>
+-    <dimen name="fab_margin">48dp</dimen>
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/layout/matrix_item.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/layout/matrix_item.xml b/../RESTapp/app/src/main/res/layout/matrix_item.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/layout/matrix_item.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,28 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    android:orientation="vertical"
+-    android:layout_width="match_parent"
+-    android:padding="5dp"
+-    android:layout_gravity="center"
+-    android:layout_height="match_parent">
+-
+-    <Button
+-        android:id="@+id/matrixBtn"
+-        android:layout_width="40dp"
+-        android:layout_height="40dp"
+-        android:paddingHorizontal="5dp"
+-        android:layout_marginLeft="0dp"
+-        android:layout_marginRight="0dp"
+-        android:background="@drawable/no_round"
+-        android:insetTop="0dp"
+-        android:gravity="center"
+-        android:insetBottom="0dp"
+-        android:letterSpacing="0.0"
+-        android:textColor="@color/white"
+-        android:textSize="16dp"
+-        app:backgroundTint="@null"
+-        app:iconPadding="0dp" />
+-    
+-</LinearLayout>
+-
+Index: ../RESTapp/app/build.gradle
+===================================================================
+diff --git a/../RESTapp/app/build.gradle b/../RESTapp/app/build.gradle
+deleted file mode 100644
+--- a/../RESTapp/app/build.gradle	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,53 +0,0 @@
+-plugins {
+-    id 'com.android.application'
+-}
+-
+-android {
+-    namespace 'com.example.restapp'
+-    compileSdk 32
+-
+-    defaultConfig {
+-        applicationId "com.example.restapp"
+-        minSdk 21
+-        targetSdk 32
+-        versionCode 1
+-        versionName "1.0"
+-
+-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+-    }
+-
+-    buildTypes {
+-        release {
+-            minifyEnabled false
+-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+-        }
+-    }
+-
+-    buildFeatures{
+-
+-        viewBinding true
+-
+-    }
+-
+-    compileOptions {
+-        sourceCompatibility JavaVersion.VERSION_1_8
+-        targetCompatibility JavaVersion.VERSION_1_8
+-    }
+-}
+-
+-dependencies {
+-
+-    implementation 'androidx.appcompat:appcompat:1.5.1'
+-    implementation 'com.google.android.material:material:1.7.0'
+-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+-    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+-    implementation 'androidx.navigation:navigation-ui:2.5.3'
+-    testImplementation 'junit:junit:4.13.2'
+-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+-    implementation 'com.jjoe64:graphview:4.2.2'
+-
+-    // Volley
+-    implementation 'com.android.volley:volley:1.2.1'
+-
+-}
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values-land/dimens.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values-land/dimens.xml b/../RESTapp/app/src/main/res/values-land/dimens.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values-land/dimens.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,3 +0,0 @@
+-<resources>
+-    <dimen name="fab_margin">48dp</dimen>
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml b/../RESTapp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,30 +0,0 @@
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:aapt="http://schemas.android.com/aapt"
+-    android:width="108dp"
+-    android:height="108dp"
+-    android:viewportWidth="108"
+-    android:viewportHeight="108">
+-    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
+-        <aapt:attr name="android:fillColor">
+-            <gradient
+-                android:endX="85.84757"
+-                android:endY="92.4963"
+-                android:startX="42.9492"
+-                android:startY="49.59793"
+-                android:type="linear">
+-                <item
+-                    android:color="#44000000"
+-                    android:offset="0.0" />
+-                <item
+-                    android:color="#00000000"
+-                    android:offset="1.0" />
+-            </gradient>
+-        </aapt:attr>
+-    </path>
+-    <path
+-        android:fillColor="#FFFFFF"
+-        android:fillType="nonZero"
+-        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
+-        android:strokeWidth="1"
+-        android:strokeColor="#00000000" />
+-</vector>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/drawable/ic_launcher_background.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable/ic_launcher_background.xml b/../RESTapp/app/src/main/res/drawable/ic_launcher_background.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable/ic_launcher_background.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,170 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:width="108dp"
+-    android:height="108dp"
+-    android:viewportWidth="108"
+-    android:viewportHeight="108">
+-    <path
+-        android:fillColor="#3DDC84"
+-        android:pathData="M0,0h108v108h-108z" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M9,0L9,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,0L19,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M29,0L29,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M39,0L39,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M49,0L49,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M59,0L59,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M69,0L69,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M79,0L79,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M89,0L89,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M99,0L99,108"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,9L108,9"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,19L108,19"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,29L108,29"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,39L108,39"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,49L108,49"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,59L108,59"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,69L108,69"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,79L108,79"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,89L108,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M0,99L108,99"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,29L89,29"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,39L89,39"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,49L89,49"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,59L89,59"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,69L89,69"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M19,79L89,79"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M29,19L29,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M39,19L39,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M49,19L49,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M59,19L59,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M69,19L69,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-    <path
+-        android:fillColor="#00000000"
+-        android:pathData="M79,19L79,89"
+-        android:strokeWidth="0.8"
+-        android:strokeColor="#33FFFFFF" />
+-</vector>
+Index: ../RESTapp/app/src/main/res/drawable/settings_button.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/drawable/settings_button.xml b/../RESTapp/app/src/main/res/drawable/settings_button.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/drawable/settings_button.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,8 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+-    <item android:drawable="@color/frameColorActive"
+-        android:state_pressed="true" />
+-    <item android:drawable="@color/frameColorActive"
+-        android:state_focused="true" />
+-    <item android:drawable="@color/frameColor" />
+-</selector>
+\ No newline at end of file
+Index: ../RESTapp/app/src/androidTest/java/com/example/restapp/ExampleInstrumentedTest.java
+===================================================================
+diff --git a/../RESTapp/app/src/androidTest/java/com/example/restapp/ExampleInstrumentedTest.java b/../RESTapp/app/src/androidTest/java/com/example/restapp/ExampleInstrumentedTest.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/androidTest/java/com/example/restapp/ExampleInstrumentedTest.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,26 +0,0 @@
+-package com.example.restapp;
+-
+-import android.content.Context;
+-
+-import androidx.test.platform.app.InstrumentationRegistry;
+-import androidx.test.ext.junit.runners.AndroidJUnit4;
+-
+-import org.junit.Test;
+-import org.junit.runner.RunWith;
+-
+-import static org.junit.Assert.*;
+-
+-/**
+- * Instrumented test, which will execute on an Android device.
+- *
+- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+- */
+-@RunWith(AndroidJUnit4.class)
+-public class ExampleInstrumentedTest {
+-    @Test
+-    public void useAppContext() {
+-        // Context of the app under test.
+-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+-        assertEquals("com.example.restapp", appContext.getPackageName());
+-    }
+-}
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml b/../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,5 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@drawable/ic_launcher_background" />
+-    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+-</adaptive-icon>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values/strings.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values/strings.xml b/../RESTapp/app/src/main/res/values/strings.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values/strings.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,13 +0,0 @@
+-<resources>
+-    <string name="app_name">REST app</string>
+-    <string name="title_activity_leds">LEDS</string>
+-    <!-- Strings used for fragments for navigation -->
+-    <string name="first_fragment_label">First Fragment</string>
+-    <string name="second_fragment_label">Second Fragment</string>
+-    <string name="next">Next</string>
+-    <string name="previous">Previous</string>
+-
+-    <string name="hello_first_fragment">Hello first fragment</string>
+-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+-    <string name="title_activity_data">DataActivity</string>
+-</resources>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/java/com/example/restapp/GraphActivity.java
+===================================================================
+diff --git a/../RESTapp/app/src/main/java/com/example/restapp/GraphActivity.java b/../RESTapp/app/src/main/java/com/example/restapp/GraphActivity.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/java/com/example/restapp/GraphActivity.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,176 +0,0 @@
+-package com.example.restapp;
+-
+-import android.app.AlertDialog;
+-import android.app.Dialog;
+-import android.content.Intent;
+-import android.os.Bundle;
+-import android.os.Handler;
+-import android.util.Log;
+-import android.view.View;
+-import android.view.Window;
+-import android.view.WindowManager;
+-import android.widget.Button;
+-import android.widget.CheckBox;
+-import android.widget.EditText;
+-import android.widget.ImageButton;
+-import android.widget.Toast;
+-
+-import androidx.appcompat.app.ActionBar;
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-import com.android.volley.Request;
+-import com.android.volley.RequestQueue;
+-import com.android.volley.toolbox.StringRequest;
+-import com.android.volley.toolbox.Volley;
+-import com.jjoe64.graphview.DefaultLabelFormatter;
+-import com.jjoe64.graphview.GraphView;
+-import com.jjoe64.graphview.GridLabelRenderer;
+-import com.jjoe64.graphview.series.DataPoint;
+-import com.jjoe64.graphview.series.LineGraphSeries;
+-
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import java.text.SimpleDateFormat;
+-import java.util.Calendar;
+-import java.util.Date;
+-import java.util.Stack;
+-
+-public class GraphActivity extends AppCompatActivity {
+-
+-    Button previous_button;
+-    ImageButton settingsBtn;
+-    GraphView graphTemp;
+-    GraphView graphHumi;
+-    LineGraphSeries<DataPoint> seriesTemp;
+-    LineGraphSeries<DataPoint> seriesHumi;
+-    Stack<Float> arrTemp = new Stack<>();
+-    Stack<Float> arrHumi = new Stack<>();
+-
+-    Date currentTime;
+-    SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+-    int rate = 10000;
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-
+-        // NO TITLE BAR
+-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+-        getSupportActionBar().hide();
+-
+-        setContentView(R.layout.activity_graph);
+-        ActionBar actionBar = getSupportActionBar();
+-        actionBar.setDisplayHomeAsUpEnabled(true);
+-
+-        Toast.makeText(GraphActivity.this, "Set refresh rate by clicking spanner icon", Toast.LENGTH_LONG).show();
+-
+-        previous_button = (Button) findViewById(R.id.backGraphBtn);
+-        settingsBtn = (ImageButton) findViewById(R.id.settingsBtn);
+-        graphTemp = (GraphView) findViewById(R.id.graphTemp);
+-        graphHumi = (GraphView) findViewById(R.id.graphHumi);
+-        graphTemp.setTitle("Temperature");
+-        graphHumi.setTitle("Humidity");
+-        GridLabelRenderer graphTempRenderer = graphTemp.getGridLabelRenderer();
+-        graphTempRenderer.setHorizontalLabelsAngle(45);
+-        GridLabelRenderer graphHumiRenderer = graphHumi.getGridLabelRenderer();
+-        graphHumiRenderer.setHorizontalLabelsAngle(45);
+-        graphTempRenderer.setLabelFormatter(new DefaultLabelFormatter()
+-        {
+-            @Override
+-            public String formatLabel(double value, boolean isValueX){
+-                if(isValueX){
+-                    return sdf.format(new Date((long) value));
+-                }
+-                else{
+-                    return super.formatLabel(value, isValueX);
+-                }
+-            }
+-        });
+-        graphHumiRenderer.setLabelFormatter(new DefaultLabelFormatter()
+-        {
+-            @Override
+-            public String formatLabel(double value, boolean isValueX){
+-                if(isValueX){
+-                    return sdf.format(new Date((long) value));
+-                }
+-                else{
+-                    return super.formatLabel(value, isValueX);
+-                }
+-            }
+-        });
+-
+-
+-
+-        seriesTemp = new LineGraphSeries<>();
+-        seriesHumi = new LineGraphSeries<>();
+-        previous_button.setOnClickListener(v -> {
+-            Intent intent = new Intent(GraphActivity.this, MainActivity.class);
+-            startActivity(intent);
+-        });
+-
+-        settingsBtn.setOnClickListener(v ->
+-                showInputDialog()
+-        );
+-
+-        final Handler timeHandler = new Handler();
+-        timeHandler.postDelayed(new Runnable(){
+-            public void run(){
+-                currentTime = Calendar.getInstance().getTime();
+-                getRequestDrawGraphs(currentTime);
+-                timeHandler.postDelayed(this, rate);
+-            }
+-        }, rate); // takes millis
+-    }
+-
+-    private void getRequestDrawGraphs(Date currentTime){
+-        RequestQueue queue = Volley.newRequestQueue(this);
+-        String url = "http://192.168.1.156/getEverything.php";
+-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+-                response -> {
+-                    Log.d("TEST", ("Response is: " + response));
+-                    try {
+-                        JSONObject jsonObject = new JSONObject(response);
+-                        // GRAPH TEMP
+-                        String temp = jsonObject.get("temperature").toString();
+-                        float tempFloat = Float.parseFloat(temp.replaceAll("[^\\d.]", ""));
+-                        arrTemp.push(tempFloat);
+-                        seriesTemp.appendData(new DataPoint(currentTime, tempFloat), true, 10);
+-                        graphTemp.addSeries(seriesTemp);
+-
+-                        // GRAPH HUMIDITY
+-                        String humi = jsonObject.get("humidity").toString();
+-                        float humiFloat = Float.parseFloat(humi.replaceAll("[^\\d.]", ""));
+-                        arrHumi.push(humiFloat);
+-                        seriesHumi.appendData(new DataPoint(currentTime, humiFloat), true, 10);
+-                        graphHumi.addSeries(seriesHumi);
+-
+-                    } catch (JSONException e) {
+-                        e.printStackTrace();
+-                    }
+-                }, error -> Log.d("TEST", "That didn't work! " + error));
+-        queue.add(stringRequest);
+-    }
+-
+-    private void showInputDialog() {
+-        final Dialog dialog = new Dialog(GraphActivity.this);
+-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+-        dialog.setCancelable(true);
+-        dialog.setContentView(R.layout.refr_rate_dialog);
+-
+-        //Initializing the view of the dialog.
+-        final EditText refrRateET = dialog.findViewById(R.id.refrRateET);
+-        Button submitButton = dialog.findViewById(R.id.submit_button);
+-
+-        submitButton.setOnClickListener(v -> {
+-            if(!refrRateET.getText().toString().isEmpty()) {
+-                rate = Integer.parseInt(refrRateET.getText().toString());
+-            }
+-            dialog.dismiss();
+-        });
+-
+-        dialog.show();
+-    }
+-
+-}
+Index: ../RESTapp/app/src/main/java/com/example/restapp/DataActivity.java
+===================================================================
+diff --git a/../RESTapp/app/src/main/java/com/example/restapp/DataActivity.java b/../RESTapp/app/src/main/java/com/example/restapp/DataActivity.java
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/java/com/example/restapp/DataActivity.java	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,197 +0,0 @@
+-package com.example.restapp;
+-
+-import android.content.Intent;
+-import android.graphics.Color;
+-import android.graphics.drawable.Drawable;
+-import android.os.Bundle;
+-import android.os.Handler;
+-import android.util.Log;
+-import android.view.Gravity;
+-import android.view.Window;
+-import android.view.WindowManager;
+-import android.widget.Button;
+-import android.widget.TableLayout;
+-import android.widget.TableRow;
+-import android.widget.TextView;
+-
+-import androidx.appcompat.app.ActionBar;
+-import androidx.appcompat.app.AppCompatActivity;
+-
+-import com.android.volley.Request;
+-import com.android.volley.RequestQueue;
+-import com.android.volley.toolbox.StringRequest;
+-import com.android.volley.toolbox.Volley;
+-import com.example.restapp.databinding.ActivityDataBinding;
+-
+-import org.json.JSONArray;
+-import org.json.JSONException;
+-import org.json.JSONObject;
+-
+-import java.lang.reflect.Array;
+-import java.text.SimpleDateFormat;
+-import java.util.ArrayList;
+-import java.util.Calendar;
+-import java.util.Date;
+-
+-public class DataActivity extends AppCompatActivity {
+-
+-    ActivityDataBinding binding;
+-    Button previous_button;
+-    TableLayout tab;
+-
+-    int rowCounter = 0;
+-
+-    int rate = 2000;
+-
+-    ArrayList<String> JoyArr = new ArrayList<>();
+-
+-    ArrayList<String> TempArr = new ArrayList<>();
+-    ArrayList<String> HumiArr = new ArrayList<>();
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-
+-        // NO TITLE BAR
+-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+-
+-        binding = ActivityDataBinding.inflate(getLayoutInflater());
+-        setContentView(binding.getRoot());
+-
+-        tab = (TableLayout) findViewById(R.id.table);
+-        previous_button = (Button) findViewById(R.id.backDataBtn);
+-
+-        previous_button.setOnClickListener(v -> {
+-            Intent intent = new Intent(DataActivity.this, MainActivity.class);
+-            startActivity(intent);
+-        });
+-
+-        addtable();
+-
+-        final Handler timeHandler = new Handler();
+-        timeHandler.postDelayed(new Runnable(){
+-            public void run(){
+-                getRequest();
+-                Calendar currentTime = Calendar.getInstance();
+-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+-                int minute = currentTime.get(Calendar.MINUTE);
+-                int second = currentTime.get(Calendar.SECOND);
+-                System.out.println(JoyArr);
+-                System.out.println(JoyArr.size());
+-                rowCounter += 1;
+-                if(JoyArr.size() > 0) {
+-                    drawTable(hour, minute, second);
+-                }
+-                timeHandler.postDelayed(this, rate);
+-            }
+-        }, rate); // takes millis
+-
+-    }
+-
+-    private void addtable(){
+-        TableRow tabRow = new TableRow(this);
+-        TextView header1 = new TextView(this);
+-        header1.setText("Timestamp");
+-        header1.setGravity(Gravity.CENTER);
+-        header1.setPadding(30, 30, 30, 30);
+-        header1.setTextColor(Color.WHITE);
+-        tabRow.addView(header1);
+-
+-        TextView header2 = new TextView(this);
+-        header2.setText("Temperature");
+-        header2.setGravity(Gravity.CENTER);
+-        header2.setPadding(30, 30, 30, 30);
+-        header2.setTextColor(Color.WHITE);
+-        tabRow.addView(header2);
+-
+-        TextView header3 = new TextView(this);
+-        header3.setText("Humidity");
+-        header3.setGravity(Gravity.CENTER);
+-        header3.setTextColor(Color.WHITE);
+-        header3.setPadding(30, 30, 30, 30);
+-        tabRow.addView(header3);
+-
+-        TextView header4 = new TextView(this);
+-        header4.setText("Joystick");
+-        header4.setGravity(Gravity.CENTER);
+-        header4.setPadding(30, 30, 30, 30);
+-        header4.setTextColor(Color.WHITE);
+-        tabRow.addView(header4);
+-
+-        tab.addView(tabRow);
+-    }
+-
+-    private void getRequest() {
+-        RequestQueue queue = Volley.newRequestQueue(this);
+-        String url = "http://192.168.1.156/getEverything.php";
+-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+-                response -> {
+-                    try {
+-                        JSONObject jsonObject = new JSONObject(response);
+-                        String JoyX = jsonObject.getString("X");
+-                        String JoyY = jsonObject.getString("Y");
+-                        String JoyMid = jsonObject.getString("Mid");
+-                        String Joystick = JoyX + ',' + JoyY + ',' + JoyMid;
+-                        JoyArr.add(Joystick);
+-                        limiter(JoyArr);
+-                        String Temp = jsonObject.getString("temperature");
+-                        TempArr.add(Temp);
+-                        limiter(TempArr);
+-                        String Humi = jsonObject.getString("humidity");
+-                        HumiArr.add(Humi);
+-                        limiter(HumiArr);
+-                    } catch (JSONException e) {
+-                        e.printStackTrace();
+-                    }
+-                }, error -> Log.d("TEST", "That didn't work! " + error));
+-
+-        queue.add(stringRequest);
+-    }
+-
+-    private void limiter(ArrayList<String> arr){
+-        if(arr.size() > 10){
+-            arr.remove(0);
+-        }
+-    }
+-
+-    private void drawTable(int hour, int minute, int second){
+-        TableRow recordRow = new TableRow(this);
+-        recordRow.setId(rowCounter);
+-
+-        TextView t1v = new TextView(this);
+-
+-        if(rowCounter > 10){
+-            tab.removeView((TableRow)findViewById(rowCounter-10));
+-        }
+-        t1v.setText(Integer.toString(hour) + ":" + Integer.toString(minute) + ":" + Integer.toString(second));
+-        t1v.setPadding(30, 30, 30, 30);
+-        t1v.setTextColor(Color.WHITE);
+-        t1v.setGravity(Gravity.CENTER);
+-        recordRow.addView(t1v);
+-
+-        TextView t2v = new TextView(this);
+-        t2v.setText(TempArr.get(TempArr.size()-1));
+-        t2v.setPadding(30, 30, 30, 30);
+-        t2v.setTextColor(Color.WHITE);
+-        t2v.setGravity(Gravity.CENTER);
+-        recordRow.addView(t2v);
+-
+-        TextView t3v = new TextView(this);
+-        t3v.setText(HumiArr.get(TempArr.size()-1));
+-        t3v.setPadding(30, 30, 30, 30);
+-        t3v.setTextColor(Color.WHITE);
+-        t3v.setGravity(Gravity.CENTER);
+-        recordRow.addView(t3v);
+-
+-        TextView t4v = new TextView(this);
+-        t4v.setText(JoyArr.get(TempArr.size()-1));
+-        t4v.setPadding(30, 30, 30, 30);
+-        t4v.setTextColor(Color.WHITE);
+-        t4v.setGravity(Gravity.CENTER);
+-        recordRow.addView(t4v);
+-
+-        tab.addView(recordRow);
+-    }
+-
+-}
+Index: ../RESTapp/app/src/main/res/xml/backup_rules.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/xml/backup_rules.xml b/../RESTapp/app/src/main/res/xml/backup_rules.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/xml/backup_rules.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,13 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?><!--
+-   Sample backup rules file; uncomment and customize as necessary.
+-   See https://developer.android.com/guide/topics/data/autobackup
+-   for details.
+-   Note: This file is ignored for devices older that API 31
+-   See https://developer.android.com/about/versions/12/backup-restore
+--->
+-<full-backup-content>
+-    <!--
+-   <include domain="sharedpref" path="."/>
+-   <exclude domain="sharedpref" path="device.xml"/>
+--->
+-</full-backup-content>
+\ No newline at end of file
+Index: ../RESTapp/app/src/main/res/values-w1240dp/dimens.xml
+===================================================================
+diff --git a/../RESTapp/app/src/main/res/values-w1240dp/dimens.xml b/../RESTapp/app/src/main/res/values-w1240dp/dimens.xml
+deleted file mode 100644
+--- a/../RESTapp/app/src/main/res/values-w1240dp/dimens.xml	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ /dev/null	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
+@@ -1,3 +0,0 @@
+-<resources>
+-    <dimen name="fab_margin">200dp</dimen>
+-</resources>
+\ No newline at end of file
+Index: app/src/main/java/com/example/sensehat/data/Repository.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/sensehat/data/Repository.java b/app/src/main/java/com/example/sensehat/data/Repository.java
+new file mode 100644
+--- /dev/null	(date 1674085512423)
++++ b/app/src/main/java/com/example/sensehat/data/Repository.java	(date 1674085512423)
+@@ -0,0 +1,111 @@
++package com.example.sensehat.data;
++import android.content.BroadcastReceiver;
++import android.content.ComponentName;
++import android.content.ContentResolver;
++import android.content.Context;
++import android.content.Intent;
++import android.content.IntentFilter;
++import android.content.IntentSender;
++import android.content.ServiceConnection;
++import android.content.SharedPreferences;
++import android.content.pm.ApplicationInfo;
++import android.content.pm.PackageManager;
++import android.content.res.AssetManager;
++import android.content.res.Configuration;
++import android.content.res.Resources;
++import android.database.DatabaseErrorHandler;
++import android.database.sqlite.SQLiteDatabase;
++import android.graphics.Bitmap;
++import android.graphics.drawable.Drawable;
++import android.net.Uri;
++import android.os.Bundle;
++import android.os.Handler;
++import android.os.Looper;
++import android.os.UserHandle;
++import android.util.Log;
++import android.view.Display;
++import android.widget.Toast;
++
++import androidx.annotation.NonNull;
++import androidx.annotation.Nullable;
++import androidx.appcompat.app.AppCompatActivity;
++
++import com.android.volley.Request;
++import com.android.volley.RequestQueue;
++import com.android.volley.Response;
++import com.android.volley.VolleyError;
++import com.android.volley.toolbox.JsonObjectRequest;
++import com.android.volley.toolbox.StringRequest;
++import com.android.volley.toolbox.Volley;
++
++import org.json.JSONArray;
++import org.json.JSONException;
++import org.json.JSONObject;
++
++import java.io.File;
++import java.io.FileInputStream;
++import java.io.FileNotFoundException;
++import java.io.FileOutputStream;
++import java.io.IOException;
++import java.io.InputStream;
++
++
++public class Repository extends AppCompatActivity {
++
++    private String IP = "25.78.72.7";
++
++    // Get data, pass urlParam to get data you need
++    private void getRequest(String urlParam) {
++        RequestQueue queue = Volley.newRequestQueue(this);
++        String url = "http://" + IP + urlParam;
++        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
++                response -> {
++                    try {
++                        JSONObject jsonObject = new JSONObject(response);
++                    } catch (JSONException e) {
++                        e.printStackTrace();
++                    }
++                }, error -> Log.d("TEST", "That didn't work! " + error));
++        queue.add(stringRequest);
++    }
++
++    // Put data to set values on server
++    private void putRequest(int x, int y, int r, int g, int b){
++        RequestQueue queue = Volley.newRequestQueue(this);
++        String url = "http://" + IP + ":80/ledPost.php";
++        // Prepare body request
++        try {
++            final JSONObject jsonObject = new JSONObject();
++            try {
++                jsonObject.put("x", x);
++                jsonObject.put("y", y);
++                jsonObject.put("r", r);
++                jsonObject.put("g", g);
++                jsonObject.put("b", b);
++            } catch (JSONException e) {
++                // handle JSON exception
++            }
++
++            // Building a request
++            JsonObjectRequest request = new JsonObjectRequest(
++                    Request.Method.POST, url, jsonObject,
++                    response -> {
++                        try {
++                            Toast.makeText(this, "LED " + response.get("LED")+ " set", Toast.LENGTH_SHORT).show();
++                        } catch (JSONException e) {
++                            e.printStackTrace();
++                        }
++                        Log.i("Response", response.toString());
++                    },
++                    error -> {
++                        int statusCode = error.networkResponse.statusCode;
++                        Toast.makeText(LEDSActivity.this, "Error Response ", Toast.LENGTH_SHORT).show();
++                        Log.e("Error", error.toString());
++                    });
++            Volley.newRequestQueue(getApplicationContext()).add(request);
++        } catch(JSONException ex){
++            Toast.makeText(LEDSActivity.this, "Error JSON parse", Toast.LENGTH_SHORT).show();
++        }
++    }
++
++}
+Index: ../../Server/api/src/python/get_logs.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#!/usr/bin/python3\r\nimport json\r\nimport time\r\nimport datetime\r\nimport os\r\n\r\njson_keys = []\r\ndirectory = \"/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/\"\r\njson_dict = {}\r\ninterval_float = 1\r\n\r\n\r\ndef read_file(file_path):\r\n    with open(file_path, 'r') as f:\r\n        return f.read()\r\n\r\nfor file in os.listdir(directory):\r\n        if file.endswith(\".dat\"):\r\n            data = read_file(directory + file)\r\n            key = file.replace('.dat', '')\r\n            json_keys.append(key)\r\n            json_dict[key] = []\r\n            json_dict[\"timestamp\"] = []\r\n\r\nwhile(True):\r\n    json_dict[\"timestamp\"].append(str(datetime.datetime.now()))\r\n    for file in os.listdir(directory):\r\n        if file.endswith(\".dat\"):\r\n            data = read_file(directory + file)\r\n            key = file.replace('.dat', '')\r\n            json_dict[key].append(data)\r\n\r\n    if len(json_dict[key]) > 10:\r\n        for k in json_keys:\r\n            json_dict[k].pop(0)\r\n        json_dict[\"timestamp\"].pop(0)\r\n\r\n    log = open(\"/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/logs.json\", 'w')\r\n    log.write(str(json_dict))\r\n    log.close()\r\n\r\n    time_interval = read_file(directory + \"interval.txt\")\r\n    interval_float = float(time_interval)\r\n    time.sleep(interval_float)
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../Server/api/src/python/get_logs.py b/../../Server/api/src/python/get_logs.py
+--- a/../../Server/api/src/python/get_logs.py	(revision ee91de943f46faa7abc89fa4b9560198af80269d)
++++ b/../../Server/api/src/python/get_logs.py	(date 1674081257290)
+@@ -4,13 +4,14 @@
+ import datetime
+ import os
+ 
++
+ json_keys = []
+ directory = "/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/"
+ json_dict = {}
+ interval_float = 1
+ 
+ 
+-def read_file(file_path):
++def read_file(file_path: str):
+     with open(file_path, 'r') as f:
+         return f.read()
+ 
+@@ -41,4 +42,4 @@
+ 
+     time_interval = read_file(directory + "interval.txt")
+     interval_float = float(time_interval)
+-    time.sleep(interval_float)
+\ No newline at end of file
++    time.sleep(interval_float)
+diff --git a/../../Desktop_app/TODO.txt b/../../Desktop_app/TODO.txt
+deleted file mode 100644

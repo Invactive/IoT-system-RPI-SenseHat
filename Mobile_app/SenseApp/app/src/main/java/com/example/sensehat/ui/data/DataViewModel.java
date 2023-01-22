@@ -17,24 +17,54 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class DataViewModel extends ViewModel {
 
-    private final MutableLiveData<String> mText;
+    private final MutableLiveData<String> mRow;
     private RepositoryModel mRepo;
     private Handler mHandler;
     private int rowCounter;
 
+//    Data prepared for table
+//    private final MutableLiveData<String> mTimestamp;
+//    private final MutableLiveData<String> mTemperature;
+//    private final MutableLiveData<String> mPressure;
+//    private final MutableLiveData<String> mHumidity;
+//    private final MutableLiveData<String> mRoll;
+//    private final MutableLiveData<String> mPitch;
+    private HashMap<String, Boolean> choosenValuesHashMap;
+    private final MutableLiveData<HashMap<String, Boolean>> mChoosenValues;
+
+    private HashMap<String, Double> values;
+    private final MutableLiveData<HashMap<String, Double>> mValues;
+
+
     public DataViewModel() {
         mRepo = new RepositoryModel();
-        mText = new MutableLiveData<>();
+        mRow = new MutableLiveData<>();
         mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-        rowCounter = 0;
+
+        choosenValuesHashMap = new HashMap<>();
+        mChoosenValues = new MutableLiveData<>();
+
+        values = new HashMap<>();
+        mValues = new MutableLiveData<>();
+
+        choosenValuesHashMap.put("Temperature", Boolean.FALSE);
+        mChoosenValues.setValue(mChoosenValues.getValue());
+//        mTimestamp = new MutableLiveData<>();
+//        mTimestamp = new MutableLiveData<>();
+
         // GET DATA ONCE FOR THE FIRST TIME HERE
 
 //        EXAMPLE: get value of temperature from temperature sensor in degrees mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString()
 //        mText.setValue(mRepo.getTemperatureDataChart().getValue().toString());
-        updateTable(2L);
+//        updateTable(1L);
+        System.out.println("CALLED FROM CONSTRCTOR DVM");
 //        EXAMPLE: get value of pressure in hpa mRepo.getPressureDataChart().getValue().get("pressHpa").toString()
 //        mText.setValue(mRepo.getPressureDataChart().getValue().toString());
 
@@ -72,6 +102,7 @@ public class DataViewModel extends ViewModel {
 
     }
 
+<<<<<<< HEAD
     public LiveData<String> getText() { return mText; }
 
     public void addtable(TableLayout table, Context context){
@@ -108,11 +139,33 @@ public class DataViewModel extends ViewModel {
         table.addView(tabRow);
     }
 
+=======
+//    public LiveData<String> getRow() { return mRow; }
+    public LiveData<HashMap<String, Boolean>> getChoosenValues() { return mChoosenValues; }
+>>>>>>> f7ad888fff7a871915f105ce9baa6cef264b656e
 
     public void updateTable(Long delay){
         mHandler.postDelayed(new Runnable(){
             public void run(){
                 // REQUESTS
+//                System.out.println(mChoosenValues.getValue().get("Temperature").toString());
+//                System.out.println("ROWCOUNTER 10");
+                choosenValuesHashMap.put("Temperature", Boolean.TRUE);
+                choosenValuesHashMap.put("Pressure", Boolean.TRUE);
+                choosenValuesHashMap.put("Humidity", Boolean.FALSE);
+                mChoosenValues.setValue(mChoosenValues.getValue());
+
+                try {
+                    values.put("tempCTemp", mRepo.getLogsData().getValue().get("temperature").getJSONObject(0).getJSONArray("tempCTemp").getDouble(0));
+                    System.out.println(values.get("tempCTemp"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+//                mChoosenValues.setValue(choosenValuesHashMap);
+//                mRow.setValue(mRepo.getLogsData().getValue().get("temperature").toString());
+//                mRow.setValue(mRepo.getLogsData().getValue().get("joystick").toString());
 //                System.out.println(mRepo.getLogsData().getValue().get("joystick"));
 //                System.out.println(mRepo.getLogsData().getValue().get("temperature"));
 //                System.out.println(mRepo.getLogsData().getValue().get("pressure"));
@@ -122,53 +175,15 @@ public class DataViewModel extends ViewModel {
 //                System.out.println(mRepo.getLogsData().getValue().get("orientation"));
 //                System.out.println(mRepo.getLogsData().getValue().get("pixels"));
 
-                rowCounter += 1;
-                System.out.println("ROWCOUNTER: " + rowCounter);
-
+//                System.out.println("ROWCOUNTER: " + rowCounter);
+                rowCounter++;
                 // WORKING!!!
 //                mRepo.putLedsRequest(0,0,3,4,255);
 //                mRepo.putIntervalRequest(i);
 //                mRepo.putResetLedsRequest();
-                mHandler.postDelayed(this, delay * 1000);
+                mHandler.postDelayed(this, delay*2000);
             }
-        }, delay * 1000);
-    }
-
-    public void drawTable(TableLayout table, Context context){
-        System.out.println("Table draw");
-        TableRow recordRow = new TableRow(context);
-        recordRow.setId(rowCounter);
-
-        TextView t1v = new TextView(context);
-
-        t1v.setText("Test1");
-        t1v.setPadding(30, 30, 30, 30);
-        t1v.setTextColor(Color.WHITE);
-        t1v.setGravity(Gravity.CENTER);
-        recordRow.addView(t1v);
-
-        TextView t2v = new TextView(context);
-        t2v.setText("Test2");
-        t2v.setPadding(30, 30, 30, 30);
-        t2v.setTextColor(Color.WHITE);
-        t2v.setGravity(Gravity.CENTER);
-        recordRow.addView(t2v);
-
-        TextView t3v = new TextView(context);
-        t3v.setText("Test3");
-        t3v.setPadding(30, 30, 30, 30);
-        t3v.setTextColor(Color.WHITE);
-        t3v.setGravity(Gravity.CENTER);
-        recordRow.addView(t3v);
-
-        TextView t4v = new TextView(context);
-        t4v.setText("Test4");
-        t4v.setPadding(30, 30, 30, 30);
-        t4v.setTextColor(Color.WHITE);
-        t4v.setGravity(Gravity.CENTER);
-        recordRow.addView(t4v);
-
-        table.addView(recordRow);
+        }, delay*2000);
     }
 
 
