@@ -96,7 +96,6 @@ public class RepositoryModel {
             dataHashMap.put("tempCHumi", tempHumiJsonObj.getDouble("tempC"));
             dataHashMap.put("tempFHumi", tempHumiJsonObj.getDouble("tempF"));
 
-
             this.temperaturesData.setValue(dataHashMap);
         } catch (JSONException e) {
             System.out.println("Exception - json parse error");
