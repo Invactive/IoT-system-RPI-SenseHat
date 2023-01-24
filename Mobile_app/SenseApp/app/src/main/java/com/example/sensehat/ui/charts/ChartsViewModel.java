@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModel;
 import com.example.sensehat.data.RepositoryModel;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChartsViewModel extends ViewModel {
 
@@ -32,7 +34,7 @@ public class ChartsViewModel extends ViewModel {
         mHandler = new Handler();
         Handler mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-        fetcher(1L);
+        fetcher(1);
     }
 
     public LiveData<String> getTempCData() {
@@ -60,18 +62,19 @@ public class ChartsViewModel extends ViewModel {
     }
 
 
-    public void fetcher(Long delay){
+    public void fetcher(int delay){
         mHandler.postDelayed(new Runnable(){
             public void run(){
-                System.out.println("Task");
                 mTemperatureC.setValue(mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString());
                 mTemperatureF.setValue(mRepo.getTemperatureDataChart().getValue().get("tempFTemp").toString());
                 mPressureHp.setValue(mRepo.getPressureDataChart().getValue().get("pressHpa").toString());
                 mPressureMm.setValue(mRepo.getPressureDataChart().getValue().get("pressMmhg").toString());
                 mHumidity.setValue(mRepo.getHumidityDataChart().getValue().get("humi").toString());
                 mTimestamp.setValue(mRepo.getTemperatureDataChart().getValue().get("timestamp").toString());
-                mHandler.postDelayed(this, delay);
+                mTimestamp.setValue(mRepo.getPressureDataChart().getValue().get("timestamp").toString());
+                mTimestamp.setValue(mRepo.getHumidityDataChart().getValue().get("timestamp").toString());
+                mHandler.postDelayed(this, delay/10000);
             }
-        }, delay);
+        }, delay/10000);
     }
 }

@@ -29,6 +29,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ChartsFragment extends Fragment {
     private ChartsViewModel mViewModel;
@@ -73,7 +75,6 @@ public class ChartsFragment extends Fragment {
         chart.setData(data);
 
         mViewModel = new ViewModelProvider(this).get(ChartsViewModel.class);
-        updater(mViewModel, "timestamp", chart, data, dataSets);
         updater(mViewModel, "tempC", chart, data, dataSets);
         updater(mViewModel, "tempF", chart, data, dataSets);
 //        updater(mViewModel, "pressHpa", chart, data, dataSets);
@@ -89,59 +90,128 @@ public class ChartsFragment extends Fragment {
         binding = null;
     }
 
-    public static long getDateInMilliSeconds(String givenDateString, String format) {
-        String DATE_TIME_FORMAT = format;
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_TIME_FORMAT, Locale.ENGLISH);
-        long timeInMilliseconds = 1;
-        try {
-            java.util.Date mDate = sdf.parse(givenDateString);
-            timeInMilliseconds = mDate.getTime();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return timeInMilliseconds;
-    }
-
     public void updater(ChartsViewModel model, String type, LineChart chart,LineData data, ArrayList<ILineDataSet> dataSets){
 
-        if(type == "timestamp"){
+        if(type == "tempC"){
             XAxis topAxis = chart.getXAxis();
             topAxis.setGranularity(1f);
             topAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-            ArrayList<String> arr = new ArrayList<>();
-            topAxis.setLabelCount(arr.size(), false);
-//            topAxis.setValueFormatter(new ValueFormatter() {
-//                List<String> datesList = arr;
-//                @Override
-//                public String getFormattedValue(float value) {
-//                    Integer position = Math.round(value);
-//                    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-//
-//                    java.util.Date date = null;
-//                    String output = null;
-//
-//                    if (value > 1 && value < 2) {
-//                        position = 0;
-//                    } else if (value > 2 && value < 3) {
-//                        position = 1;
-//                    } else if (value > 3 && value < 4) {
-//                        position = 2;
-//                    } else if (value > 4 && value <= 5) {
-//                        position = 3;
-//                    }
-//                    if (position < datesList.size())
-//                        return sdf.format(new Date((getDateInMilliSeconds(datesList.get(position), "HH:mm:ss"))));
-//                    return "";
-//                }
-//            });
+            ArrayList<String> arrDates = new ArrayList<>();
+            arrDates.add("2023-01-24 17:39:04.914442");
+            arrDates.add("2023-01-24 17:40:04.914442");
+            topAxis.setLabelCount(arrDates.size(), false);
             model.getTimestamp().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
-                    arr.add(s);
+                    arrDates.add(s);
                 }
             });
+            topAxis.setValueFormatter(new ValueFormatter() {
+                List<String> datesList = arrDates;
+                @Override
+                public String getFormattedValue(float value) {
 
+                    return datesList.get(ttc);
+                }
+            });
+        }
 
+        if(type == "tempF"){
+            XAxis topAxis = chart.getXAxis();
+            topAxis.setGranularity(1f);
+            topAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            ArrayList<String> arrDates = new ArrayList<>();
+            arrDates.add("2023-01-24 17:39:04.914442");
+            arrDates.add("2023-01-24 17:40:04.914442");
+            topAxis.setLabelCount(arrDates.size(), false);
+            model.getTimestamp().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    arrDates.add(s);
+                }
+            });
+            topAxis.setValueFormatter(new ValueFormatter() {
+                List<String> datesList = arrDates;
+                @Override
+                public String getFormattedValue(float value) {
+
+                    return datesList.get(ttf);
+                }
+            });
+        }
+
+        if(type == "pressHpa"){
+            XAxis topAxis = chart.getXAxis();
+            topAxis.setGranularity(1f);
+            topAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            ArrayList<String> arrDates = new ArrayList<>();
+            arrDates.add("2023-01-24 17:39:04.914442");
+            arrDates.add("2023-01-24 17:40:04.914442");
+            topAxis.setLabelCount(arrDates.size(), false);
+            model.getTimestamp().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    arrDates.add(s);
+                }
+            });
+            topAxis.setValueFormatter(new ValueFormatter() {
+                List<String> datesList = arrDates;
+                @Override
+                public String getFormattedValue(float value) {
+
+                    return datesList.get(tph);
+                }
+            });
+        }
+
+        if(type == "pressMmhg"){
+            XAxis topAxis = chart.getXAxis();
+            topAxis.setGranularity(1f);
+            topAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            ArrayList<String> arrDates = new ArrayList<>();
+            arrDates.add("2023-01-24 17:39:04.914442");
+            arrDates.add("2023-01-24 17:40:04.914442");
+            topAxis.setLabelCount(arrDates.size(), false);
+            model.getTimestamp().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    arrDates.add(s);
+                }
+            });
+            topAxis.setValueFormatter(new ValueFormatter() {
+                List<String> datesList = arrDates;
+                @Override
+                public String getFormattedValue(float value) {
+                    return datesList.get(tpm);
+                }
+            });
+        }
+
+        if(type == "humidity"){
+            XAxis topAxis = chart.getXAxis();
+            topAxis.setGranularity(1f);
+            topAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+            ArrayList<String> arrDates = new ArrayList<>();
+            YAxis minmax = chart.getAxisLeft();
+            minmax.setAxisMinimum(0f);
+            minmax.setAxisMaximum(100f);
+            arrDates.add("2023-01-24 17:39:04.914442");
+            arrDates.add("2023-01-24 17:40:04.914442");
+            topAxis.setLabelCount(arrDates.size(), false);
+            model.getTimestamp().observe(getViewLifecycleOwner(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    arrDates.add(s);
+                }
+            });
+            topAxis.setValueFormatter(new ValueFormatter() {
+                List<String> datesList = arrDates;
+                @Override
+                public String getFormattedValue(float value) {
+
+                    return datesList.get(th+1);
+                }
+            });
         }
 
         if(type == "tempC") {
@@ -153,7 +223,6 @@ public class ChartsFragment extends Fragment {
                     return value+" °";
                 }
             });
-
             ArrayList<Entry> values = new ArrayList<>();
             LineDataSet set = new LineDataSet(values, "Temperature Celcius");
             set.setDrawValues(false);
@@ -161,7 +230,6 @@ public class ChartsFragment extends Fragment {
             set.setLineWidth(2.5f);
             set.setColor(Color.RED);
             dataSets.add(set);
-
             model.getTempCData().observe(getViewLifecycleOwner(), new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
@@ -263,7 +331,6 @@ public class ChartsFragment extends Fragment {
             });
         }
         if(type == "humidity") {
-
             YAxis leftAxis = chart.getAxisLeft();
             leftAxis.setValueFormatter(new ValueFormatter() {
                 @Override
@@ -296,8 +363,6 @@ public class ChartsFragment extends Fragment {
                 }
             });
         }
-
-
     }
 
 }

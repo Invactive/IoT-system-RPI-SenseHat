@@ -102,9 +102,9 @@ public class DataViewModel extends ViewModel {
 
     }
 
-<<<<<<< HEAD
-    public LiveData<String> getText() { return mText; }
-
+//<<<<<<< HEAD
+//    public LiveData<String> getText() { return mText; }
+//
     public void addtable(TableLayout table, Context context){
         System.out.println("Table added");
         TableRow tabRow = new TableRow(context);
@@ -139,10 +139,10 @@ public class DataViewModel extends ViewModel {
         table.addView(tabRow);
     }
 
-=======
+//=======
 //    public LiveData<String> getRow() { return mRow; }
     public LiveData<HashMap<String, Boolean>> getChoosenValues() { return mChoosenValues; }
->>>>>>> f7ad888fff7a871915f105ce9baa6cef264b656e
+//>>>>>>> f7ad888fff7a871915f105ce9baa6cef264b656e
 
     public void updateTable(Long delay){
         mHandler.postDelayed(new Runnable(){
