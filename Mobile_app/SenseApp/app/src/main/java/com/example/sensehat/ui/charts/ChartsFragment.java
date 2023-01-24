@@ -243,6 +243,7 @@ public class ChartsFragment extends Fragment {
                     chart.notifyDataSetChanged();
                     chart.invalidate();
                     ttc++;
+                    System.out.println(s);
                 }
             });
         }

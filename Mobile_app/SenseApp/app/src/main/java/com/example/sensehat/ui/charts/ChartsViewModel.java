@@ -1,6 +1,8 @@
 package com.example.sensehat.ui.charts;
 
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,6 +13,10 @@ import com.example.sensehat.data.RepositoryModel;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ChartsViewModel extends ViewModel {
 
@@ -22,6 +28,11 @@ public class ChartsViewModel extends ViewModel {
     private final MutableLiveData<String> mTimestamp;
     private RepositoryModel mRepo;
     private Handler mHandler;
+    private ScheduledExecutorService mScheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+
+
+
+
 
     public ChartsViewModel() {
         mRepo = new RepositoryModel();
@@ -34,7 +45,14 @@ public class ChartsViewModel extends ViewModel {
         mHandler = new Handler();
         Handler mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
+//        scheduleTemperatureUpdate(mTemperatureC);
+//        scheduleTemperatureUpdate(mTimestamp);
         fetcher(1);
+
+
+
+
+
     }
 
     public LiveData<String> getTempCData() {
@@ -73,8 +91,20 @@ public class ChartsViewModel extends ViewModel {
                 mTimestamp.setValue(mRepo.getTemperatureDataChart().getValue().get("timestamp").toString());
                 mTimestamp.setValue(mRepo.getPressureDataChart().getValue().get("timestamp").toString());
                 mTimestamp.setValue(mRepo.getHumidityDataChart().getValue().get("timestamp").toString());
-                mHandler.postDelayed(this, delay/10000);
+                mHandler.postDelayed(this, delay);
             }
-        }, delay/10000);
+        }, delay);
     }
+
+    private void scheduleTemperatureUpdate(MutableLiveData<String> temp) {
+        mScheduledExecutor.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                String temperature = mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString();
+                temp.postValue(temperature);
+            }
+        }, 0, 100, TimeUnit.MILLISECONDS);
+    }
+
+
 }
