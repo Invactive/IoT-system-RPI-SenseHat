@@ -28,7 +28,6 @@ public class ChartsViewModel extends ViewModel {
     private final MutableLiveData<String> mTimestamp;
     private RepositoryModel mRepo;
     private Handler mHandler;
-    private ScheduledExecutorService mScheduledExecutor = Executors.newSingleThreadScheduledExecutor();
 
 
 
@@ -43,16 +42,8 @@ public class ChartsViewModel extends ViewModel {
         mHumidity = new MutableLiveData<>();
         mTimestamp = new MutableLiveData<>();
         mHandler = new Handler();
-        Handler mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-//        scheduleTemperatureUpdate(mTemperatureC);
-//        scheduleTemperatureUpdate(mTimestamp);
         fetcher(1);
-
-
-
-
-
     }
 
     public LiveData<String> getTempCData() {
@@ -95,16 +86,5 @@ public class ChartsViewModel extends ViewModel {
             }
         }, delay);
     }
-
-    private void scheduleTemperatureUpdate(MutableLiveData<String> temp) {
-        mScheduledExecutor.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                String temperature = mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString();
-                temp.postValue(temperature);
-            }
-        }, 0, 100, TimeUnit.MILLISECONDS);
-    }
-
 
 }

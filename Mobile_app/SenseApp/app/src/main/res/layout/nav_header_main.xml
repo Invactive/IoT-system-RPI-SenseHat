@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
+    android:backgroundTint="#1E3549"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -16,20 +17,9 @@
         android:id="@+id/imageView"
         android:layout_width="174dp"
         android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
         android:contentDescription="@string/nav_header_desc"
         android:foreground="@drawable/logo"
         android:paddingTop="@dimen/nav_header_vertical_spacing" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Krzysztof Stanowski"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="krzysztof.stanowski@vip.com" />
 </LinearLayout>
