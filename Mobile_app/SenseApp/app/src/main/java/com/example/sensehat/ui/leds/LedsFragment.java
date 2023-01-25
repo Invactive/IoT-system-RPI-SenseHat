@@ -51,27 +51,27 @@ public class LedsFragment extends Fragment {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Button button = (Button) gridLayout.getChildAt(i * 8 + j);
+                button.setOnClickListener(new View.OnClickListener() {
+                    public void onClick(View v)
+                    {
+                        button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb( 252,53,73)));
+                    }
+                });
                 button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(30,53,73)));
             }
         }
 
-        Button button = (Button) gridLayout.getChildAt(3 * 8 + 2);
-        button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb( 252,53,73)));
 
-//        LedsViewModel.getText().observe(getViewLifecycleOwner(), data -> {
-//            for (int i = 0; i < 8; i++) {
-//                for (int j = 0; j < 8; j++) {
-//                    Button button = (Button) gridLayout.getChildAt(i * 8 + j);
-//                    button.setBackgroundColor(Color.argb(100,251,127,127));
-////                    button.setText(data[i][j]);
-////                    if (data[i][j].equals("A")) {
-////                        button.setBackgroundColor(Color.RED);
-////                    } else {
-////                        button.setBackgroundColor(Color.GREEN);
-////                    }
-//                }
-//            }
-//        });
+
+
+        LedsViewModel.getText().observe(getViewLifecycleOwner(), data -> {
+            for(int x =0 ; x<64; x++){
+                int argX = x % 8;
+                int argY = (x - argX) / 8;
+                Button button = (Button) gridLayout.getChildAt(argX * 8 + argY);
+                button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  data.get(x).get(0), data.get(x).get(1), data.get(x).get(2))));
+            }
+        });
 
 
         return root;

@@ -13,8 +13,8 @@ import java.util.ArrayList;
 
 public class LedsViewModel extends ViewModel {
 
-    MutableLiveData<ArrayList<String>> myArray = new MutableLiveData<>();
-    ArrayList<String> arrayList = new ArrayList<>();
+    MutableLiveData<ArrayList<ArrayList<Integer>>> myArray = new MutableLiveData<>();
+    ArrayList<ArrayList<Integer>> arrayList = new ArrayList<>();
     private RepositoryModel mRepo;
     private Handler mHandler;
 
@@ -24,18 +24,17 @@ public class LedsViewModel extends ViewModel {
         mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
         fetcher(1);
-        System.out.println(arrayList);
     }
 
-    public LiveData<ArrayList<String>> getText() {
+    public LiveData<ArrayList<ArrayList<Integer>>> getText() {
         return myArray;
     }
 
     public void fetcher(int delay){
         mHandler.postDelayed(new Runnable(){
             public void run(){
-                for(int i=0; i<=64; i++){
-                    arrayList.add(mRepo.getLedsData().getValue().get(Integer.toString(i)).toString());
+                for(int i=0; i<64; i++){
+                    arrayList.add(i, mRepo.getLedsData().getValue().get(i));
                 }
                 myArray.setValue(arrayList);
                 mHandler.postDelayed(this, delay);

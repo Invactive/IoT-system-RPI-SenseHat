@@ -49,7 +49,7 @@ public class RepositoryModel {
     private MutableLiveData<HashMap<String, Object>> orientationData;
     private MutableLiveData<HashMap<String, Object>> compassData;
     private MutableLiveData<HashMap<String, Object>> joystickData;
-    private MutableLiveData<HashMap<String, Object>> ledsData;
+    private MutableLiveData <ArrayList<ArrayList<Integer>>> ledsData;
     private MutableLiveData<HashMap<String, JSONArray>> logsData;
 
     public RepositoryModel() {
@@ -274,23 +274,21 @@ public class RepositoryModel {
     }
 
     private void fetchLeds(){
-        HashMap<String, Object> dataHashMap = new HashMap<>();
+        ArrayList<ArrayList<Integer>> newarr = new ArrayList<>();
         try {
             getRequest("leds");
 //            Get leds object - data from LED matrix
             JSONObject ledsJsonObj = new JSONObject(this.jsonLedsString);
-//            Get timestamp
-            dataHashMap.put("timestamp", ledsJsonObj.getString("timestamp"));
 //            Get RGB array of every LED from matrix
             for(int i=0; i<ledsJsonObj.length()-1; i++){
                 ArrayList<Integer> arrayList = new ArrayList<>();
                 for(int j=0; j<ledsJsonObj.getJSONArray(Integer.toString(i)).length(); j++){
                     arrayList.add(ledsJsonObj.getJSONArray(Integer.toString(i)).getInt(j));
                 }
-                dataHashMap.put(Integer.toString(i), arrayList);
+                newarr.add(i, arrayList);
             }
 
-            this.ledsData.setValue(dataHashMap);
+            this.ledsData.setValue(newarr);
         } catch (JSONException e) {
             System.out.println("Exception - json parse error");
             e.printStackTrace();
@@ -299,7 +297,7 @@ public class RepositoryModel {
         }
     }
 
-    public MutableLiveData<HashMap<String, Object>> getLedsData(){
+    public MutableLiveData<ArrayList<ArrayList<Integer>>> getLedsData(){
         fetchLeds();
         return this.ledsData;
     }
