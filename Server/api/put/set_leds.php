@@ -3,7 +3,6 @@
     header("Content-type: application/json; charset=UTF-8");
     header("Access-Control-Allow-Origin: *");
     header("Access-Control-Allow-Methods: *");
-    header("Access-Control-Allow-Credentials: *");
     header("Access-Control-Allow-Headers: *");
 
     $keys_arr = ['x', 'y', 'r', 'g', 'b'];
@@ -12,7 +11,6 @@
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "PUT" || $method == "OPTIONS"){
         $put_data = json_decode(file_get_contents("php://input"), true);
-        
         for($i=0; $i<count($keys_arr); $i++){
             if(array_key_exists($keys_arr[$i], $put_data)){
                 $arg_dict[$keys_arr[$i]] = $put_data[$keys_arr[$i]];
@@ -21,7 +19,6 @@
                 $arg_dict[$keys_arr[$i]] = 0;
             }
         }
-        // echo $arg_dict;
 
         if ($arg_dict['x'] >= 0 && $arg_dict['x'] < 8 &&
             $arg_dict['y'] >= 0 && $arg_dict['y'] < 8 &&
