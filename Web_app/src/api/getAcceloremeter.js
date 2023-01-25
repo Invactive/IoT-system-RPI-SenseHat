@@ -1,7 +1,7 @@
 
-const fetchAccelerometer = async () => {
+const fetchAccelerometer = async (uri="25.78.72.7") => {
     try {
-      const db = await fetch("http://25.78.72.7/api/get/get_accelerometer.php", {
+      const db = await fetch(`http://${uri}/api/get/get_accelerometer.php`, {
         //headers,
         method: "GET",
         mode: "cors",

@@ -1,12 +1,65 @@
 {
   "name": "air-web-app",
+  "main": "electron/main.js",
+  "description": "IoT Users App",
+  "build": {
+    "appId": "com.app.id",
+    "productName": "React Electron App",
+    "files": [
+      "build/**/*",
+      "electron/main.js",
+      "package.json"
+    ],
+    "extends": null,
+    "mac": {
+      "type": "distribution"
+    }
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "ignore": [
+          "^\\/node_modules$"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "exercent"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "win32"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "publishers": []
+    }
+  },
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "electron-is": "^3.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.18.2",
+    "isomorphic-fetch": "^3.0.0",
+    "rc-table": "^7.30.3",
     "react": "^18.2.0",
+    "react-color": "2.19.3",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "recharts": "^2.3.2",
@@ -14,10 +67,22 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "start2": "electron-forge start",
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build-electron": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "live-server public --host=25.78.76.222 --port=3000 --middleware=./disable-browser-cache.js",
+    "electron:start": "concurrently \"yarn start\" \"wait-on http://localhost:3001 && electron .\"",
+    "electron:build": "yarn build-electron && electron-builder build --publish never",
+    "launch": "electron .",
+    "make": "electron-forge make",
+    "package": "electron-forge package"
+  },
+  "author": {
+    "name": "rohit",
+    "email": "rohit@xyz.com"
   },
   "eslintConfig": {
     "extends": [
@@ -38,9 +103,20 @@
     ]
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
+    "concurrently": "^7.6.0",
+    "electron": "^22.0.3",
+    "electron-builder": "^23.6.0",
+    "electron-winstaller": "^5.1.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
+    "react-colour-wheel": "^1.0.7",
     "react-router-dom": "^6.6.2",
-    "sort-by": "^1.2.0"
+    "sort-by": "^1.2.0",
+    "wait-on": "^7.0.1"
   }
 }

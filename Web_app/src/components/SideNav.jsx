@@ -10,15 +10,15 @@ import thermometerIcon from "../assets/images/thermometer.svg";
 import humidityIcon from "../assets/images/humidity.svg";
 import pressureIcon from "../assets/images/pressure.svg";
 import dataIcon from "../assets/images/data.svg";
+import accelerometerIcon from "../assets/images/accelerometer.svg";
 import arrowIcon from "../assets/images/arrow.svg";
-import { fetchData } from "../api/getData";
 
 const SideNav = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <StyledNavBar>
-      <StyledHeader>SenseHat</StyledHeader>
+      <StyledHeader>SenseHat.</StyledHeader>
       <StyledList>
         <NavBarLink to="/">
           <StyledIcon src={homeIcon} alt="home icons" />
@@ -31,15 +31,8 @@ const SideNav = () => {
         <StyledItem>
           <NavBarLink to="/charts">
             <StyledIcon src={chartIcon} alt="charts icons" />
-            <span
-              onClick={() => {
-                fetchData();
-              }}
-            >
-              Charts
-            </span>
+            Charts
           </NavBarLink>
-
           <StyledArrow
             isOpen={isOpen}
             src={arrowIcon}
@@ -79,6 +72,10 @@ const CollapsableMenu = ({ isOpen }) => {
         <StyledIcon src={pressureIcon} alt="pressure icons" />
         Pressure
       </NavBarLink>
+      <NavBarLink to="/joystick">
+        <StyledIcon src={accelerometerIcon} alt="pressure icons" />
+        Accelerometer
+      </NavBarLink>
     </StyledMenu>
   );
 };
@@ -89,30 +86,46 @@ const NavBarLink = styled(Link)`
   gap: 0.25rem;
   color: white;
   text-decoration: none;
-  margin: 0.5rem 0;
+  margin: 0.75rem 0;
+  width: fit-content;
+  @media only screen and (max-width: 1528px) {
+    width: 4rem;
+    color: #1e3549;
+  }
 `;
 
 const StyledHeader = styled.h1`
   margin-left: 1rem;
+  @media only screen and (max-width: 1528px) {
+    visibility: hidden;
+  }
 `;
 
 const StyledNavBar = styled.div`
+  height: 100vh;
   display: flex;
   flex-direction: column;
   background-color: #1e3549;
-  width: 20vw;
-  height: 100vh;
-  box-sizing: border-box;
-  width: 200px;
+  width: 300px;
+  max-width: 300px;
+  min-width: 300px;
+  color: white;
+  font-size: 1.25vw;
+  @media only screen and (max-width: 1528px) {
+    width: 10rem;
+    max-width: 10rem;
+    min-width: 10rem;
+    position: fixed;
+    top: 0;
+  }
 `;
 
 const StyledList = styled.div`
   display: flex;
   flex-direction: column;
   white-space: nowrap;
-  width: 100%;
-  margin-left: 1rem;
-  margin-top: 1rem;
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
@@ -120,22 +133,32 @@ const StyledList = styled.div`
 const StyledMenu = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 2rem;
+  margin: 1rem;
+  font-size: 1vw;
   display: ${props => (props.isOpen ? "block" : "none")};
 `;
 
 const StyledIcon = styled.img`
-  width: 25px;
+  width: 2rem;
+  @media only screen and (max-width: 1528px) {
+    width: 4rem;
+  }
 `;
 
 const StyledArrow = styled(StyledIcon)`
-  transition: 0.3s;
-  rotate: ${props => (props.isOpen ? "0deg" : "-90deg")};
+  //transition: 0.3s;
+  width: 1.5rem;
+  margin-left: 0.4rem;
+  rotate: ${props => (props.isOpen ? "-90deg" : "-180deg")};
+  @media only screen and (max-width: 1528px) {
+    width: 3rem;
+  }
 `;
 
 const StyledItem = styled.div`
   display: flex;
   flex-direction: row;
+  width: fit-content;
 `;
 
 export { SideNav };

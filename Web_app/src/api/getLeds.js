@@ -1,7 +1,7 @@
-const fetchTemp = async (uri="25.78.72.7") => {
+const fetchLeds= async (uri="25.78.72.7") => {
 
     try {
-      const db = await fetch(`http://${uri}/api/get/get_temperature.php`, {
+      const db = await fetch(`http://${uri}/api/get/get_leds.php/`, {
         //headers,
         method: "GET",
         mode: "cors",
@@ -12,9 +12,9 @@ const fetchTemp = async (uri="25.78.72.7") => {
       const data = await db.json();
       return data;
     } catch (e) {
-      //console.error(e);
+      console.error(e);
     }
   };
   
-  export { fetchTemp };
+  export { fetchLeds};
   
