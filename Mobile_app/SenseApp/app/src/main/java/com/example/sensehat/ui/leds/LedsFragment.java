@@ -14,12 +14,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.sensehat.MainActivity;
 import com.example.sensehat.databinding.FragmentLedsBinding;
 import com.example.sensehat.ui.charts.ChartsViewModel;
 
 public class LedsFragment extends Fragment {
 
     private FragmentLedsBinding binding;
+    private int mDefaultColor;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -29,8 +32,16 @@ public class LedsFragment extends Fragment {
         binding = FragmentLedsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //Get grid layout
+
+
+        //binding layout
         final GridLayout gridLayout = binding.gridLayout;
+        final Button post = binding.postBtn;
+        final TextView r = binding.rVal;
+        final TextView g = binding.gVal;
+        final TextView b = binding.bVal;
+
+
 
         //append buttons to grid to create 8x8 matrix
         for (int i = 0; i < 8; i++) {
