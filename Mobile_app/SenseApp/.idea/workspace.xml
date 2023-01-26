@@ -9,18 +9,36 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="448d196e-bc70-4a93-9a8a-931a9862be24" name="Changes" comment="Fixed getting timestamps">
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_leds.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_leds.xml" afterDir="false" />
+=======
+    <list default="true" id="904651d5-98d2-48da-9f3c-e42aa5854c5a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_option.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_option.xml" afterDir="false" />
+>>>>>>> Mobile_app
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< HEAD
   <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\User\.android\avd\Pixel_3a_API_33.avd]" />
+=======
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\gkuba\.android\avd\Pixel_3a_API_33_x86_64.avd]" />
+>>>>>>> Mobile_app
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -43,6 +61,7 @@
       </state>
     </system>
   </component>
+<<<<<<< HEAD
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -53,22 +72,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
     <option name="UPDATE_TYPE" value="REBASE" />
+=======
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+>>>>>>> Mobile_app
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectId" id="2KVwXnzfQdOc25e7dYUKaxS3dlo" />
+=======
+  <component name="ProjectId" id="2Kpbbng9xnhCM0P3pMuODmB10Ef" />
+>>>>>>> Mobile_app
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+<<<<<<< HEAD
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+=======
+>>>>>>> Mobile_app
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
+<<<<<<< HEAD
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
     <property name="show.do.not.copy.http.proxy.settings.to.gradle" value="true" />
@@ -80,6 +111,16 @@
     </key>
   </component>
   <component name="RunManager" selected="Android App.app">
+=======
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gkuba\Desktop\IoT-system-RPI-SenseHat\Mobile_app\SenseApp\app\src\main\res\drawable" />
+    </key>
+  </component>
+  <component name="RunManager">
+>>>>>>> Mobile_app
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="SenseHat.app.main" />
       <option name="DEPLOY" value="true" />
@@ -139,6 +180,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="app.androidTest" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="SenseHat.app.androidTest" />
       <option name="DEPLOY" value="true" />
@@ -257,10 +299,13 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+=======
+>>>>>>> Mobile_app
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< HEAD
       <changelist id="448d196e-bc70-4a93-9a8a-931a9862be24" name="Changes" comment="" />
       <created>1674073099630</created>
       <option name="number" value="Default" />
@@ -310,6 +355,14 @@
       <updated>1674239517051</updated>
     </task>
     <option name="localTasksCounter" value="7" />
+=======
+      <changelist id="904651d5-98d2-48da-9f3c-e42aa5854c5a" name="Changes" comment="" />
+      <created>1674674555326</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1674674555326</updated>
+    </task>
+>>>>>>> Mobile_app
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -323,6 +376,7 @@
       </map>
     </option>
   </component>
+<<<<<<< HEAD
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Preparation for request" />
     <MESSAGE value="Getting dummy data for chart" />
@@ -332,4 +386,6 @@
     <MESSAGE value="Fixed getting timestamps" />
     <option name="LAST_COMMIT_MESSAGE" value="Fixed getting timestamps" />
   </component>
+=======
+>>>>>>> Mobile_app
 </project>

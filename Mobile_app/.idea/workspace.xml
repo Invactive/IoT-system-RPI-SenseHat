@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8d81939b-6fc9-4860-b5de-37a41e5cd027" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Desktop_app/TODO.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/proguard-rules.pro" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/androidTest/java/com/example/restapp/ExampleInstrumentedTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/AndroidManifest.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/java/com/example/restapp/DataActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/java/com/example/restapp/GraphActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/java/com/example/restapp/GridAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/java/com/example/restapp/InputFilterMinMax.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/java/com/example/restapp/LEDSActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/java/com/example/restapp/MainActivity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable-v24/no_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/back.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/back_no_border.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/cell_shape.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/ic_launcher_background.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/settings_button.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/wall.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/wallpaper.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/wallpaper2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/wallpaper3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/drawable/wallpaperblur.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/layout/activity_data.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/layout/activity_graph.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/layout/activity_leds.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/layout/activity_main.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/layout/matrix_item.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/layout/refr_rate_dialog.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-hdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-hdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-mdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-mdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-xhdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-xhdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-xxhdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values-land/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values-night/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values-w1240dp/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values-w600dp/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values/colors.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values/dimens.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values/strings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/values/themes.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/xml/backup_rules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/main/res/xml/data_extraction_rules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/app/src/test/java/com/example/restapp/ExampleUnitTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/gradle.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RESTapp/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Server/api/src/python/get_logs.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Server/api/src/python/get_logs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hq" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="2KVwPWJ2MpwH2BEd0t7y8j7z7oD" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
+    <property name="cidr.known.project.marker" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/SenseApp" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8d81939b-6fc9-4860-b5de-37a41e5cd027" name="Changes" comment="" />
+      <created>1674073038570</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1674073038570</updated>
+    </task>
+    <servers />
+  </component>
+</project>
