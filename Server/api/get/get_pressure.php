@@ -1,11 +1,11 @@
 <?php
 
     header("Content-type: application/json; charset=UTF-8");
-
+    header("Access-Control-Allow-Origin: *");
+    
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "GET"){
-        $command = escapeshellcmd('python3 ../srcPY/get_pressure.py');
-        $output = shell_exec($command);
+        $output = file_get_contents("../src/data/pressure.dat");
         http_response_code(200);
         echo $output;
     }

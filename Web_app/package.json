@@ -1,6 +1,10 @@
 {
   "name": "air-web-app",
   "main": "electron/main.js",
+<<<<<<< HEAD
+=======
+  "homepage": ".",
+>>>>>>> server
   "description": "IoT Users App",
   "build": {
     "appId": "com.app.id",
@@ -61,7 +65,7 @@
     "react": "^18.2.0",
     "react-color": "2.19.3",
     "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "recharts": "^2.3.2",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"

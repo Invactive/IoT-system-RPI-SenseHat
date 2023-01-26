@@ -1,9 +1,9 @@
 #!/usr/bin/python3
-
 from sense_emu import SenseHat
-
 import json
-from time import sleep
+import time
+import datetime
+
 
 sense = SenseHat()
 
@@ -30,13 +30,13 @@ while True:
 
 
     res_dict = {"X": axisX, "Y": axisY, "Mid": midPresses}
-    
-
+    date = {"timestamp": str(datetime.datetime.now())}
+    res_dict.update(date)
     result_json = json.dumps(res_dict)
-    file = open('joystick.dat', 'w')
-    file.write(result_json)
-    file.close()
+    f = open("/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/joystick.dat", "w")
+    f.write(result_json)
+    f.close()
     
-    sleep(1)
+    time.sleep(1)
 
 
