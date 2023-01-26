@@ -40,6 +40,7 @@ public class DataFragment extends Fragment {
         binding = FragmentDataBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
         TableLayout table = binding.table;
         border_top_bot = getResources().getDrawable(R.drawable.top_bot_shape);
         border_right = getResources().getDrawable(R.drawable.right_shape);
@@ -52,9 +53,21 @@ public class DataFragment extends Fragment {
 
         DataViewModel.updateTable(1L);
 //        DataViewModel.getRow().observe(getViewLifecycleOwner(), textRow::setText);
-        addTableHeaders(table, getActivity());
+
 
         DataViewModel.getChoosenValues().observe(getViewLifecycleOwner(), mChoosenValues -> {
+            addTableHeaders(table, getActivity());
+//            if(textRow.getParent() != null) {
+//                System.out.println((ViewGroup)textRow.getParent());
+//                ((ViewGroup)textRow.getParent()).removeView(textRow); // <- fix
+//            }
+//            System.out.println(mChoosenValues.values());
+
+//            drawTable(table, getActivity());
+
+        });
+
+        DataViewModel.getDataLogs().observe(getViewLifecycleOwner(), mDataLogs -> {
 //            if(textRow.getParent() != null) {
 //                System.out.println((ViewGroup)textRow.getParent());
 //                ((ViewGroup)textRow.getParent()).removeView(textRow); // <- fix
@@ -222,6 +235,18 @@ public class DataFragment extends Fragment {
     }
 
 
+
+//
+//    arrTemp.set(i, mRepo.getLogsData().getValue().get("temperature").getJSONObject(i).getJSONObject("temp").getDouble("tempC"));
+//                            arrTemp.set(i, mRepo.getLogsData().getValue().get("humidity").getJSONObject(i).getDouble("humidity"));
+//                            arrHumi.set(i, mRepo.getLogsData().getValue().get("humidity").getJSONObject(i).getDouble("humidity"));
+//                            arrPress.set(i, mRepo.getLogsData().getValue().get("pressure").getJSONObject(i).getDouble("press_hpa"));
+//                            arrRoll.set(i, mRepo.getLogsData().getValue().get("accelerometer").getJSONObject(i).getDouble("roll"));
+//                            arrPitch.set(i, mRepo.getLogsData().getValue().get("accelerometer").getJSONObject(i).getDouble("pitch"));
+//                            arrYaw.set(i, mRepo.getLogsData().getValue().get("accelerometer").getJSONObject(i).getDouble("yaw"));
+//                            arrJoyX.set(i, mRepo.getLogsData().getValue().get("joystick").getJSONObject(i).getDouble("X"));
+//                            arrJoyY.set(i, mRepo.getLogsData().getValue().get("joystick").getJSONObject(i).getDouble("Y"));
+//                            arrJoyMid.set(i, mRepo.getLogsData().getValue().get("joystick").getJSONObject(i).getDouble("Mid"));
 }
 
 

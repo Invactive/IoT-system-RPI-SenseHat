@@ -3,6 +3,8 @@ package com.example.sensehat.ui.data;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.view.Gravity;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -20,91 +22,57 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DataViewModel extends ViewModel {
 
     private final MutableLiveData<String> mRow;
     private RepositoryModel mRepo;
     private Handler mHandler;
+    private HandlerThread mHandlerThread;
     private int rowCounter;
 
 //    Data prepared for table
-//    private final MutableLiveData<String> mTimestamp;
-//    private final MutableLiveData<String> mTemperature;
-//    private final MutableLiveData<String> mPressure;
-//    private final MutableLiveData<String> mHumidity;
-//    private final MutableLiveData<String> mRoll;
-//    private final MutableLiveData<String> mPitch;
     private HashMap<String, Boolean> choosenValuesHashMap;
     private final MutableLiveData<HashMap<String, Boolean>> mChoosenValues;
 
-    private HashMap<String, Double> values;
-    private final MutableLiveData<HashMap<String, Double>> mValues;
+    private MutableLiveData<HashMap<String, JSONArray>> mDataLogs;
+
 
 
     public DataViewModel() {
         mRepo = new RepositoryModel();
         mRow = new MutableLiveData<>();
         mHandler = new Handler();
+
         mRepo.setIP("25.78.72.7");
 
         choosenValuesHashMap = new HashMap<>();
         mChoosenValues = new MutableLiveData<>();
 
-        values = new HashMap<>();
-        mValues = new MutableLiveData<>();
+        mDataLogs = new MutableLiveData<>();
 
         choosenValuesHashMap.put("Temperature", Boolean.FALSE);
         mChoosenValues.setValue(mChoosenValues.getValue());
-//        mTimestamp = new MutableLiveData<>();
-//        mTimestamp = new MutableLiveData<>();
 
-        // GET DATA ONCE FOR THE FIRST TIME HERE
 
-//        EXAMPLE: get value of temperature from temperature sensor in degrees mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString()
-//        mText.setValue(mRepo.getTemperatureDataChart().getValue().toString());
-//        updateTable(1L);
-        System.out.println("CALLED FROM CONSTRCTOR DVM");
-//        EXAMPLE: get value of pressure in hpa mRepo.getPressureDataChart().getValue().get("pressHpa").toString()
-//        mText.setValue(mRepo.getPressureDataChart().getValue().toString());
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                updateTable(100L);
+            }
+        };
+        thread.start();
 
-//        EXAMPLE: get value of humidity mRepo.getHumidityDataChart().getValue().get("humi").toString()
-//        mText.setValue(mRepo.getHumidityDataChart().getValue().toString());
 
-//        EXAMPLE: get value of degrees in roll axis mRepo.getOrientationDataChart().getValue().get("roll").toString()
-//        mText.setValue(mRepo.getAccelerometerDataChart().getValue().toString());
-
-//        EXAMPLE: get value of degrees in roll axis mRepo.getOrientationDataChart().getValue().get("roll_deg").toString()
-//        mText.setValue(mRepo.getOrientationDataChart().getValue().toString());
-
-//        EXAMPLE: get value of compass mRepo.getCompassData().getValue().toString()
-//        mText.setValue(mRepo.getCompassData().getValue().toString());
-
-//        EXAMPLE: get X value of joystick mRepo.getJoystickData().getValue().get("X").toString()
-//        mText.setValue(mRepo.getJoystickData().getValue().toString());
-
-//        EXAMPLE: get led red color of led 43 mRepo.getLedsData().getValue().get("43").get(0).toString()
-//        mText.setValue(mRepo.getLedsData().getValue().toString());
-
-//        EXAMPLE: get first JSONObject of joystick mRepo.getLogsData().getValue().get("joystick").getJSONObject(0);
-//        try {
-//            mText.setValue(mRepo.getLogsData().getValue().get("joystick").getJSONObject(0).toString());
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
-//        EXAMPLE: get value of X in first JSONObject joystick mRepo.getLogsData().getValue().get("joystick").getJSONObject(0).getInt("X");
-//        try {
-//            mText.setValue(String.valueOf(mRepo.getLogsData().getValue().get("joystick").getJSONObject(0).getInt("X")));
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
 
     }
 
-//<<<<<<< HEAD
+
+
 //    public LiveData<String> getText() { return mText; }
-//
+
     public void addtable(TableLayout table, Context context){
         System.out.println("Table added");
         TableRow tabRow = new TableRow(context);
@@ -139,10 +107,11 @@ public class DataViewModel extends ViewModel {
         table.addView(tabRow);
     }
 
-//=======
 //    public LiveData<String> getRow() { return mRow; }
     public LiveData<HashMap<String, Boolean>> getChoosenValues() { return mChoosenValues; }
-//>>>>>>> f7ad888fff7a871915f105ce9baa6cef264b656e
+    public LiveData<HashMap<String, JSONArray>> getDataLogs() { return mDataLogs; }
+
+
 
     public void updateTable(Long delay){
         mHandler.postDelayed(new Runnable(){
@@ -155,12 +124,8 @@ public class DataViewModel extends ViewModel {
                 choosenValuesHashMap.put("Humidity", Boolean.FALSE);
                 mChoosenValues.setValue(mChoosenValues.getValue());
 
-                try {
-                    values.put("tempCTemp", mRepo.getLogsData().getValue().get("temperature").getJSONObject(0).getJSONArray("tempCTemp").getDouble(0));
-                    System.out.println(values.get("tempCTemp"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+                System.out.println("Timer");
 
 
 //                mChoosenValues.setValue(choosenValuesHashMap);

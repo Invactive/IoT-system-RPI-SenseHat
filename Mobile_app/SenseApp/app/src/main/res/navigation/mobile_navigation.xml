@@ -26,12 +26,12 @@
     <fragment
         android:id="@+id/nav_data"
         android:name="com.example.sensehat.ui.data.DataFragment"
-        android:label="fragment_data"
+        android:label="Table"
         tools:layout="@layout/fragment_data" />
 
     <fragment
         android:id="@+id/nav_options"
         android:name="com.example.sensehat.ui.Options.OptionFragment"
-        android:label="fragment_option"
+        android:label="Options"
         tools:layout="@layout/fragment_option" />
 </navigation>

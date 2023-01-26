@@ -293,7 +293,6 @@ public class RepositoryModel {
                     newarr.set(i, arrayList); //update the value at index i in the newarr array
                 }
             }
-
             this.ledsData.setValue(newarr);
         } catch (JSONException e) {
             System.out.println("Exception - json parse error");
@@ -333,11 +332,10 @@ public class RepositoryModel {
         }
     }
 
-    public MutableLiveData<HashMap<String, JSONArray>> getLogsData(){
+    public MutableLiveData<HashMap<String, JSONArray>> fetchLogsData(){
         fetchLogs();
         return this.logsData;
     }
-
 
     public void getRequest(String param) throws InterruptedException {
         String url = this.URL + "get/" + "get_" + param + ".php";
@@ -374,32 +372,26 @@ public class RepositoryModel {
     }
 
     private void bodyDestinationSolver(String body, String url){
-        if(Objects.equals(url, "http://25.78.72.7/api/get/get_temperature.php")){
-            jsonTempString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_pressure.php")){
-            jsonPressString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_humidity.php")){
-            jsonHumiString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_accelerometer.php")){
-            jsonAccelString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_orientation.php")){
-            jsonOrientString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_compass.php")){
-            jsonCompassString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_joystick.php")){
-            jsonJoystickString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_leds.php")){
-            jsonLedsString = body;
-        }
-        else if(Objects.equals(url, "http://25.78.72.7/api/get/get_logs.php")){
-            jsonLogsString = body;
+        if(!body.isEmpty()) {
+            if (Objects.equals(url, "http://25.78.72.7/api/get/get_temperature.php")) {
+                jsonTempString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_pressure.php")) {
+                jsonPressString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_humidity.php")) {
+                jsonHumiString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_accelerometer.php")) {
+                jsonAccelString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_orientation.php")) {
+                jsonOrientString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_compass.php")) {
+                jsonCompassString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_joystick.php")) {
+                jsonJoystickString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_leds.php")) {
+                jsonLedsString = body;
+            } else if (Objects.equals(url, "http://25.78.72.7/api/get/get_logs.php")) {
+                jsonLogsString = body;
+            }
         }
     }
 
