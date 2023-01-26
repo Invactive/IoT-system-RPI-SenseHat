@@ -33,7 +33,6 @@ public class LedsViewModel extends ViewModel {
         };
         thread.start();
 
-
     }
 
     public LiveData<ArrayList<ArrayList<Integer>>> getText() {
@@ -50,12 +49,13 @@ public class LedsViewModel extends ViewModel {
     }
 
 
-
-
     public void fetcher(int delay){
         mHandler.postDelayed(new Runnable(){
             public void run(){
-                myArray.setValue(mRepo.getLedsData().getValue());
+                for(int i=0; i<64; i++){
+                    arrayList.add(i, mRepo.getLedsData().getValue().get(i));
+                }
+                myArray.setValue(arrayList);
                 mHandler.postDelayed(this, delay);
             }
         }, delay);

@@ -73,27 +73,13 @@ public class LedsFragment extends Fragment {
                         int argB = 0;
 
                         if(!r.getText().toString().equals("")){
-                            if(Integer.parseInt(r.getText().toString())>255){
-                                argR = 255;
-                            }else{
-                                argR = Integer.parseInt(r.getText().toString());
-                            }
+                            argR = Integer.parseInt(r.getText().toString());
                         }
-
                         if(!g.getText().toString().equals("")){
-                            if(Integer.parseInt(g.getText().toString())>255){
-                                argG = 255;
-                            }else{
-                                argG = Integer.parseInt(g.getText().toString());
-                            }
+                            argG = Integer.parseInt(g.getText().toString());
                         }
-
                         if(!b.getText().toString().equals("")){
-                            if(Integer.parseInt(b.getText().toString())>255){
-                                argB = 255;
-                            }else{
-                                argB = Integer.parseInt(b.getText().toString());
-                            }
+                            argB = Integer.parseInt(b.getText().toString());
                         }
 
                         viewModel.setLeds(argX, argY, argR, argG, argB);
@@ -105,13 +91,11 @@ public class LedsFragment extends Fragment {
 
 
         LedsViewModel.getText().observe(getViewLifecycleOwner(), data -> {
-            if(data != null){
-                for(int x =0 ; x<64; x++){
-                    int argX = x % 8;
-                    int argY = (x - argX) / 8;
-                    Button button = (Button) gridLayout.getChildAt(argY * 8 + argX);
-                    button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  data.get(x).get(0), data.get(x).get(1), data.get(x).get(2))));
-                }
+            for(int x =0 ; x<64; x++){
+                int argX = x % 8;
+                int argY = (x - argX) / 8;
+                Button button = (Button) gridLayout.getChildAt(argY * 8 + argX);
+                button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  data.get(x).get(0), data.get(x).get(1), data.get(x).get(2))));
             }
         });
 
