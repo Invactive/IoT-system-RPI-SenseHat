@@ -2,7 +2,10 @@
 import json
 from sense_emu import SenseHat
 import time
+<<<<<<< HEAD
 import datetime
+=======
+>>>>>>> Mobile_app
 
 
 sense = SenseHat()
@@ -14,8 +17,12 @@ while(True):
     for i in pixel_list:
         result[idx] = i
         idx += 1
+<<<<<<< HEAD
     # date = {"timestamp": str(datetime.datetime.now())}
     # result.update(date)
+=======
+
+>>>>>>> Mobile_app
     f = open("/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/pixels.dat", "w")
     f.write(json.dumps(result))
     f.close()

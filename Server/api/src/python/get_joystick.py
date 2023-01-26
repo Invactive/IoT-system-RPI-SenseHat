@@ -2,7 +2,10 @@
 from sense_emu import SenseHat
 import json
 import time
+<<<<<<< HEAD
 import datetime
+=======
+>>>>>>> Mobile_app
 
 
 sense = SenseHat()
@@ -30,8 +33,12 @@ while True:
 
 
     res_dict = {"X": axisX, "Y": axisY, "Mid": midPresses}
+<<<<<<< HEAD
     date = {"timestamp": str(datetime.datetime.now())}
     res_dict.update(date)
+=======
+    
+>>>>>>> Mobile_app
     result_json = json.dumps(res_dict)
     f = open("/home/jakub/Desktop/IoT-system-RPI-SenseHat/Server/api/src/data/joystick.dat", "w")
     f.write(result_json)
