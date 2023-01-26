@@ -9,32 +9,46 @@ IoT system including:
 - Desktop app (Electron)
 - Mobile app (Android)
 
-# Project tasks
-:heavy_check_mark: - server PHP with use of Lighttpd, REST architecture with GET and PUT requests to use all possible inputs/outputs of SenseHat
-
-  <img src="src/senseHat.png" width="475" height="317">
-
-:heavy_check_mark: - Web app with requests to server with possibility to change/get all data on SenseHat
-
-  <img src="src/webHome.png" width="475" height="317">
-  <img src="src/webCharts.png" width="475" height="317">
-  <img src="src/webLeds.png" width="475" height="317">
-  <img src="src/webTable.png" width="475" height="317">
-  <img src="src/webSettings.png" width="475" height="317">
-
-:heavy_check_mark: - Desktop app based on web app with the same UI and functionalities
-  
-  <img src="src/desktopHome.png" width="475" height="317">
-  
-:heavy_check_mark: - Mobile app with similar UI and functionalities as web and desktop app 
-
-  <img src="src/mobileHome.png" width="475" height="317">
-  <img src="src/mobileCharts.png" width="475" height="317">
-  <img src="src/mobileLeds.png" width="475" height="317">
-  <img src="src/mobileTable.png" width="475" height="317">
-  <img src="src/mobileSettings.png" width="475" height="317">
-
 Project created in collaboration with:
 - [Patryk Borowski](https://github.com/boobel)
 - [Szymon Smodlibowski](https://github.com/MusePL)
+
+# Project tasks
+:heavy_check_mark: - server PHP with use of Lighttpd, REST architecture with GET and PUT requests to use all possible inputs/outputs of SenseHat
+
+<p align="center">
+  <img src="src/senseHat.png" width="475" height="317">
+</p>
+
+:heavy_check_mark: - Web app with requests to server with possibility to change/get all data on SenseHat
+
+<p align="center">
+  <img src="src/webHome.png">
+  <img src="src/webCharts.png"">
+  <img src="src/webLeds.png">
+  <img src="src/webTable.png">
+  <img src="src/webSettings.png">
+</p>
+
+:heavy_check_mark: - Desktop app based on web app with the same UI and functionalities
+
+<p align="center">
+  <img src="src/desktopHome.png">
+</p>
+
+:heavy_check_mark: - Mobile app with similar UI and functionalities as web and desktop app 
+
+<div align="center">
+   <img src="src/mobileHome.png"> <img src="src/mobileCharts.png"> 
+</div>
+
+<div align="center">
+   <img src="src/mobileLeds.png"> <img src="src/mobileTable.png"> 
+   <img src="src/mobileOptions.png">
+</div>
+  
+  
+  
+
+
 
