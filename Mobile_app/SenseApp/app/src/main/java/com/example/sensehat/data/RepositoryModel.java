@@ -52,6 +52,8 @@ public class RepositoryModel {
     private MutableLiveData <ArrayList<ArrayList<Integer>>> ledsData;
     private MutableLiveData<HashMap<String, JSONArray>> logsData;
 
+    private ArrayList<ArrayList<Integer>> newarr = new ArrayList<>();
+
     public RepositoryModel() {
         temperaturesData = new MutableLiveData<>();
         pressureData = new MutableLiveData<>();
@@ -274,18 +276,22 @@ public class RepositoryModel {
     }
 
     private void fetchLeds(){
-        ArrayList<ArrayList<Integer>> newarr = new ArrayList<>();
         try {
             getRequest("leds");
 //            Get leds object - data from LED matrix
             JSONObject ledsJsonObj = new JSONObject(this.jsonLedsString);
 //            Get RGB array of every LED from matrix
-            for(int i=0; i<ledsJsonObj.length()-1; i++){
+
+            for(int i=0; i<ledsJsonObj.length(); i++){
                 ArrayList<Integer> arrayList = new ArrayList<>();
                 for(int j=0; j<ledsJsonObj.getJSONArray(Integer.toString(i)).length(); j++){
                     arrayList.add(ledsJsonObj.getJSONArray(Integer.toString(i)).getInt(j));
                 }
-                newarr.add(i, arrayList);
+                if (newarr.size() <= i) {
+                    newarr.add(arrayList); // add data to the newarr array
+                } else {
+                    newarr.set(i, arrayList); //update the value at index i in the newarr array
+                }
             }
 
             this.ledsData.setValue(newarr);

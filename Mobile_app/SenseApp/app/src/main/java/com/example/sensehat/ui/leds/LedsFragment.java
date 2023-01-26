@@ -57,18 +57,15 @@ public class LedsFragment extends Fragment {
                         button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb( 252,53,73)));
                     }
                 });
-                button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb(30,53,73)));
             }
         }
-
-
 
 
         LedsViewModel.getText().observe(getViewLifecycleOwner(), data -> {
             for(int x =0 ; x<64; x++){
                 int argX = x % 8;
                 int argY = (x - argX) / 8;
-                Button button = (Button) gridLayout.getChildAt(argX * 8 + argY);
+                Button button = (Button) gridLayout.getChildAt(argY * 8 + argX);
                 button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  data.get(x).get(0), data.get(x).get(1), data.get(x).get(2))));
             }
         });
