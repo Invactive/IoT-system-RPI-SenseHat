@@ -53,7 +53,7 @@ public class LedsFragment extends Fragment {
                 params.rowSpec = GridLayout.spec(i);
                 params.width = 115;
                 button.setLayoutParams(params);
-                button.setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+                button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  0, 0, 0)));
                 button.setId(i * 8 + j);
                 gridLayout.addView(button);
             }
