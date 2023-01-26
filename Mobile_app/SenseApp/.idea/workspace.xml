@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="904651d5-98d2-48da-9f3c-e42aa5854c5a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/data/RepositoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/data/RepositoryModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" afterDir="false" />
     </list>

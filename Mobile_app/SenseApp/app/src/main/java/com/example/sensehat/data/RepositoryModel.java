@@ -294,7 +294,7 @@ public class RepositoryModel {
                 }
             }
 
-            this.ledsData.setValue(newarr);
+            this.ledsData.postValue(newarr);
         } catch (JSONException e) {
             System.out.println("Exception - json parse error");
             e.printStackTrace();
