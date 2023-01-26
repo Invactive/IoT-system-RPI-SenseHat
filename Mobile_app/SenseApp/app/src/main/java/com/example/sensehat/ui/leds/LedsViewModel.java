@@ -18,17 +18,19 @@ public class LedsViewModel extends ViewModel {
 
     private RepositoryModel mRepo;
     private Handler mHandler;
+    private String IP = "25.78.72.7";
+    private int interval = 1000;
 
     public LedsViewModel() {
         mRepo = new RepositoryModel();
         myArray = new MutableLiveData<>();
         mHandler = new Handler();
-        mRepo.setIP("25.78.72.7");
+        mRepo.setIP(IP);
 
         Thread thread = new Thread(){
             @Override
             public void run(){
-                fetcher(1);
+                fetcher(interval);
             }
         };
         thread.start();
@@ -48,13 +50,25 @@ public class LedsViewModel extends ViewModel {
         mRepo.putResetLedsRequest();
     }
 
-
     public void fetcher(int delay){
+        System.out.println(delay);
         mHandler.postDelayed(new Runnable(){
             public void run(){
                 myArray.setValue(mRepo.getLedsData().getValue());
                 mHandler.postDelayed(this, delay);
             }
         }, delay);
+    }
+
+    public void destroyHandler(){
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+    public void setChartInterv(int time){
+        interval = time;
+    }
+
+    public void setServerIP(String ip){
+        IP = ip;
     }
 }

@@ -10,11 +10,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="904651d5-98d2-48da-9f3c-e42aa5854c5a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/top_left_right_shape.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/data/RepositoryModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/data/RepositoryModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/Options/OptionViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/charts/ChartsViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/data/DataViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_data.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_data.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_option.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_option.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +68,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="cidr.known.project.marker" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/src/main/res/drawable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gkuba\Desktop\IoT-system-RPI-SenseHat\Mobile_app\SenseApp\app\src\main\res\drawable" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
@@ -134,5 +146,16 @@
       <updated>1674674555326</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

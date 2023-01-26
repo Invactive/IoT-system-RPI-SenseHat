@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sensehat.MainActivity;
 import com.example.sensehat.databinding.FragmentLedsBinding;
+import com.example.sensehat.ui.Options.OptionViewModel;
 import com.example.sensehat.ui.charts.ChartsViewModel;
 
 public class LedsFragment extends Fragment {
@@ -27,6 +28,9 @@ public class LedsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         LedsViewModel LedsViewModel =
                 new ViewModelProvider(requireActivity()).get(LedsViewModel.class);
+
+        OptionViewModel OptionViewModel =
+                new ViewModelProvider(this).get(OptionViewModel.class);
 
         binding = FragmentLedsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -39,8 +43,6 @@ public class LedsFragment extends Fragment {
         final TextView r = binding.rVal;
         final TextView g = binding.gVal;
         final TextView b = binding.bVal;
-
-
 
 
         //append buttons to grid to create 8x8 matrix
@@ -98,7 +100,6 @@ public class LedsFragment extends Fragment {
                 button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  data.get(x).get(0), data.get(x).get(1), data.get(x).get(2))));
             }
         });
-
 
         reset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v)

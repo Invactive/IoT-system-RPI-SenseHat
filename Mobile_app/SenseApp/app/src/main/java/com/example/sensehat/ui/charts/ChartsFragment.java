@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sensehat.databinding.FragmentChartsBinding;
+import com.example.sensehat.ui.Options.OptionViewModel;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -48,6 +49,9 @@ public class ChartsFragment extends Fragment {
         ChartsViewModel ChartsViewModel =
                 new ViewModelProvider(this).get(ChartsViewModel.class);
 
+        OptionViewModel OptionViewModel =
+                new ViewModelProvider(this).get(OptionViewModel.class);
+
         binding = FragmentChartsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
@@ -81,6 +85,7 @@ public class ChartsFragment extends Fragment {
         chart.setData(data);
 
         mViewModel = new ViewModelProvider(this).get(ChartsViewModel.class);
+//        temperatureSwitch.setChecked(true);
 
         temperatureSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -126,6 +131,17 @@ public class ChartsFragment extends Fragment {
                     th = 0;
                 }
             }
+        });
+
+        OptionViewModel.getChartInterv().observe(getViewLifecycleOwner(), mChartInterv -> {
+            System.out.println("Getchart" + mChartInterv);
+            ChartsViewModel.destroyHandler();
+            ChartsViewModel.fetcher(mChartInterv);
+            ChartsViewModel.setChartInterv(mChartInterv);
+        });
+
+        OptionViewModel.getServerIP().observe(getViewLifecycleOwner(), mServerIP -> {
+            ChartsViewModel.setServerIP(mServerIP);
         });
 
         return root;

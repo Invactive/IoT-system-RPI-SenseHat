@@ -28,10 +28,8 @@ public class ChartsViewModel extends ViewModel {
     private final MutableLiveData<String> mTimestamp;
     private RepositoryModel mRepo;
     private Handler mHandler;
-
-
-
-
+    private int interval = 1000;
+    private String IP = "25.78.72.7";
 
     public ChartsViewModel() {
         mRepo = new RepositoryModel();
@@ -42,8 +40,8 @@ public class ChartsViewModel extends ViewModel {
         mHumidity = new MutableLiveData<>();
         mTimestamp = new MutableLiveData<>();
         mHandler = new Handler();
-        mRepo.setIP("25.78.72.7");
-        fetcher(1);
+        mRepo.setIP(IP);
+        fetcher(interval);
     }
 
     public LiveData<String> getTempCData() {
@@ -72,6 +70,7 @@ public class ChartsViewModel extends ViewModel {
 
 
     public void fetcher(int delay){
+        System.out.println(delay);
         mHandler.postDelayed(new Runnable(){
             public void run(){
                 mTemperatureC.setValue(mRepo.getTemperatureDataChart().getValue().get("tempCTemp").toString());
@@ -85,6 +84,18 @@ public class ChartsViewModel extends ViewModel {
                 mHandler.postDelayed(this, delay);
             }
         }, delay);
+    }
+
+    public void destroyHandler(){
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+    public void setChartInterv(int time){
+        interval = time;
+    }
+
+    public void setServerIP(String ip){
+        IP = ip;
     }
 
 }

@@ -13,16 +13,14 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class DataViewModel extends ViewModel {
 
     private final RepositoryModel mRepo;
-    private final Handler mHandler;
+    private Handler mHandler;
 
 //    Data prepared for table
-    private final HashMap<String, Boolean> choosenValuesHashMap;
-    private final MutableLiveData<HashMap<String, Boolean>> mChoosenHeaders;
-
     private HashMap<String, JSONArray> inputHashMap;
     private final MutableLiveData<HashMap<String, ArrayList<Object>>> mDataLogs;
     private final ArrayList<Object> timeArr;
@@ -37,12 +35,14 @@ public class DataViewModel extends ViewModel {
     private final ArrayList<Object> joyMidArr;
     private final HashMap<String, ArrayList<Object>> prepHashMap;
 
+    private String IP = "25.78.72.7";
+    public int interval = 1000;
+
     public DataViewModel() {
         mRepo = new RepositoryModel();
-        MutableLiveData<String> mRow = new MutableLiveData<>();
         mHandler = new Handler();
 
-        mRepo.setIP("25.78.72.7");
+        mRepo.setIP(IP);
 
         inputHashMap = new HashMap<>();
         timeArr = new ArrayList<>();
@@ -57,36 +57,14 @@ public class DataViewModel extends ViewModel {
         joyMidArr = new ArrayList<>();
         prepHashMap = new HashMap<>();
         mDataLogs = new MutableLiveData<>();
-
-        choosenValuesHashMap = new HashMap<String, Boolean>() {{
-            put("temperature", Boolean.TRUE);
-            put("pressure", Boolean.FALSE);
-            put("humidity", Boolean.FALSE);
-            put("roll", Boolean.FALSE);
-            put("pitch", Boolean.FALSE);
-            put("yaw", Boolean.FALSE);
-            put("joystickX", Boolean.FALSE);
-            put("joystickY", Boolean.FALSE);
-            put("joystickMid", Boolean.FALSE);
-            put("timestamp", Boolean.TRUE);
-        }};
-        mChoosenHeaders = new MutableLiveData<>();
-        mChoosenHeaders.setValue(mChoosenHeaders.getValue());
-
-        Thread thread = new Thread(){
-            @Override
-            public void run(){
-                updateData(100L);
-            }
-        };
-        thread.start();
+        updateData(interval);
 
     }
 
-    public LiveData<HashMap<String, Boolean>> getChoosenHeaders() { return mChoosenHeaders; }
     public LiveData<HashMap<String, ArrayList<Object>>> getDataLogs() { return mDataLogs; }
 
-    public void updateData(Long delay){
+    public void updateData(int delay){
+        mHandler = new Handler();
         mHandler.postDelayed(new Runnable(){
             @SuppressLint("DefaultLocale")
             public void run(){
@@ -95,15 +73,15 @@ public class DataViewModel extends ViewModel {
                 try {
                     for(int i=0; i<10; i++){
                         timeArr.add(inputHashMap.get("timestamp").get(i));
-                        tempArr.add(String.format("%.2f", inputHashMap.get("temperature").getJSONObject(i).getJSONObject("temp").getDouble("tempC")));
-                        pressArr.add(String.format("%.2f", inputHashMap.get("pressure").getJSONObject(i).getDouble("press_hpa")));
-                        humiArr.add(String.format("%.2f",inputHashMap.get("humidity").getJSONObject(i).getDouble("humidity")));
-                        rollArr.add(String.format("%.2f",inputHashMap.get("accelerometer").getJSONObject(i).getDouble("roll")));
-                        pitchArr.add(String.format("%.2f",inputHashMap.get("accelerometer").getJSONObject(i).getDouble("pitch")));
-                        yawArr.add(String.format("%.2f",inputHashMap.get("accelerometer").getJSONObject(i).getDouble("yaw")));
-                        joyXArr.add(inputHashMap.get("joystick").getJSONObject(i).getInt("X"));
-                        joyYArr.add(inputHashMap.get("joystick").getJSONObject(i).getInt("Y"));
-                        joyMidArr.add(inputHashMap.get("joystick").getJSONObject(i).getInt("Mid"));
+                        tempArr.add(String.format("%.2f", Objects.requireNonNull(inputHashMap.get("temperature")).getJSONObject(i).getJSONObject("temp").getDouble("tempC")));
+                        pressArr.add(String.format("%.2f", Objects.requireNonNull(inputHashMap.get("pressure")).getJSONObject(i).getDouble("press_hpa")));
+                        humiArr.add(String.format("%.2f", Objects.requireNonNull(inputHashMap.get("humidity")).getJSONObject(i).getDouble("humidity")));
+                        rollArr.add(String.format("%.2f", Objects.requireNonNull(inputHashMap.get("accelerometer")).getJSONObject(i).getDouble("roll")));
+                        pitchArr.add(String.format("%.2f", Objects.requireNonNull(inputHashMap.get("accelerometer")).getJSONObject(i).getDouble("pitch")));
+                        yawArr.add(String.format("%.2f", Objects.requireNonNull(inputHashMap.get("accelerometer")).getJSONObject(i).getDouble("yaw")));
+                        joyXArr.add(Objects.requireNonNull(inputHashMap.get("joystick")).getJSONObject(i).getInt("X"));
+                        joyYArr.add(Objects.requireNonNull(inputHashMap.get("joystick")).getJSONObject(i).getInt("Y"));
+                        joyMidArr.add(Objects.requireNonNull(inputHashMap.get("joystick")).getJSONObject(i).getInt("Mid"));
                     }
                     prepHashMap.put("timestamp", timeArr);
                     prepHashMap.put("temperature", tempArr);
@@ -121,13 +99,17 @@ public class DataViewModel extends ViewModel {
                     e.printStackTrace();
                 }
 
-                choosenValuesHashMap.put("temperature", Boolean.TRUE);
-                choosenValuesHashMap.put("pressure", Boolean.TRUE);
-                mChoosenHeaders.setValue(mChoosenHeaders.getValue());
-
-                mHandler.postDelayed(this, delay*2000);
+                mHandler.postDelayed(this, delay);
             }
-        }, delay*2000);
+        }, delay);
+    }
+
+    public void destroyHandler(){
+        mHandler.removeCallbacksAndMessages(null);
+    }
+
+    public void setServerIP(String ip){
+        IP = ip;
     }
 
 
