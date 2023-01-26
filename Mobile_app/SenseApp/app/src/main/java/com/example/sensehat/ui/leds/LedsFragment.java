@@ -32,14 +32,14 @@ public class LedsFragment extends Fragment {
         binding = FragmentLedsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
+        LedsViewModel viewModel = new ViewModelProvider(this).get(LedsViewModel.class);
 
         //binding layout
         final GridLayout gridLayout = binding.gridLayout;
-        final Button post = binding.postBtn;
         final TextView r = binding.rVal;
         final TextView g = binding.gVal;
         final TextView b = binding.bVal;
+
 
 
 
@@ -66,7 +66,28 @@ public class LedsFragment extends Fragment {
                     public void onClick(View v)
                     {
                         index = button.getId();
-                        button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb( 252,53,73)));
+                        int argY = index % 8;
+                        int argX = (index - argY) / 8;
+                        int argR = 0;
+                        int argG = 0;
+                        int argB = 0;
+
+                        if(!r.getText().toString().equals("")){
+                            argR = Integer.parseInt(r.getText().toString());
+                        }
+                        if(!g.getText().toString().equals("")){
+                            argG = Integer.parseInt(g.getText().toString());
+                        }
+                        if(!b.getText().toString().equals("")){
+                            argB = Integer.parseInt(b.getText().toString());
+                        }
+
+                        viewModel.setX(argX);
+                        viewModel.setY(argY);
+                        viewModel.setR(argR);
+                        viewModel.setG(argG);
+                        viewModel.setB(argB);
+
                     }
                 });
             }
