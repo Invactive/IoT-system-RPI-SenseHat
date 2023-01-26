@@ -82,11 +82,7 @@ public class LedsFragment extends Fragment {
                             argB = Integer.parseInt(b.getText().toString());
                         }
 
-                        viewModel.setX(argX);
-                        viewModel.setY(argY);
-                        viewModel.setR(argR);
-                        viewModel.setG(argG);
-                        viewModel.setB(argB);
+                        viewModel.setLeds(argX, argY, argR, argG, argB);
 
                     }
                 });

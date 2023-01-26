@@ -14,11 +14,7 @@ public class LedsViewModel extends ViewModel {
 
     MutableLiveData<ArrayList<ArrayList<Integer>>> myArray;
     ArrayList<ArrayList<Integer>> arrayList = new ArrayList<>();
-    int x;
-    int y;
-    int r;
-    int g;
-    int b;
+
 
     private RepositoryModel mRepo;
     private Handler mHandler;
@@ -28,36 +24,24 @@ public class LedsViewModel extends ViewModel {
         myArray = new MutableLiveData<>();
         mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-        fetcher(1);
+
+        Thread thread = new Thread(){
+            @Override
+            public void run(){
+                fetcher(1);
+            }
+        };
+        thread.start();
+
     }
 
     public LiveData<ArrayList<ArrayList<Integer>>> getText() {
         return myArray;
     }
 
-    public LiveData<Integer> setX(int argX){
-        x = argX;
-        return null;
-    }
 
-    public LiveData<Integer> setY(int argY){
-        y = argY;
-        return null;
-    }
-
-    public LiveData<Integer> setR(int argR){
-        r = argR;
-        return null;
-    }
-
-    public LiveData<Integer> setG(int argG){
-        g = argG;
-        return null;
-    }
-
-    public LiveData<Integer> setB(int argB){
-        b = argB;
-        return null;
+    public void setLeds(int x, int y, int r, int g, int b){
+        mRepo.putLedsRequest(x, y, r, g, b);
     }
 
     public void reset(){
@@ -72,7 +56,6 @@ public class LedsViewModel extends ViewModel {
                     arrayList.add(i, mRepo.getLedsData().getValue().get(i));
                 }
                 myArray.setValue(arrayList);
-                mRepo.putLedsRequest(x, y, r, g, b);
                 mHandler.postDelayed(this, delay);
             }
         }, delay);
