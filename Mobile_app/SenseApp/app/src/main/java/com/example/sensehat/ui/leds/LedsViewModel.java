@@ -60,6 +60,10 @@ public class LedsViewModel extends ViewModel {
         return null;
     }
 
+    public void reset(){
+        mRepo.putResetLedsRequest();
+    }
+
 
     public void fetcher(int delay){
         mHandler.postDelayed(new Runnable(){

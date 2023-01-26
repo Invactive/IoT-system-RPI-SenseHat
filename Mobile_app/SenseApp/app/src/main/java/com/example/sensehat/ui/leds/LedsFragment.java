@@ -22,7 +22,6 @@ import com.example.sensehat.ui.charts.ChartsViewModel;
 public class LedsFragment extends Fragment {
 
     private FragmentLedsBinding binding;
-    private int index;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,6 +35,7 @@ public class LedsFragment extends Fragment {
 
         //binding layout
         final GridLayout gridLayout = binding.gridLayout;
+        final Button reset = binding.reset;
         final TextView r = binding.rVal;
         final TextView g = binding.gVal;
         final TextView b = binding.bVal;
@@ -65,9 +65,9 @@ public class LedsFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v)
                     {
-                        index = button.getId();
-                        int argY = index % 8;
-                        int argX = (index - argY) / 8;
+                        int index = button.getId();
+                        int argX = index % 8;
+                        int argY = (index - argX) / 8;
                         int argR = 0;
                         int argG = 0;
                         int argB = 0;
@@ -100,6 +100,14 @@ public class LedsFragment extends Fragment {
                 int argY = (x - argX) / 8;
                 Button button = (Button) gridLayout.getChildAt(argY * 8 + argX);
                 button.setBackgroundTintList(ColorStateList.valueOf(Color.argb(150,  data.get(x).get(0), data.get(x).get(1), data.get(x).get(2))));
+            }
+        });
+
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v)
+            {
+                viewModel.reset();
             }
         });
 
