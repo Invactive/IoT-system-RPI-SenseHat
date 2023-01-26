@@ -354,6 +354,13 @@ public class ChartsFragment extends Fragment {
             });
         }
         if(type == "pressHpa") {
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+"";
+                }
+            });
             ArrayList<Entry> values = new ArrayList<>();
             LineDataSet set = new LineDataSet(values, "Pressure Hpa");
             set.setDrawValues(false);
