@@ -13,7 +13,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/sensehat/ui/leds/LedsViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_leds.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_leds.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
