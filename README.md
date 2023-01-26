@@ -2,10 +2,10 @@
 IoT system including:
 - Raspberry PI with SenseHat shield
 - Php server 
-- Web app 
-- Desktop app
+- Web app (React
+- Desktop app (Electron)
 - Mobile app (android)
 
 Project created in collaboration with:
-- TBA
+- [Patryk Borowski](https://github.com/boobel)
 - TBA
