@@ -281,7 +281,6 @@ public class RepositoryModel {
 //            Get leds object - data from LED matrix
             JSONObject ledsJsonObj = new JSONObject(this.jsonLedsString);
 //            Get RGB array of every LED from matrix
-
             for(int i=0; i<ledsJsonObj.length(); i++){
                 ArrayList<Integer> arrayList = new ArrayList<>();
                 for(int j=0; j<ledsJsonObj.getJSONArray(Integer.toString(i)).length(); j++){

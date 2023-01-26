@@ -24,7 +24,6 @@ public class LedsViewModel extends ViewModel {
         myArray = new MutableLiveData<>();
         mHandler = new Handler();
         mRepo.setIP("25.78.72.7");
-        myArray.setValue(mRepo.getLedsData().getValue());
 
         Thread thread = new Thread(){
             @Override
