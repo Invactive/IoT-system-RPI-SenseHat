@@ -24,6 +24,87 @@
             android:layout_height="fill_parent"
             android:orientation="horizontal">
 
+            <Switch
+                android:id="@+id/headerTemperature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="40dp"
+                android:text="Temperature" />
+
+            <Switch
+                android:id="@+id/headerHumidity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="292dp"
+                android:layout_marginTop="40dp"
+                android:text="Humidity"
+                app:layout_constraintStart_toEndOf="@+id/headerPressure"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/headerPressure"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="40dp"
+                android:text="Pressure"
+                android:layout_marginEnd="0dp" />
+
+            <Switch
+                android:id="@+id/headerRoll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="72dp"
+                android:layout_marginTop="80dp"
+                android:text="Roll"
+                android:layout_marginEnd="0dp" />
+
+            <Switch
+                android:id="@+id/headerPitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="175dp"
+                android:layout_marginTop="80dp"
+                android:text="Pitch"
+                android:layout_marginEnd="0dp" />
+
+            <Switch
+                android:id="@+id/headerYaw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="293dp"
+                android:layout_marginTop="80dp"
+                android:text="Pressure"
+                android:layout_marginEnd="0dp" />
+
+            <Switch
+                android:id="@+id/headerJoyX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="120dp"
+                android:text="Joystick X"
+                android:layout_marginEnd="0dp" />
+
+            <Switch
+                android:id="@+id/headerJoyY"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="143dp"
+                android:layout_marginTop="120dp"
+                android:text="Joystick Y"
+                android:layout_marginEnd="0dp" />
+
+            <Switch
+                android:id="@+id/headerJoyMid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="270dp"
+                android:layout_marginTop="120dp"
+                android:text="Joystick Mid"
+                android:layout_marginEnd="0dp" />
+
             <TableLayout
                 android:id="@+id/table"
                 android:layout_width="wrap_content"
@@ -31,22 +112,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginEnd="0dp">
 
-                >
 
             </TableLayout>
-
-            <Button
-                android:id="@+id/backDataBtn"
-                android:layout_width="130dp"
-                android:layout_height="48dp"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="33dp"
-                android:text="Back"
-                android:textSize="15sp"
-                android:textStyle="bold" />
         </RelativeLayout>
     </ScrollView>
 

@@ -49,7 +49,7 @@ public class RepositoryModel {
     private MutableLiveData<HashMap<String, Object>> orientationData;
     private MutableLiveData<HashMap<String, Object>> compassData;
     private MutableLiveData<HashMap<String, Object>> joystickData;
-    private MutableLiveData <ArrayList<ArrayList<Integer>>> ledsData;
+    private MutableLiveData<ArrayList<ArrayList<Integer>>> ledsData;
     private MutableLiveData<HashMap<String, JSONArray>> logsData;
 
     private ArrayList<ArrayList<Integer>> newarr = new ArrayList<>();
