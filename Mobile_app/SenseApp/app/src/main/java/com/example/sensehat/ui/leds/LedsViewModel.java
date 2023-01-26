@@ -59,16 +59,4 @@ public class LedsViewModel extends ViewModel {
             }
         }, delay);
     }
-
-    public void destroyHandler(){
-        mHandler.removeCallbacksAndMessages(null);
-    }
-
-    public void setChartInterv(int time){
-        interval = time;
-    }
-
-    public void setServerIP(String ip){
-        IP = ip;
-    }
 }

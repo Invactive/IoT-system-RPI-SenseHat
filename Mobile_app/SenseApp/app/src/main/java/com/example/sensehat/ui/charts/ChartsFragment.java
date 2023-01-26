@@ -75,9 +75,6 @@ public class ChartsFragment extends Fragment {
         legend.setTextColor(Color.BLACK);
         YAxis leftAxis = chart.getAxisLeft();
         leftAxis.setGranularityEnabled(true);
-        //  leftAxis.setAxisMinimum(-30f);
-        //  leftAxis.setAxisMaximum(110f);
-        //  leftAxis.setYOffset(-9f);
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
         ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -85,7 +82,6 @@ public class ChartsFragment extends Fragment {
         chart.setData(data);
 
         mViewModel = new ViewModelProvider(this).get(ChartsViewModel.class);
-//        temperatureSwitch.setChecked(true);
 
         temperatureSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -95,8 +91,6 @@ public class ChartsFragment extends Fragment {
                 } else {
                     ILineDataSet fahren = chart.getData().getDataSetByLabel("Temperature Fahrenheit", true);
                     ILineDataSet celsius = chart.getData().getDataSetByLabel("Temperature Celcius", true);
-//                    chart.getData().removeDataSet(fahren);
-//                    chart.getData().removeDataSet(celsius);
                     chart.getLineData().removeDataSet(fahren);
                     chart.getLineData().removeDataSet(celsius);
                     ttc = 0;
@@ -154,7 +148,7 @@ public class ChartsFragment extends Fragment {
     }
 
     public void updater(ChartsViewModel model, String type, LineChart chart,LineData data, ArrayList<ILineDataSet> dataSets){
-
+// Setting dates to be implemented
 //        if(type == "tempC"){
 //            XAxis topAxis = chart.getXAxis();
 //            topAxis.setGranularity(1f);
@@ -302,7 +296,7 @@ public class ChartsFragment extends Fragment {
                             data.removeEntry(e, index);
                         }
                         catch(ArrayIndexOutOfBoundsException gh){
-                            System.out.println("dupa");
+
                         }
 
                     }
@@ -310,7 +304,6 @@ public class ChartsFragment extends Fragment {
                     chart.notifyDataSetChanged();
                     chart.invalidate();
                     ttc++;
-//                    System.out.println(s);
                 }
             });
         }
@@ -343,7 +336,6 @@ public class ChartsFragment extends Fragment {
                             data.removeEntry(e, index);
                         }
                         catch(ArrayIndexOutOfBoundsException gh){
-                            System.out.println("dupa");
                         }
                     }
                     data.notifyDataChanged();
@@ -354,6 +346,13 @@ public class ChartsFragment extends Fragment {
             });
         }
         if(type == "pressHpa") {
+            YAxis leftAxis = chart.getAxisLeft();
+            leftAxis.setValueFormatter(new ValueFormatter() {
+                @Override
+                public String getFormattedValue(float value) {
+                    return value+"";
+                }
+            });
             ArrayList<Entry> values = new ArrayList<>();
             LineDataSet set = new LineDataSet(values, "Pressure Hpa");
             set.setDrawValues(false);
@@ -373,7 +372,6 @@ public class ChartsFragment extends Fragment {
                             data.removeEntry(e, index);
                         }
                         catch(ArrayIndexOutOfBoundsException gh){
-                            System.out.println("dupa");
                         }
                     }
                     data.notifyDataChanged();
@@ -403,7 +401,6 @@ public class ChartsFragment extends Fragment {
                             data.removeEntry(e, index);
                         }
                         catch(ArrayIndexOutOfBoundsException gh){
-                            System.out.println("dupa");
                         }
                     }
                     data.notifyDataChanged();
@@ -440,7 +437,6 @@ public class ChartsFragment extends Fragment {
                             data.removeEntry(e, index);
                         }
                         catch(ArrayIndexOutOfBoundsException gh){
-                            System.out.println("dupa");
                         }
                     }
                     data.notifyDataChanged();

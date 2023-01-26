@@ -80,7 +80,6 @@ public class DataFragment extends Fragment {
         rowCounter = 0;
 
         DataViewModel.getDataLogs().observe(getViewLifecycleOwner(), mDataLogs -> {
-            System.out.println(mDataLogs);
             drawTable(table, getActivity(), mDataLogs, choosenValuesHashMap);
         });
 
@@ -90,7 +89,7 @@ public class DataFragment extends Fragment {
         });
 
         OptionViewModel.getServerIP().observe(getViewLifecycleOwner(), mServerIP -> {
-            DataViewModel.setServerIP(mServerIP);
+            DataViewModel.setServerIP(getActivity(), mServerIP);
         });
 
         temperatureSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -100,7 +99,6 @@ public class DataFragment extends Fragment {
                 } else {
                     choosenValuesHashMap.put("temperature", Boolean.FALSE);
                 }
-                System.out.println(rowCounter + "From temp");
                 rowCounter = 0;
                 table.removeAllViews();
                 addTableHeaders(table, getActivity(), choosenValuesHashMap);

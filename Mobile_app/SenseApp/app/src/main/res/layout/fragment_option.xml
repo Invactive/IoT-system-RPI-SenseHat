@@ -8,10 +8,16 @@
 
     <TextView
         android:id="@+id/text_option"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="80dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:text="User Settings"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/chartsInterval"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/chartsInterval"
@@ -61,11 +67,11 @@
         android:text="Server IP"
         app:layout_constraintBottom_toTopOf="@+id/etIpAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/text_option" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etIpAddress"
-        android:layout_width="80dp"
+        android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="400dp"
         android:textAlignment="center"

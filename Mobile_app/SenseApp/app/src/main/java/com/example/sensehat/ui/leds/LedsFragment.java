@@ -75,13 +75,28 @@ public class LedsFragment extends Fragment {
                         int argB = 0;
 
                         if(!r.getText().toString().equals("")){
-                            argR = Integer.parseInt(r.getText().toString());
+                            if(Integer.parseInt(r.getText().toString()) > 255){
+                                argR = 255;
+                            }
+                            else {
+                                argR = Integer.parseInt(r.getText().toString());
+                            }
                         }
                         if(!g.getText().toString().equals("")){
-                            argG = Integer.parseInt(g.getText().toString());
+                            if(Integer.parseInt(g.getText().toString()) > 255){
+                                argG = 255;
+                            }
+                            else {
+                                argG = Integer.parseInt(g.getText().toString());
+                            }
                         }
                         if(!b.getText().toString().equals("")){
-                            argB = Integer.parseInt(b.getText().toString());
+                            if(Integer.parseInt(b.getText().toString()) > 255){
+                                argB = 255;
+                            }
+                            else {
+                                argB = Integer.parseInt(b.getText().toString());
+                            }
                         }
 
                         viewModel.setLeds(argX, argY, argR, argG, argB);

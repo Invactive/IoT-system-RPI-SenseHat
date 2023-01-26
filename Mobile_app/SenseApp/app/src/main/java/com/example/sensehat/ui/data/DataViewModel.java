@@ -1,7 +1,9 @@
 package com.example.sensehat.ui.data;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Handler;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -108,8 +110,13 @@ public class DataViewModel extends ViewModel {
         mHandler.removeCallbacksAndMessages(null);
     }
 
-    public void setServerIP(String ip){
+    public void setServerIP(Context context, String ip){
         IP = ip;
+        mRepo.setIP(IP);
+        if(ip == "25.78.72.7") {
+            Toast.makeText(context, "Connection error",
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
 

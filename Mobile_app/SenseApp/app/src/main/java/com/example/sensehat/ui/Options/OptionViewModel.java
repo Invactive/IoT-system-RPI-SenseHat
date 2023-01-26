@@ -14,14 +14,9 @@ public class OptionViewModel extends ViewModel {
     public OptionViewModel() {
         mText = new MutableLiveData<>();
 
-        mText.setValue("This is option fragment");
         mChartInterv = new MutableLiveData<>();
         mTableInterv = new MutableLiveData<>();
         mServerIP = new MutableLiveData<>();
-
-//        mChartInterv.setValue(1000);
-//        mTableInterv.setValue(1000);
-//        mServerIP.setValue("123.123.123.123");
 
     }
 

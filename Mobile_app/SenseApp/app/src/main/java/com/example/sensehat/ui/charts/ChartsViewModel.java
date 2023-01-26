@@ -10,14 +10,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sensehat.data.RepositoryModel;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 public class ChartsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mTemperatureC;
