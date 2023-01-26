@@ -22,7 +22,7 @@ import com.example.sensehat.ui.charts.ChartsViewModel;
 public class LedsFragment extends Fragment {
 
     private FragmentLedsBinding binding;
-    private int mDefaultColor;
+    private int index;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class LedsFragment extends Fragment {
                 button.setOnClickListener(new View.OnClickListener() {
                     public void onClick(View v)
                     {
+                        index = button.getId();
                         button.setBackgroundTintList(ColorStateList.valueOf(Color.rgb( 252,53,73)));
                     }
                 });
