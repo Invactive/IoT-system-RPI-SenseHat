@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.js": "/static/js/main.ddd11a33.js",
+    "static/media/matrix.svg": "/static/media/matrix.f897c86bd4aacc05891c36b16081afd5.svg",
+    "static/media/data.svg": "/static/media/data.d9bb7b7db9cbb72f18a2138cfa91e585.svg",
+    "static/media/settings.svg": "/static/media/settings.b73e73012d7592fa5150369e803530ea.svg",
+    "static/media/pressure.svg": "/static/media/pressure.27506605d4960e84c9d6a275ca57e64f.svg",
+    "static/media/accelerometer.svg": "/static/media/accelerometer.ac541fb4c6b334a32c88992e7838fae6.svg",
+    "static/media/home.svg": "/static/media/home.e3b31c37e310bc2613c4b3d4e065d569.svg",
+    "static/media/chart.svg": "/static/media/chart.2c3645f7d491d750383005a545eab94e.svg",
+    "static/media/arrow.svg": "/static/media/arrow.2eaa79f8097e301c03f34456c24276e5.svg",
+    "static/media/thermometer.svg": "/static/media/thermometer.e884295880041a4a5e85f3e90678c1ab.svg",
+    "static/media/humidity.svg": "/static/media/humidity.53151c928502650a035508d48892a578.svg",
+    "index.html": "/index.html",
+    "main.ddd11a33.js.map": "/static/js/main.ddd11a33.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.ddd11a33.js"
+  ]
+}
