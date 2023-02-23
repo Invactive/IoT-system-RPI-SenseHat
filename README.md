@@ -7,7 +7,7 @@ IoT system including:
 - PHP server with REST
 - Web app (React)
 - Desktop app (Electron)
-- Mobile app (Android)
+- Mobile app (Android Java)
 
 Project created in collaboration with:
 - [Patryk Borowski](https://github.com/boobel)
