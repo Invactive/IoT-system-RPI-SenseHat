@@ -9,7 +9,6 @@
     $arg_dict = array();
 
     $method = $_SERVER['REQUEST_METHOD'];
-<<<<<<< HEAD
     if ($method == "PUT" || $method == "OPTIONS"){
         $put_data = json_decode(file_get_contents("php://input"), true);
         for($i=0; $i<count($keys_arr); $i++){
@@ -27,16 +26,6 @@
             $arg_dict['g'] >= 0 && $arg_dict['g'] < 256 &&
             $arg_dict['b'] >= 0 && $arg_dict['b']< 256){
                 $command = escapeshellcmd('python3 ../src/python/set_leds.py -x '.$arg_dict['x'].' -y '.$arg_dict['y'].' -r '.$arg_dict['r'].' -g '.$arg_dict['g'].' -b '.$arg_dict['b']);
-=======
-    if ($method == "PUT"){
-        if ($argX >= 0 && $argX < 8 &&
-            $argY >= 0 && $argY < 8 &&
-            $argR >= 0 && $argR < 256 &&
-            $argG >= 0 && $argG < 256 &&
-            $argB >= 0 && $argB < 256){
-                $command = escapeshellcmd('python3 ../src/python/set_leds.py -x '.$argX.' -y '.$argY.' -r '.$argR.' -g '.$argG.' -b '.$argB);
-                echo $command;
->>>>>>> Mobile_app
                 $output = shell_exec($command);
                 http_response_code(200);
             }
@@ -49,7 +38,4 @@
         http_response_code(400);
     }
 
-    
-
-    
 ?>
